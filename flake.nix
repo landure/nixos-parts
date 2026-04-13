@@ -44,5 +44,11 @@
         # "aarch64-darwin"
         # "x86_64-darwin"
       ];
+      perSystem = {...}: {
+                  nix-unit = {
+            # NOTE: a `nixpkgs-lib` follows rule is currently required
+                    inherit inputs;
+                      };
+      };
     };
 }
