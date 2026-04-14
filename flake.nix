@@ -1,54 +1,30 @@
+# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# Use `nix run .#write-flake` to regenerate it.
 {
-  description = "Flake parts for NixOS and Home Manager, designed for use in a nixos-unified flake.";
+  description = "Dendritic NixOS and Home Manager modules for flake-file and flake-parts.";
+
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    import-tree.url = "github:vic/import-tree";
+    devshell.url = "github:numtide/devshell";
+    flake-file.url = "github:vic/flake-file";
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
+      inputs.nixpkgs-lib.follows = "nixpkgs-lib";
+    };
+    import-tree.url = "github:vic/import-tree";
+    nix-auto-follow = {
+      url = "github:fzakaria/nix-auto-follow";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-unit = {
       url = "github:nix-community/nix-unit";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
         flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
       };
     };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-lib.follows = "nixpkgs";
   };
-
-  outputs =
-    inputs@{
-      flake-parts,
-      import-tree,
-      nix-unit,
-      self,
-      ...
-    }:
-    let
-      inherit (flake-parts.lib) mkFlake;
-    in
-    mkFlake { inherit inputs; } {
-      imports = [
-        # To import an internal flake module: ./other.nix
-        # To import an external flake module:
-        #   1. Add foo to inputs
-        #   2. Add foo as a parameter to the outputs function
-        #   3. Add here: foo.flakeModule
-        nix-unit.modules.flake.default
-        (import-tree ./modules)
-      ];
-      systems = [
-        "x86_64-linux"
-        # "aarch64-linux"
-        # "aarch64-darwin"
-        # "x86_64-darwin"
-      ];
-      perSystem = {...}: {
-                  nix-unit = {
-            # NOTE: a `nixpkgs-lib` follows rule is currently required
-                    inherit inputs;
-                      };
-      };
-    };
 }
