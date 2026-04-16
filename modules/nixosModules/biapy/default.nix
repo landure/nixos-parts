@@ -1,10 +1,19 @@
-{ self, ... }:
+{
+  flake-parts-lib,
+  self,
+  withSystem,
+  ...
+}:
+let
+  inherit (flake-parts-lib) importApply;
+
+in
 {
   flake = {
     nixosModules = {
       biapy = { };
 
-      default = self.homeModules.biapy;
+      default = self.nixosModules.biapy;
     };
 
     tests = {
