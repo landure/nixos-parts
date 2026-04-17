@@ -1,10 +1,16 @@
 /**
-  # nix-unit
+  # nil
+
+  An incremental analysis assistant for writing in Nix.
 
   ## 🛠️ Tech Stack
 
-  - [nix-unit homepage](https://nix-community.github.io/nix-unit/)
-    ([nix-unit @ GitHub](https://github.com/nix-community/nix-unit)).
+  - [nil @ GitHub](https://github.com/oxalica/nil).
+
+  ### Dependencies
+
+  - [devshell homepage](https://numtide.github.io/devshell/)
+    ([devshell @ GitHub](https://github.com/numtide/devshell)).
   - [flake-parts homepage](https://flake.parts/)
     ([flake-parts @ GitHub](https://github.com/hercules-ci/flake-parts)).
   - [flake-file homepage](https://flake-file.oeiuwq.com/)
@@ -37,9 +43,9 @@ in
             name = "nil-diagnostics";
             text = ''
               shopt -s globstar
-              
+
               flake_path="''${1}"
-            
+
               ${getExe pkgs.nil} diagnostics --deny-warnings "''${flake_path}/"**/*.nix
             '';
           };
@@ -54,7 +60,6 @@ in
   perSystem =
     { pkgs, ... }:
     {
-
       devshells.default = {
         packages = with pkgs; [ nil ];
 
