@@ -21,7 +21,6 @@
 {
   inputs,
   lib,
-  pkgs,
   ...
 }:
 let
