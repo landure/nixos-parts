@@ -20,6 +20,7 @@ let
 in
 {
   flake-file.inputs = {
+    devshell.url = mkDefault "github:numtide/devshell";
     nix-unit = {
       url = mkDefault "github:nix-community/nix-unit";
       inputs = {
@@ -30,22 +31,29 @@ in
   };
 
   imports = [
+    (inputs.devshell.flakeModule or { })
     (inputs.nix-unit.modules.flake.default or { })
   ];
 
   perSystem =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
     {
       nix-unit = {
         # NOTE: a `nixpkgs-lib` follows rule is currently required
         inherit inputs;
       };
 
-      devshells.default.commands = [
-        {
-          package = pkgs.nix-unit;
-          category = "tests";
-        }
-      ];
+      devshells.default = {
+        packages = with pkgs; [ nix-unit ];
+
+        commands = [
+          {
+            name = "nix-unit-tests";
+            help = "run nix-unit tests";
+            command = "${lib.getExe pkgs.nix-unit} --flake '.#checks'";
+            category = "tests";
+          }
+        ];
+      };
     };
 }
