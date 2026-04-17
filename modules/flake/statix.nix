@@ -1,10 +1,14 @@
 /**
-  # nix-unit
+  # statix
 
   ## 🛠️ Tech Stack
 
-  - [nix-unit homepage](https://nix-community.github.io/nix-unit/)
-    ([nix-unit @ GitHub](https://github.com/nix-community/nix-unit)).
+  - [statix @ GitHub](https://github.com/oppiliappan/statix).
+
+  ### Dependencies
+
+  - [devshell homepage](https://numtide.github.io/devshell/)
+    ([devshell @ GitHub](https://github.com/numtide/devshell)).
   - [flake-parts homepage](https://flake.parts/)
     ([flake-parts @ GitHub](https://github.com/hercules-ci/flake-parts)).
   - [flake-file homepage](https://flake-file.oeiuwq.com/)
