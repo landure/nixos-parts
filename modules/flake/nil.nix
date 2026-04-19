@@ -69,7 +69,7 @@ in
             help = "Lint nix files with nil";
             command = ''
               shopt -s globstar
-              ${getExe pkgs.nil} diagnostics ./**/*.nix
+              ${getExe pkgs.nil} diagnostics "''${PRJ_ROOT}"/**/*.nix
             '';
             category = "lint";
           }
