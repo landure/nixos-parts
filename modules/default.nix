@@ -39,7 +39,8 @@ in
 
     [
       # makes deduplication and disabledModules work
-      # flake-parts.flakeModules.flakeModules
+      # (inputs.flake-parts.flakeModules.flakeModules or {})
+      (inputs.flake-parts.flakeModules.modules or { })
       # enable inside-flake and say goodbye to bootstrap
       (inputs.flake-file.flakeModules.dendritic or { })
       (inputs.flake-file.flakeModules.nix-auto-follow or { })
