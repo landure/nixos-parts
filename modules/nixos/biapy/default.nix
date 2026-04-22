@@ -11,16 +11,13 @@ let
     mkOption
     types
     ;
-
-  biapy.modules.nixos = self.biapy.modules.nixos;
 in
 {
-
   imports = [
     (inputs.flake-parts.flakeModules.modules or { })
   ];
 
-  options.flake.biapy.modules.nixos = mkOption {
+  options.flake.biapy.nixos = mkOption {
     type = types.lazyAttrsOf types.deferredModule;
     default = { };
     apply = mapAttrs (
@@ -48,10 +45,13 @@ in
 
       modules.nixos = {
         biapy =
-          _:
+          { self, ... }:
+          let
+            biapy_nixos_modules = self.biapy.nixos;
+          in
           {
             imports = [
-              biapy.modules.nixos
+              biapy_nixos_modules
             ];
           };
 
@@ -59,14 +59,16 @@ in
       };
 
       tests = {
-        "modules.nixos: declares biapy" = {
-          expr = self.modules.nixos ? biapy;
-          expected = true;
-        };
+        "modules.nixos" = {
+          "test: declares modules.nixos.biapy" = {
+            expr = self.modules.nixos ? biapy;
+            expected = true;
+          };
 
-        "modules.nixos: default is biapy" = {
-          expr = self.modules.nixos.default == self.modules.nixos.biapy;
-          expected = true;
+          "test: declares modules.nixos.default" = {
+            expr = self.modules.nixos ? default;
+            expected = true;
+          };
         };
       };
     };

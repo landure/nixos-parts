@@ -35,16 +35,14 @@ in
     };
   };
 
-  imports =
-
-    [
-      # makes deduplication and disabledModules work
-      # (inputs.flake-parts.flakeModules.flakeModules or {})
-      (inputs.flake-parts.flakeModules.modules or { })
-      # enable inside-flake and say goodbye to bootstrap
-      (inputs.flake-file.flakeModules.dendritic or { })
-      (inputs.flake-file.flakeModules.nix-auto-follow or { })
-    ];
+  imports = [
+    # makes deduplication and disabledModules work
+    # (inputs.flake-parts.flakeModules.flakeModules or {})
+    (inputs.flake-parts.flakeModules.modules or { })
+    # enable inside-flake and say goodbye to bootstrap
+    (inputs.flake-file.flakeModules.dendritic or { })
+    (inputs.flake-file.flakeModules.nix-auto-follow or { })
+  ];
 
   systems = [
     "x86_64-linux"
