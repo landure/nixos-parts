@@ -57,7 +57,10 @@ in
   ];
 
   perSystem =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
+    let
+      getExe = lib.getExe;
+    in
     {
       devshells.default = {
         packages = with pkgs; [ nixf-diagnose ];
@@ -68,7 +71,7 @@ in
             help = "run nixf-diagnose";
             command = ''
               shopt -s globstar
-              ${lib.getExe pkgs.nixf-diagnose} "''${PRJ_ROOT}"/**/*.nix
+              ${getExe pkgs.nixf-diagnose} "''${PRJ_ROOT}"/**/*.nix
             '';
             category = "lint";
           }

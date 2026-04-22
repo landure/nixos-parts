@@ -58,7 +58,10 @@ in
   ];
 
   perSystem =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
+    let
+      inherit (lib) getExe;
+    in
     {
       devshells.default = {
         packages = with pkgs; [ nil ];

@@ -37,6 +37,9 @@ in
 
   perSystem =
     { lib, pkgs, ... }:
+    let
+      inherit (lib) getExe;
+    in
     {
       nix-unit = {
         # NOTE: a `nixpkgs-lib` follows rule is currently required
@@ -50,7 +53,7 @@ in
           {
             name = "nix-unit-tests";
             help = "run nix-unit tests";
-            command = "${lib.getExe pkgs.nix-unit} --flake '.#checks'";
+            command = "${getExe pkgs.nix-unit} --flake '.#tests'";
             category = "tests";
           }
         ];

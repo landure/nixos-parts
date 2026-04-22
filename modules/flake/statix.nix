@@ -39,7 +39,9 @@ in
           pkgs:
           pkgs.writeShellApplication {
             name = "statix-check";
-            text = "${getExe pkgs.statix} check";
+            text = ''
+              ${getExe pkgs.statix} check
+            '';
           };
       }
     ];
@@ -50,7 +52,10 @@ in
   ];
 
   perSystem =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
+    let
+      inherit (lib) getExe;
+    in
     {
 
       devshells.default = {
