@@ -30,9 +30,7 @@
   - [Bluetooth @ ArchLinux Wiki](https://wiki.archlinux.org/title/Bluetooth).
 */
 {
-  config,
   inputs,
-  lib,
   ...
 }:
 let
@@ -133,7 +131,6 @@ in
 
   perSystem =
     {
-      config,
       lib,
       system,
       ...
