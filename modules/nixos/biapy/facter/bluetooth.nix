@@ -41,6 +41,7 @@ let
       config,
       lib,
       pkgs,
+      
       ...
     }:
     let
@@ -121,93 +122,103 @@ let
         # services.blueman.enable = mkDefault true;
       };
     };
+
 in
 {
+
   flake = {
     biapy.modules.nixos."facter.bluetooth" = module;
 
-    tests =
-      let
-        inherit (lib) getName;
-        inherit (lib.lists) any;
+  };
 
-        testSystem = builtins.head config.systems;
+  perSystem =
+    {
+      config,
+      lib,
+      system,
+      ...
+    }:
+    let
+      inherit (lib) getName;
+      inherit (lib.lists) any;
 
-        evalBluetooth =
-          modules:
-          import (inputs.nixpkgs + "/nixos/lib/eval-config.nix") {
-            system = testSystem;
-            modules = [ module ] ++ modules;
-          };
 
-        withReport = hardware: {
-          hardware.facter.report.hardware = hardware;
+      evalNixOSModule =
+        modules:
+        import (inputs.nixpkgs + "/nixos/lib/eval-config.nix") {
+          system = system;
+          modules = [ module ] ++ modules;
         };
 
-        withoutBluetooth = evalBluetooth [
-          (withReport {
-            bluetooth = [ ];
-            usb = [ ];
-          })
-        ];
+      withFacterReport = hardware: {
+        hardware.facter.report.hardware = hardware;
+      };
 
-        bluetoothFromHardware = evalBluetooth [
-          (withReport {
-            bluetooth = [ { name = "adapter"; } ];
-            usb = [ ];
-          })
-        ];
+      withoutBluetooth = evalNixOSModule [
+        (withFacterReport {
+          bluetooth = [ ];
+          usb = [ ];
+        })
+      ];
 
-        bluetoothFromUsbDriver = evalBluetooth [
-          (withReport {
-            bluetooth = [ ];
-            usb = [ { driver = "btusb"; } ];
-          })
-        ];
+      bluetoothFromHardware = evalNixOSModule [
+        (withFacterReport {
+          bluetooth = [ { name = "adapter"; } ];
+          usb = [ ];
+        })
+      ];
 
-        bluetoothFromUsbDriverModule = evalBluetooth [
-          (withReport {
-            bluetooth = [ ];
-            usb = [ { driver_module = "btusb"; } ];
-          })
-        ];
+      bluetoothFromUsbDriver = evalNixOSModule [
+        (withFacterReport {
+          bluetooth = [ ];
+          usb = [ { driver = "btusb"; } ];
+        })
+      ];
 
-        bluetoothDisabled = evalBluetooth [
-          (withReport {
-            bluetooth = [ { name = "adapter"; } ];
-            usb = [ ];
-          })
-          {
-            biapy.facter.detected.bluetooth.enable = false;
-          }
-        ];
+      bluetoothFromUsbDriverModule = evalNixOSModule [
+        (withFacterReport {
+          bluetooth = [ ];
+          usb = [ { driver_module = "btusb"; } ];
+        })
+      ];
 
-        hasDefaultPackage =
-          name: evaluated: any (pkg: getName pkg == name) evaluated.config.environment.defaultPackages;
+      bluetoothDisabled = evalNixOSModule [
+        (withFacterReport {
+          bluetooth = [ { name = "adapter"; } ];
+          usb = [ ];
+        })
+        {
+          biapy.facter.detected.bluetooth.enable = false;
+        }
+      ];
 
-      in
-      {
-        "bluetooth: default disabled without detected hardware" = {
+      hasDefaultPackage =
+        name: evaluated: any (pkg: getName pkg == name) evaluated.config.environment.defaultPackages;
+
+    in
+    {
+      nix-unit.tests."biapy.modules.nixos.\"facter.bluetooth\"" = {
+        "test: default disabled without detected hardware" = {
           expr = withoutBluetooth.config.biapy.facter.detected.bluetooth.enable;
           expected = false;
         };
 
-        "bluetooth: hardware report enables module by default" = {
+        "test: hardware report enables module by default" = {
           expr = bluetoothFromHardware.config.biapy.facter.detected.bluetooth.enable;
           expected = true;
         };
 
-        "bluetooth: btusb usb driver enables module by default" = {
+        "test: btusb usb driver enables module by default" = {
           expr = bluetoothFromUsbDriver.config.biapy.facter.detected.bluetooth.enable;
           expected = true;
         };
 
-        "bluetooth: btusb usb driver_module enables module by default" = {
+        "test: btusb usb driver_module enables module by default" = {
           expr = bluetoothFromUsbDriverModule.config.biapy.facter.detected.bluetooth.enable;
           expected = true;
         };
 
-        "bluetooth: detected hardware enables packages and bluez" = {
+        "test: detected hardware enables packages and bluez" = {
           expr =
             bluetoothFromHardware.config.hardware.bluetooth.enable
             && hasDefaultPackage "bluez-tools" bluetoothFromHardware
@@ -215,7 +226,7 @@ in
           expected = true;
         };
 
-        "bluetooth: explicit disable skips bluetooth packages" = {
+        "test: explicit disable skips bluetooth packages" = {
           expr =
             !bluetoothDisabled.config.biapy.facter.detected.bluetooth.enable
             && !hasDefaultPackage "bluez-tools" bluetoothDisabled
@@ -223,5 +234,6 @@ in
           expected = true;
         };
       };
-  };
+    };
+
 }
