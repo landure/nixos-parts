@@ -1,8 +1,8 @@
 {
+  config,
   inputs,
   lib,
   moduleLocation,
-  self,
   ...
 }:
 let
@@ -44,9 +44,9 @@ in
     flake = {
       modules.home = {
         biapy =
-          { self, ... }:
+          { config, ... }:
           let
-            biapy_home_modules = self.biapy.home;
+            biapy_home_modules = config.flake.biapy.home;
           in
           {
             imports = [
@@ -54,18 +54,18 @@ in
             ];
           };
 
-        default = self.modules.home.biapy;
+        default = config.flake.modules.home.biapy;
       };
 
       tests = {
         "modules.home" = {
           "test: declares biapy" = {
-            expr = self.modules.home ? biapy;
+            expr = config.flake.modules.home ? biapy;
             expected = true;
           };
 
           "test: declares default" = {
-            expr = self.modules.home ? default;
+            expr = config.flake.modules.home ? default;
             expected = true;
           };
         };

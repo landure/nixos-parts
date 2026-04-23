@@ -30,6 +30,7 @@
   - [Bluetooth @ ArchLinux Wiki](https://wiki.archlinux.org/title/Bluetooth).
 */
 {
+  config,
   inputs,
   ...
 }:
@@ -39,7 +40,7 @@ let
       config,
       lib,
       pkgs,
-      
+
       ...
     }:
     let
@@ -125,7 +126,16 @@ in
 {
 
   flake = {
-    biapy.modules.nixos."facter.bluetooth" = module;
+    biapy.nixos."facter.bluetooth" = module;
+
+    tests = {
+      "biapy.nixos.\"facter.bluetooth\"" = {
+        "test: declare module" = {
+          expr = config.flake.biapy.nixos ? "facter.bluetooth";
+          expected = true;
+        };
+      };
+    };
 
   };
 
@@ -138,7 +148,6 @@ in
     let
       inherit (lib) getName;
       inherit (lib.lists) any;
-
 
       evalNixOSModule =
         modules:
@@ -194,7 +203,7 @@ in
 
     in
     {
-      nix-unit.tests."biapy.modules.nixos.\"facter.bluetooth\"" = {
+      nix-unit.tests."biapy.nixos.\"facter.bluetooth\"" = {
         "test: default disabled without detected hardware" = {
           expr = withoutBluetooth.config.biapy.facter.detected.bluetooth.enable;
           expected = false;

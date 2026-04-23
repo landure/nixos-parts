@@ -1,8 +1,8 @@
 {
+  config,
   inputs,
   lib,
   moduleLocation,
-  self,
   ...
 }:
 let
@@ -45,9 +45,9 @@ in
 
       modules.nixos = {
         biapy =
-          { self, ... }:
+          { config, ... }:
           let
-            biapy_nixos_modules = self.biapy.nixos;
+            biapy_nixos_modules = config.flake.biapy.nixos;
           in
           {
             imports = [
@@ -55,18 +55,18 @@ in
             ];
           };
 
-        default = self.modules.nixos.biapy;
+        default = config.flake.modules.nixos.biapy;
       };
 
       tests = {
         "modules.nixos" = {
           "test: declares modules.nixos.biapy" = {
-            expr = self.modules.nixos ? biapy;
+            expr = config.flake.modules.nixos ? biapy;
             expected = true;
           };
 
           "test: declares modules.nixos.default" = {
-            expr = self.modules.nixos ? default;
+            expr = config.flake.modules.nixos ? default;
             expected = true;
           };
         };
