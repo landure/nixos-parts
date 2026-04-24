@@ -22,11 +22,10 @@
   ## 🙇 Acknowledgements
 
   - [FZF vs Skim (October 2025): which fuzzy finder should power your terminal? @ GitgasBlade](https://gigasblade.blogspot.com/2025/10/fzf-vs-skim-october-2025-which-fuzzy.html).
+  - [Supercharging the shell @ On data, programming, and technology](https://ivergara.github.io/Supercharging-shell.html).
+  - [Use CLI like a modern tech bro @ tsukie](https://www.tsukie.com/en/technologies/use-cli-like-a-modern-tech-bro/).
 */
-{
-  config,
-  ...
-}:
+{ config, ... }:
 let
 
   module =
@@ -59,14 +58,36 @@ let
 
         programs.skim = {
           enable = mkDefault true;
-          defaultCommand = "${getExe config.programs.fd.package} --type 'f' --hidden --follow --exclude '.git'";
+          # defaultCommand = "rg --files || fd || find .";
+          defaultCommand = config.programs.skim.fileWidgetCommand;
+
+          defaultOptions = [
+            "--height 40%"
+            "--prompt='⟫'"
+          ];
+          # ALT-C
+          changeDirWidgetCommand = mkDefault "${getExe config.programs.fd.package} --type 'd' --hidden --follow --exclude '.git'";
+          changeDirWidgetOptions = mkDefault "--preview 'tree -C {} | head -200'";
+
+          # CTRL-T
+          fileWidgetCommand = mkDefault "${getExe config.programs.fd.package} --type 'f' --hidden --follow --exclude '.git'";
+          fileWidgetOptions = mkDefault [
+            "--preview='${getExe config.programs.bat.package} --style=numbers --color=always --line-range :500 {}"
+            "--preview-window='right:60%:wrap'"
+          ];
+
+          # CTRL-R
+          historyWidgetOptions = mkDefault [
+            "--tac"
+            "--exact"
+          ];
         };
 
         home.packages = [
           (pkgs.writeShellScriptBin "skf" ''
             # A comfortable UI + preview
             ${getExe config.programs.skim.package} --ansi --prompt='Files> ' \
-              --preview '${getExe config.programs.bat.package} --style=numbers --color=always --line-range :500 {}' \
+              --preview='${getExe config.programs.bat.package} --style=numbers --color=always --line-range :500 {}' \
               --preview-window='right:60%:wrap'
           '')
 
@@ -74,8 +95,40 @@ let
             # Live grep
             ${getExe config.programs.skim.package} --ansi --delimiter ':' \
               -c '${getExe config.programs.ripgrep.package} --line-number --no-heading --color=always "{}"' \
-              --preview '${getExe config.programs.bat.package} --style=numbers --color=always --highlight-line {2} {1}' \
+              --preview='${getExe config.programs.bat.package} --style=numbers --color=always --highlight-line {2} {1}' \
               --preview-window='right:70%:wrap'
+          '')
+
+          (pkgs.writeShellScriptBin "skvim" ''
+            # Open with Neovim.
+            # Should use xargs.
+            # see https://ivergara.github.io/Supercharging-shell.html
+            ${getExe config.programs.skim.package} --ansi \
+            --bind "ctrl-p:toggle-preview" \
+            --preview="${getExe config.programs.bat.package} --style=numbers --color=always '{}'"
+            --preview-window='right:60%:hidden' |
+            xargs -I '{}' ${getExe config.programs.neovim.package} {}
+          '')
+
+          (pkgs.writeShellScriptBin "skhx" ''
+            # Open with Helix.
+            # see https://ivergara.github.io/Supercharging-shell.html
+            ${getExe config.programs.skim.package} --ansi \
+            --bind "ctrl-p:toggle-preview" \
+            --preview="${getExe config.programs.bat.package} --style=numbers --color=always '{}'"
+            --preview-window='right:60%:hidden' |
+            xargs -I '{}' ${getExe config.programs.helix.package} {}
+          '')
+
+          (pkgs.writeShellScriptBin "skvs" ''
+            # Open with VS code.
+            # see https://ivergara.github.io/Supercharging-shell.html
+            set -o pipefail
+            ${getExe config.programs.skim.package} --ansi \
+            --bind "ctrl-p:toggle-preview" \
+            --preview="${getExe config.programs.bat.package} --color=always {}"
+            --preview-window='right:60%:hidden' |
+            xargs -I '{}' ${getExe config.programs.vscode.package} :w {}
           '')
         ];
       };
