@@ -24,11 +24,7 @@
 
   - [FZF vs Skim (October 2025): which fuzzy finder should power your terminal? @ GitgasBlade](https://gigasblade.blogspot.com/2025/10/fzf-vs-skim-october-2025-which-fuzzy.html).
 */
-{
-  config,
-
-  ...
-}:
+{ config, ... }:
 let
 
   module =
