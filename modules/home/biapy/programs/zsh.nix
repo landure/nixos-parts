@@ -17,23 +17,12 @@
 
   - [Unlimited history in zsh @ Stack Exchange](https://unix.stackexchange.com/questions/273861/unlimited-history-in-zsh).
 */
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, ... }:
 let
 
   module =
-    {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
+    { config, lib, ... }:
     let
-      inherit (lib.meta) getExe getExe';
       inherit (lib.modules) mkIf mkDefault;
       inherit (lib.options) mkEnableOption;
 
