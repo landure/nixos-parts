@@ -26,5 +26,12 @@
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-lib.follows = "nixpkgs";
+    zed = {
+      url = "github:zed-industries/zed";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 }
