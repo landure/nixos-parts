@@ -31,7 +31,6 @@
 */
 {
   config,
-  inputs,
   ...
 }:
 let
@@ -142,53 +141,50 @@ in
   perSystem =
     {
       lib,
-      system,
+      pkgs,
       ...
     }:
     let
       inherit (lib) getName;
-      inherit (lib.lists) any;
+      inherit (lib.lists) any toList;
+      inherit (pkgs) nixos;
 
-      evalNixOSModule =
-        modules:
-        import (inputs.nixpkgs + "/nixos/lib/eval-config.nix") {
-          system = system;
-          modules = [ module ] ++ modules;
-        };
+      nixosWithModule =
+        configuration:
+        nixos (
+          [
+            module
+          ]
+          ++ (toList configuration)
+        );
 
       withFacterReport = hardware: {
         hardware.facter.report.hardware = hardware;
       };
 
-      withoutBluetooth = evalNixOSModule [
+      withoutBluetooth = nixosWithModule [
         (withFacterReport {
           bluetooth = [ ];
           usb = [ ];
         })
       ];
 
-      bluetoothFromHardware = evalNixOSModule [
-        (withFacterReport {
-          bluetooth = [ { name = "adapter"; } ];
-          usb = [ ];
-        })
-      ];
+      bluetoothFromHardware = nixosWithModule (withFacterReport {
+        bluetooth = [ { name = "adapter"; } ];
+        usb = [ ];
+      });
 
-      bluetoothFromUsbDriver = evalNixOSModule [
-        (withFacterReport {
-          bluetooth = [ ];
-          usb = [ { driver = "btusb"; } ];
-        })
-      ];
+      bluetoothFromUsbDriver = nixosWithModule (withFacterReport {
+        bluetooth = [ ];
+        usb = [ { driver = "btusb"; } ];
+      });
 
-      bluetoothFromUsbDriverModule = evalNixOSModule [
-        (withFacterReport {
-          bluetooth = [ ];
-          usb = [ { driver_module = "btusb"; } ];
-        })
-      ];
+      bluetoothFromUsbDriverModule = nixosWithModule (withFacterReport {
+        bluetooth = [ ];
+        usb = [ { driver_module = "btusb"; } ];
+      });
 
-      bluetoothDisabled = evalNixOSModule [
+      bluetoothDisabled = nixosWithModule [
         (withFacterReport {
           bluetooth = [ { name = "adapter"; } ];
           usb = [ ];
