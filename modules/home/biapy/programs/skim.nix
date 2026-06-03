@@ -25,7 +25,7 @@
   - [Supercharging the shell @ On data, programming, and technology](https://ivergara.github.io/Supercharging-shell.html).
   - [Use CLI like a modern tech bro @ tsukie](https://www.tsukie.com/en/technologies/use-cli-like-a-modern-tech-bro/).
 */
-{ config, ... }:
+{ config, inputs, ... }:
 let
 
   module =
@@ -133,6 +133,7 @@ let
         ];
       };
     };
+
 in
 {
   flake = {
@@ -148,4 +149,93 @@ in
     };
 
   };
+
+  perSystem =
+    {
+      lib,
+      pkgs,
+      ...
+    }:
+    let
+      inherit (lib) any getName toList;
+      inherit (inputs.home-manager.lib) homeManagerConfiguration;
+      inherit (pkgs) nixos;
+
+      containsPackage = name: packages: any (pkg: getName pkg == name) packages;
+
+      homeManagerWithModule =
+        configuration:
+        homeManagerConfiguration {
+          inherit pkgs;
+          modules = (
+            [
+              module
+
+              {
+                home = {
+                  stateVersion = "25.11";
+                  enableNixpkgsReleaseCheck = false;
+                  username = "nixos";
+                  homeDirectory = "/home/nixos";
+                };
+              }
+            ]
+            ++ (toList configuration)
+          );
+        };
+    in
+    {
+      nix-unit.tests."biapy.home.programs.skim" = {
+        default =
+          let
+            sut = homeManagerWithModule { biapy.home.programs.skim.enable = true; };
+          in
+          {
+            "test: skim is enabled" = {
+              expr = sut.config.programs.skim.enable;
+              expected = true;
+            };
+
+            "test: fd is enabled" = {
+              expr = sut.config.programs.fd.enable;
+              expected = true;
+            };
+
+            "test: bat is enabled" = {
+              expr = sut.config.programs.bat.enable;
+              expected = true;
+            };
+
+            "test: ripgrep is enabled" = {
+              expr = sut.config.programs.ripgrep.enable;
+              expected = true;
+            };
+
+            "test: custom shell script skf is installed" = {
+              expr = containsPackage "skf" sut.config.home.packages;
+              expected = true;
+            };
+
+            "test: custom shell script skrg is installed" = {
+              expr = containsPackage "skrg" sut.config.home.packages;
+              expected = true;
+            };
+
+            "test: custom shell script skvim is installed" = {
+              expr = containsPackage "skvim" sut.config.home.packages;
+              expected = true;
+            };
+
+            "test: custom shell script skhx is installed" = {
+              expr = containsPackage "skhx" sut.config.home.packages;
+              expected = true;
+            };
+
+            "test: custom shell script skvs is installed" = {
+              expr = containsPackage "skvs" sut.config.home.packages;
+              expected = true;
+            };
+          };
+      };
+    };
 }
