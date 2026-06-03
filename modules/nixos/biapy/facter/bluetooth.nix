@@ -169,7 +169,7 @@ in
       containsPackage = name: packages: any (pkg: getName pkg == name) packages;
     in
     {
-      nix-unit.tests.biapy.nixos.facter.bluetooth = {
+      nix-unit.tests."biapy.nixos.facter.bluetooth" = {
         without-bluetooth-hardware =
           let
             sut = nixosWithModule {

@@ -8,6 +8,7 @@
 let
   inherit (lib)
     mapAttrs
+    mkDefault
     mkOption
     types
     ;
@@ -15,6 +16,7 @@ in
 {
   imports = [
     (inputs.flake-parts.flakeModules.modules or { })
+    (inputs.home-manager.flakeModules.home-manager or { })
   ];
 
   options.flake.biapy.home = mkOption {
@@ -40,6 +42,12 @@ in
   };
 
   config = {
+    flake-file.inputs.home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs = {
+        nixpkgs.follows = mkDefault "nixpkgs";
+      };
+    };
 
     flake = {
       modules.home = {
@@ -57,15 +65,24 @@ in
         default = config.flake.modules.home.biapy;
       };
 
+      homeModules.biapy = config.flake.modules.home.biapy;
+
       tests = {
         "modules.home" = {
-          "test: declares biapy" = {
+          "test: declares flake.modules.home.biapy" = {
             expr = config.flake.modules.home ? biapy;
             expected = true;
           };
 
-          "test: declares default" = {
+          "test: declares flake.modules.home.default" = {
             expr = config.flake.modules.home ? default;
+            expected = true;
+          };
+        };
+
+        "homeModules.biapy" = {
+          "test: declares flake.homeModules.biapy" = {
+            expr = config.flake.homeModules ? biapy;
             expected = true;
           };
         };
