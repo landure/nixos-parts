@@ -19,7 +19,7 @@ in
     (inputs.home-manager.flakeModules.home-manager or { })
   ];
 
-  options.flake.biapy.home = mkOption {
+  options.flake.biapy = mkOption {
     type = types.lazyAttrsOf types.deferredModule;
     default = { };
     apply = mapAttrs (
@@ -54,11 +54,11 @@ in
         biapy =
           { config, ... }:
           let
-            biapy_home_modules = config.flake.biapy.home;
+            biapy_modules = config.flake.biapy;
           in
           {
             imports = [
-              biapy_home_modules
+              biapy_modules
             ];
           };
 

@@ -17,7 +17,7 @@ in
     (inputs.flake-parts.flakeModules.modules or { })
   ];
 
-  options.flake.biapy.nixos = mkOption {
+  options.flake.biapy = mkOption {
     type = types.lazyAttrsOf types.deferredModule;
     default = { };
     apply = mapAttrs (
@@ -47,11 +47,11 @@ in
         biapy =
           { config, ... }:
           let
-            biapy_nixos_modules = config.flake.biapy.nixos;
+            biapy_modules = config.flake.biapy;
           in
           {
             imports = [
-              biapy_nixos_modules
+              biapy_modules
             ];
           };
 

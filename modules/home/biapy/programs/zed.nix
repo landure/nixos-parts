@@ -39,12 +39,12 @@ let
       inherit (lib.modules) mkDefault mkIf;
       inherit (lib.options) mkEnableOption;
 
-      cfg = config.biapy.home.programs.zed;
+      cfg = config.biapy.programs.zed;
 
     in
     {
       options = {
-        biapy.home.programs.zed.enable = mkEnableOption "Zed editor";
+        biapy.programs.zed.enable = mkEnableOption "Zed editor";
       };
 
       config = mkIf cfg.enable {
@@ -214,12 +214,12 @@ in
   };
 
   flake = {
-    biapy.home."programs.zed" = module;
+    biapy."programs.zed" = module;
 
     tests = {
-      "biapy.home.\"programs.zed\"" = {
+      "biapy.\"programs.zed\"" = {
         "test: declare module" = {
-          expr = config.flake.biapy.home ? "programs.zed";
+          expr = config.flake.biapy ? "programs.zed";
           expected = true;
         };
       };

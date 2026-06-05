@@ -133,12 +133,12 @@ in
 {
 
   flake = {
-    biapy.nixos."facter.bluetooth" = module;
+    biapy."facter.bluetooth" = module;
 
     tests = {
-      "biapy.nixos.\"facter.bluetooth\"" = {
+      "biapy.\"facter.bluetooth\"" = {
         "test: declare module" = {
-          expr = config.flake.biapy.nixos ? "facter.bluetooth";
+          expr = config.flake.biapy ? "facter.bluetooth";
           expected = true;
         };
       };
@@ -169,7 +169,7 @@ in
       containsPackage = name: packages: any (pkg: getName pkg == name) packages;
     in
     {
-      nix-unit.tests."biapy.nixos.facter.bluetooth" = {
+      nix-unit.tests."biapy.facter.bluetooth" = {
         without-bluetooth-hardware =
           let
             sut = nixosWithModule {

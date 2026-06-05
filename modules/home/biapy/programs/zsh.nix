@@ -26,11 +26,11 @@ let
       inherit (lib.modules) mkIf mkDefault;
       inherit (lib.options) mkEnableOption;
 
-      cfg = config.biapy.home.programs.zsh;
+      cfg = config.biapy.programs.zsh;
     in
     {
       options = {
-        biapy.home.programs.zsh = {
+        biapy.programs.zsh = {
           enable = mkEnableOption "command-line UX enhancements";
         };
       };
@@ -72,12 +72,12 @@ let
 in
 {
   flake = {
-    biapy.home."programs.zsh" = module;
+    biapy."programs.zsh" = module;
 
     tests = {
-      "biapy.home.\"programs.zsh\"" = {
+      "biapy.\"programs.zsh\"" = {
         "test: declare module" = {
-          expr = config.flake.biapy.home ? "programs.zsh";
+          expr = config.flake.biapy ? "programs.zsh";
           expected = true;
         };
       };

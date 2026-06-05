@@ -40,12 +40,12 @@ let
       inherit (lib.modules) mkIf mkDefault;
       inherit (lib.options) mkEnableOption;
 
-      cfg = config.biapy.home.programs.skim;
+      cfg = config.biapy.programs.skim;
 
     in
     {
       options = {
-        biapy.home.programs.skim = {
+        biapy.programs.skim = {
           enable = mkEnableOption "skim";
         };
       };
@@ -137,12 +137,12 @@ let
 in
 {
   flake = {
-    biapy.home."programs.skim" = module;
+    biapy."programs.skim" = module;
 
     tests = {
-      "biapy.home.\"programs.skim\"" = {
+      "biapy.\"programs.skim\"" = {
         "test: declare module" = {
-          expr = config.flake.biapy.home ? "programs.skim";
+          expr = config.flake.biapy ? "programs.skim";
           expected = true;
         };
       };
@@ -185,10 +185,10 @@ in
         };
     in
     {
-      nix-unit.tests."biapy.home.programs.skim" = {
+      nix-unit.tests."biapy.programs.skim" = {
         default =
           let
-            sut = homeManagerWithModule { biapy.home.programs.skim.enable = true; };
+            sut = homeManagerWithModule { biapy.programs.skim.enable = true; };
           in
           {
             "test: skim is enabled" = {

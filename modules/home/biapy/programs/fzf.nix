@@ -39,12 +39,12 @@ let
       inherit (lib.modules) mkIf mkDefault;
       inherit (lib.options) mkEnableOption;
 
-      cfg = config.biapy.home.programs.fzf;
+      cfg = config.biapy.programs.fzf;
 
     in
     {
       options = {
-        biapy.home.programs.fzf = {
+        biapy.programs.fzf = {
           enable = mkEnableOption "fzf";
         };
       };
@@ -84,12 +84,12 @@ let
 in
 {
   flake = {
-    biapy.home."programs.fzf" = module;
+    biapy."programs.fzf" = module;
 
     tests = {
-      "biapy.home.\"programs.fzf\"" = {
+      "biapy.\"programs.fzf\"" = {
         "test: declare module" = {
-          expr = config.flake.biapy.home ? "programs.fzf";
+          expr = config.flake.biapy ? "programs.fzf";
           expected = true;
         };
       };
