@@ -3,7 +3,7 @@
 {
   description = "Dendritic NixOS and Home Manager modules for flake-file and flake-parts.";
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } { imports = [ ./modules ]; };
 
   inputs = {
     devshell.url = "github:numtide/devshell";

@@ -53,8 +53,8 @@ in
           {
             name = "nix-unit-tests";
             help = "run nix-unit tests";
-            command = "${getExe pkgs.nix-unit} --flake '.#tests'";
-            category = "tests";
+            command = ''${getExe pkgs.nix-unit} --flake '.#tests' "''${@}"'';
+            category = "tests"; 
           }
         ];
       };

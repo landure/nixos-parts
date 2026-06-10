@@ -31,7 +31,6 @@ in
       flake-file.url = mkDefault "github:vic/flake-file";
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
       nixpkgs-lib.follows = "nixpkgs";
-
     };
   };
 
@@ -42,6 +41,9 @@ in
     # enable inside-flake and say goodbye to bootstrap
     (inputs.flake-file.flakeModules.dendritic or { })
     (inputs.flake-file.flakeModules.nix-auto-follow or { })
+    (inputs.import-tree ./flake)
+    ./nixos
+    ./home
   ];
 
   systems = [
