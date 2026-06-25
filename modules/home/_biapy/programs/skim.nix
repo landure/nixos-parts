@@ -134,62 +134,64 @@ in
     ];
   };
 
-  nix-unit.tests."biapy.programs.skim" = let
+  nix-unit.tests."biapy.programs.skim" =
+    let
       inherit (lib) any getName;
 
       containsPackage = name: packages: any (pkg: getName pkg == name) packages;
-    in {
-    default =
-      let
-        sut = {
-          biapy.programs.skim.enable = true;
-        };
-      in
-      {
-        "test: skim is enabled" = {
-          expr = sut.config.programs.skim.enable;
-          expected = true;
-        };
+    in
+    {
+      default =
+        let
+          sut = {
+            biapy.programs.skim.enable = true;
+          };
+        in
+        {
+          "test: skim is enabled" = {
+            expr = sut.config.programs.skim.enable;
+            expected = true;
+          };
 
-        "test: fd is enabled" = {
-          expr = sut.config.programs.fd.enable;
-          expected = true;
-        };
+          "test: fd is enabled" = {
+            expr = sut.config.programs.fd.enable;
+            expected = true;
+          };
 
-        "test: bat is enabled" = {
-          expr = sut.config.programs.bat.enable;
-          expected = true;
-        };
+          "test: bat is enabled" = {
+            expr = sut.config.programs.bat.enable;
+            expected = true;
+          };
 
-        "test: ripgrep is enabled" = {
-          expr = sut.config.programs.ripgrep.enable;
-          expected = true;
-        };
+          "test: ripgrep is enabled" = {
+            expr = sut.config.programs.ripgrep.enable;
+            expected = true;
+          };
 
-        "test: custom shell script skf is installed" = {
-          expr = containsPackage "skf" sut.config.home.packages;
-          expected = true;
-        };
+          "test: custom shell script skf is installed" = {
+            expr = containsPackage "skf" sut.config.home.packages;
+            expected = true;
+          };
 
-        "test: custom shell script skrg is installed" = {
-          expr = containsPackage "skrg" sut.config.home.packages;
-          expected = true;
-        };
+          "test: custom shell script skrg is installed" = {
+            expr = containsPackage "skrg" sut.config.home.packages;
+            expected = true;
+          };
 
-        "test: custom shell script skvim is installed" = {
-          expr = containsPackage "skvim" sut.config.home.packages;
-          expected = true;
-        };
+          "test: custom shell script skvim is installed" = {
+            expr = containsPackage "skvim" sut.config.home.packages;
+            expected = true;
+          };
 
-        "test: custom shell script skhx is installed" = {
-          expr = containsPackage "skhx" sut.config.home.packages;
-          expected = true;
-        };
+          "test: custom shell script skhx is installed" = {
+            expr = containsPackage "skhx" sut.config.home.packages;
+            expected = true;
+          };
 
-        "test: custom shell script skvs is installed" = {
-          expr = containsPackage "skvs" sut.config.home.packages;
-          expected = true;
+          "test: custom shell script skvs is installed" = {
+            expr = containsPackage "skvs" sut.config.home.packages;
+            expected = true;
+          };
         };
-      };
-  };
+    };
 }
