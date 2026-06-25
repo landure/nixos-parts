@@ -134,7 +134,11 @@ in
     ];
   };
 
-  nix-unit.tests."biapy.programs.skim" = {
+  nix-unit.tests."biapy.programs.skim" = let
+      inherit (lib) any getName;
+
+      containsPackage = name: packages: any (pkg: getName pkg == name) packages;
+    in {
     default =
       let
         sut = {
