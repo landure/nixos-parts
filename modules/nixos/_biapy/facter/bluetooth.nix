@@ -46,7 +46,7 @@ let
     nixos (
       [
         {
-          imports = [ ./bluetooth.nix];
+          imports = [ ./bluetooth.nix ];
         }
       ]
       ++ (toList configuration)

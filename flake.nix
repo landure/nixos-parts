@@ -3,7 +3,7 @@
 {
   description = "Dendritic NixOS and Home Manager modules for flake-file and flake-parts.";
 
-  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } { imports = [ ./modules ]; };
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
     devshell.url = "github:numtide/devshell";
@@ -30,12 +30,5 @@
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-lib.follows = "nixpkgs";
-    zed = {
-      url = "github:zed-industries/zed";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
   };
 }

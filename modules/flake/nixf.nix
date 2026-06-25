@@ -59,7 +59,7 @@ in
   perSystem =
     { lib, pkgs, ... }:
     let
-      getExe = lib.getExe;
+      inherit (lib.meta) getExe;
     in
     {
       devshells.default = {

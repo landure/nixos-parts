@@ -22,37 +22,26 @@
   ...
 }:
 {
-  imports = [
-    (inputs.flake-parts.flakeModules.modules or { })
-  ];
-
-  flake.modules.nixos = {
-    default = config.flake.modules.nixos.biapy;
-    biapy = (inputs.import-tree ./biapy);
-  };
-
-  flake.nixosModules = config.flake.module.nixos;
-
-  flake.tests = {
-    "modules.nixos" = {
-      "test: declares modules.nixos.biapy" = {
-        expr = config.flake.modules.nixos ? biapy;
-        expected = true;
-      };
-
-      "test: declares modules.nixos.default" = {
-        expr = config.flake.modules.nixos ? default;
-        expected = true;
-      };
+  flake = {
+    modules.nixos = {
+      default = config.flake.modules.nixos.biapy;
+      biapy = inputs.import-tree ./_biapy;
     };
-  };
 
-  perSystem =
-    { inputs', ... }@args:
-    {
-      nix-unit= {
-        inputs = inputs';
-        tests = (import inputs.self.modules.nixos.biapy args).nix-unit.tests;
+    nixosModules.biapy = config.flake.modules.nixos.biapy;
+
+    tests = {
+      "modules.nixos" = {
+        "test: declares modules.nixos.biapy" = {
+          expr = config.flake.modules.nixos ? biapy;
+          expected = true;
         };
+
+        "test: declares modules.nixos.default" = {
+          expr = config.flake.modules.nixos ? default;
+          expected = true;
+        };
+      };
     };
+  };
 }

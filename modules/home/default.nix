@@ -19,17 +19,37 @@
 {
   config,
   inputs,
-  lib,
   ...
 }:
-let
-  inherit (lib) mkDefault;
-in
-{
-  flake.modules.home = {
-    default = config.flake.modules.home.biapy;
-    biapy = import ./biapy;
-  };
 
-  flake.homeModules = config.flake.module.home;
+{
+  flake = {
+    modules.home = {
+      default = config.flake.modules.home.biapy;
+      biapy = inputs.import-tree ./_biapy;
+    };
+
+    homeModules.biapy = config.flake.modules.home.biapy;
+
+    tests = {
+      "modules.home" = {
+        "test: declares modules.home.biapy" = {
+          expr = config.flake.modules.home ? biapy;
+          expected = true;
+        };
+
+        "test: declares modules.home.default" = {
+          expr = config.flake.modules.home ? default;
+          expected = true;
+        };
+      };
+
+      "homeModules.biapy" = {
+        "test: declares flake.homeModules.biapy" = {
+          expr = config.flake.homeModules ? biapy;
+          expected = true;
+        };
+      };
+    };
+  };
 }
