@@ -24,12 +24,15 @@
 
 {
   flake = {
-    modules.home = {
-      default = config.flake.modules.home.biapy;
+    modules.homeManager = {
+      default = config.flake.modules.homeManager.biapy;
       biapy = inputs.import-tree ./_biapy;
     };
 
-    homeModules.biapy = config.flake.modules.home.biapy;
+    homeModules = {
+      biapy = config.flake.modules.homeManager.biapy;
+      default = config.flake.homeModules.biapy;
+    };
 
     tests = {
       "modules.home" = {
