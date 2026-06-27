@@ -33,7 +33,7 @@ in
 
   config = mkIf cfg.enable {
 
-    zsh = {
+    programs.zsh = {
       enable = mkDefault true;
       enableVteIntegration = mkDefault true;
       autosuggestion.enable = mkDefault true;
