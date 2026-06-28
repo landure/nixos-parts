@@ -11,9 +11,15 @@ in
   config = mkIf cfg.enable {
     biapy.presets.system.enable = mkDefault true;
 
-    biapy.boot = {
-      loader.enable = mkDefault true;
-      zswap.enable = mkDefault true;
+    biapy = {
+      boot = {
+        loader.enable = mkDefault true;
+        zswap.enable = mkDefault true;
+      };
+
+      services = {
+        displayManager.enable = mkDefault true;
+      };
     };
   };
 }
