@@ -11,6 +11,8 @@ in
   config = mkIf cfg.enable {
     biapy.networking.ntp.enable = mkDefault true;
 
+    biapy.security.sudo.enable = mkDefault true;
+
     biapy.services.kmscon.enable = mkDefault true;
   };
 }
