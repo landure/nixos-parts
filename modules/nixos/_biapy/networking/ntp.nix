@@ -69,8 +69,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    networking.timeServers =
-      mkDefault ([
+    networking.timeServers = mkDefault (
+      [
         "ntp-p1.obspm.fr"
         "145.238.80.80"
         "ntp.obspm.fr"
@@ -80,7 +80,8 @@ in
         "2.europe.pool.ntp.org"
         "3.europe.pool.ntp.org"
       ]
-      ++ options.networking.timeServers.default);
+      ++ options.networking.timeServers.default
+    );
 
     services = {
       timesyncd.enable = mkDefault ((cfg.service == "timesyncd") && !config.boot.isContainer);
