@@ -28,7 +28,10 @@
       biapy = inputs.import-tree ./_biapy;
     };
 
-    nixosModules.biapy = config.flake.modules.nixos.biapy;
+    nixosModules = {
+      biapy = config.flake.modules.nixos.biapy;
+      default = config.flake.nixosModules.biapy;
+    };
 
     tests = {
       "modules.nixos" = {
