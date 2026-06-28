@@ -59,7 +59,7 @@ in
           "--layout=reverse"
           "--border"
           "--info=inline"
-          ''--preview="${getExe config.programs.bat.package} --style=numbers --color=always --line-range :500 {}''
+          "--preview='${getExe config.programs.bat.package} --style=numbers --color=always --line-range :500 {}'"
           "--preview-window=right:60%:wrap"
         ];
       };
