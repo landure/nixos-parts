@@ -70,7 +70,7 @@ in
 
   config = mkIf cfg.enable {
     networking.timeServers =
-      mkDefault [
+      mkDefault ([
         "ntp-p1.obspm.fr"
         "145.238.80.80"
         "ntp.obspm.fr"
@@ -80,14 +80,14 @@ in
         "2.europe.pool.ntp.org"
         "3.europe.pool.ntp.org"
       ]
-      ++ options.networking.timeServers.default;
+      ++ options.networking.timeServers.default);
 
     services = {
-      timesyncd.enable = mkDefault (cfg.service == "timesyncd") && !config.boot.isContainer;
-      ntp.enable = mkDefault (cfg.service == "ntp") && !config.boot.isContainer;
-      ntpd-rs.enable = mkDefault (cfg.service == "ntpd-rs") && !config.boot.isContainer;
-      openntpd.enable = mkDefault (cfg.service == "openntpd") && !config.boot.isContainer;
-      chrony.enable = mkDefault (cfg.service == "chrony") && !config.boot.isContainer;
+      timesyncd.enable = mkDefault ((cfg.service == "timesyncd") && !config.boot.isContainer);
+      ntp.enable = mkDefault ((cfg.service == "ntp") && !config.boot.isContainer);
+      ntpd-rs.enable = mkDefault ((cfg.service == "ntpd-rs") && !config.boot.isContainer);
+      openntpd.enable = mkDefault ((cfg.service == "openntpd") && !config.boot.isContainer);
+      chrony.enable = mkDefault ((cfg.service == "chrony") && !config.boot.isContainer);
     };
   };
 
