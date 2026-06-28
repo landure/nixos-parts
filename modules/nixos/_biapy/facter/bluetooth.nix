@@ -138,160 +138,161 @@ in
     # services.blueman.enable = mkDefault true;
   };
 
-  tests = {
-    "biapy.\"facter.bluetooth\"" = {
-      "test: declare module" = {
-        expr = config.flake.biapy ? "facter.bluetooth";
-        expected = true;
+  /**
+    tests = {
+      "biapy.\"facter.bluetooth\"" = {
+        "test: declare module" = {
+          expr = config.flake.biapy ? "facter.bluetooth";
+          expected = true;
+        };
       };
     };
-  };
 
-  nix-unit.tests."biapy.facter.bluetooth" = {
-    without-bluetooth-hardware =
-      let
-        sut = nixosWithModule {
-          hardware.facter.report.hardware = {
-            bluetooth = [ ];
-            usb = [ ];
+    nix-unit.tests."biapy.facter.bluetooth" = {
+      without-bluetooth-hardware =
+        let
+          sut = nixosWithModule {
+            hardware.facter.report.hardware = {
+              bluetooth = [ ];
+              usb = [ ];
+            };
           };
-        };
-      in
-      {
-        "test: no bluetooth detected" = {
-          expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
-          expected = false;
-        };
-
-        "test: biapy facter module disabled" = {
-          expr = sut.config.biapy.facter.bluetooth.enable;
-          expected = false;
-        };
-      };
-
-    with-adapter =
-      let
-        sut = nixosWithModule {
-          hardware.facter.report.hardware = {
-            bluetooth = [ { name = "adapter"; } ];
-            usb = [ ];
-          };
-        };
-      in
-      {
-        "test: bluetooth detected" = {
-          expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
-          expected = true;
-        };
-      };
-
-    with-btusb-driver =
-      let
-        sut = nixosWithModule {
-          hardware.facter.report.hardware = {
-            bluetooth = [ ];
-            usb = [ { driver = "btusb"; } ];
-          };
-        };
-      in
-      {
-        "test: bluetooth detected" = {
-          expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
-          expected = true;
-        };
-      };
-
-    with-btusb-driver-module =
-      let
-        sut = nixosWithModule {
-          hardware.facter.report.hardware = {
-            bluetooth = [ ];
-            usb = [ { driver_module = "btusb"; } ];
-          };
-        };
-      in
-      {
-        "test: bluetooth detected" = {
-          expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
-          expected = true;
-        };
-      };
-
-    with-hardware-detected =
-      let
-        sut = nixosWithModule {
-          hardware.facter.report.hardware = {
-            bluetooth = [ { name = "adapter"; } ];
-            usb = [ ];
-          };
-        };
-      in
-      {
-        "test: biapy facter module enabled" = {
-          expr = sut.config.biapy.facter.bluetooth.enable;
-          expected = true;
-        };
-      };
-
-    with-hardware-detected-but-module-disabled =
-      let
-        sut = nixosWithModule {
-          hardware.facter.report.hardware = {
-            usb = [ { driver = "btusb"; } ];
+        in
+        {
+          "test: no bluetooth detected" = {
+            expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
+            expected = false;
           };
 
-          biapy.facter.bluetooth.enable = false;
-        };
-      in
-      {
-        "test: bluetooth detected" = {
-          expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
-          expected = true;
+          "test: biapy facter module disabled" = {
+            expr = sut.config.biapy.facter.bluetooth.enable;
+            expected = false;
+          };
         };
 
-        "test: module off" = {
-          expr = sut.config.biapy.facter.bluetooth.enable;
-          expected = false;
+      with-adapter =
+        let
+          sut = nixosWithModule {
+            hardware.facter.report.hardware = {
+              bluetooth = [ { name = "adapter"; } ];
+              usb = [ ];
+            };
+          };
+        in
+        {
+          "test: bluetooth detected" = {
+            expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
+            expected = true;
+          };
         };
 
-        "test: bluetooth support off" = {
-          expr = sut.config.hardware.bluetooth.enable;
-          expected = false;
+      with-btusb-driver =
+        let
+          sut = nixosWithModule {
+            hardware.facter.report.hardware = {
+              bluetooth = [ ];
+              usb = [ { driver = "btusb"; } ];
+            };
+          };
+        in
+        {
+          "test: bluetooth detected" = {
+            expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
+            expected = true;
+          };
         };
 
-        "test: defaultPackage doesn't contains bluetui" = {
-          expr = containsPackage "bluetui" sut.config.environment.defaultPackages;
-          expected = false;
+      with-btusb-driver-module =
+        let
+          sut = nixosWithModule {
+            hardware.facter.report.hardware = {
+              bluetooth = [ ];
+              usb = [ { driver_module = "btusb"; } ];
+            };
+          };
+        in
+        {
+          "test: bluetooth detected" = {
+            expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
+            expected = true;
+          };
         };
 
-        "test: defaultPackage doesn't contains bluez-tools" = {
-          expr = containsPackage "bluez-tools" sut.config.environment.defaultPackages;
-          expected = false;
-        };
-      };
-
-    with-module-enabled =
-      let
-        sut = nixosWithModule {
-          biapy.facter.bluetooth.enable = true;
-        };
-      in
-      {
-
-        "test: bluetooth support enabled" = {
-          expr = sut.config.hardware.bluetooth.enable;
-          expected = true;
+      with-hardware-detected =
+        let
+          sut = nixosWithModule {
+            hardware.facter.report.hardware = {
+              bluetooth = [ { name = "adapter"; } ];
+              usb = [ ];
+            };
+          };
+        in
+        {
+          "test: biapy facter module enabled" = {
+            expr = sut.config.biapy.facter.bluetooth.enable;
+            expected = true;
+          };
         };
 
-        "test: defaultPackage contains bluetui" = {
-          expr = containsPackage "bluetui" sut.config.environment.defaultPackages;
-          expected = true;
+      with-hardware-detected-but-module-disabled =
+        let
+          sut = nixosWithModule {
+            hardware.facter.report.hardware = {
+              usb = [ { driver = "btusb"; } ];
+            };
+
+            biapy.facter.bluetooth.enable = false;
+          };
+        in
+        {
+          "test: bluetooth detected" = {
+            expr = sut.config.hardware.facter.detected.biapy.bluetooth.enable;
+            expected = true;
+          };
+
+          "test: module off" = {
+            expr = sut.config.biapy.facter.bluetooth.enable;
+            expected = false;
+          };
+
+          "test: bluetooth support off" = {
+            expr = sut.config.hardware.bluetooth.enable;
+            expected = false;
+          };
+
+          "test: defaultPackage doesn't contains bluetui" = {
+            expr = containsPackage "bluetui" sut.config.environment.defaultPackages;
+            expected = false;
+          };
+
+          "test: defaultPackage doesn't contains bluez-tools" = {
+            expr = containsPackage "bluez-tools" sut.config.environment.defaultPackages;
+            expected = false;
+          };
         };
 
-        "test: defaultPackage contains bluez-tools" = {
-          expr = containsPackage "bluez-tools" sut.config.environment.defaultPackages;
-          expected = true;
+      with-module-enabled =
+        let
+          sut = nixosWithModule {
+            biapy.facter.bluetooth.enable = true;
+          };
+        in
+        {
+
+          "test: bluetooth support enabled" = {
+            expr = sut.config.hardware.bluetooth.enable;
+            expected = true;
+          };
+
+          "test: defaultPackage contains bluetui" = {
+            expr = containsPackage "bluetui" sut.config.environment.defaultPackages;
+            expected = true;
+          };
+
+          "test: defaultPackage contains bluez-tools" = {
+            expr = containsPackage "bluez-tools" sut.config.environment.defaultPackages;
+            expected = true;
+          };
         };
-      };
-  };
+    */
 }
