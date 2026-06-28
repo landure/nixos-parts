@@ -19,6 +19,7 @@ in
 
       services = {
         displayManager.enable = mkDefault true;
+        udisks2.enable = mkDefault true;
       };
     };
   };
