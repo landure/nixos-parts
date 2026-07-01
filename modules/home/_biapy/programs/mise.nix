@@ -22,10 +22,13 @@
   - [Mise-en-place & Fnox : mon setup de gestion multi-projets @ Rémi Tech Notes :fr:](https://www.vrchr.fr/posts/2026/04/28/mise-en-place-fnox-setup-multi-projets/).
   - [Mise + Krew : vos plugins kubectl en mode déclaratif @ Une Tasse de Café :fr:](https://une-tasse-de.cafe/expresso/mise-krew/).
   - [Mise : un multi-outil pour votre poste de Dev & Ops @ Devoxx France's YouTube :fr:](https://www.youtube.com/watch?v=ZEtc6WnreI0).
+  - [mise : le gestionnaire de versions polyvalent et rapide @ DevSecOps :fr:](https://blog.stephane-robert.info/docs/outils/systeme/mise/).
+  - [Best Practices for Using Mise to Maintain Project Structure and Manage Environment Variables @ combray's blog](https://combray.prose.sh/2025-11-26-mise-project-structure-env-vars).
 */
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -42,6 +45,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.shellAliases = {
+      mx = mkDefault "mise exec";
+      mr = mkDefault "mise run";
+    };
+
     programs = {
       mise = {
         enable = mkDefault true;
@@ -50,6 +58,13 @@ in
           settings = {
             experimental = mkDefault true;
             verbose = mkDefault false;
+
+            # Aqua backend SecOps
+            aqua = {
+              cosign = true; # Cosign checks (sigstore signatures)
+              slsa = true; # SLSA checks (builds provenance)
+              github_attestations = true; # GitHub Actions attestations
+            };
           };
 
           plugins = {
