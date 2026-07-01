@@ -8,6 +8,10 @@
   - ([mise-en-place homepage](https://mise.jdx.dev/))
     ([mise @ GitHub](https://github.com/jdx/mise)).
 
+  ## Third-party tools
+
+  - [mise VS Code homepage](https://hverlin.github.io/mise-vscode/).
+
   ## 📝 Documentation
 
   ### 🏠 Home Manager
