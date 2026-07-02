@@ -9,12 +9,15 @@ in
   options.biapy.presets.console.enable = mkEnableOption "Console preset";
 
   config = mkIf cfg.enable {
-    biapy.programs.mise.enable = mkDefault true;
-    biapy.programs.fzf.enable = mkDefault true;
-    biapy.programs.eza.enable = mkDefault true;
-    biapy.programs.ssh.enable = mkDefault true;
-    biapy.programs.skim.enable = mkDefault true;
-    biapy.programs.zed.enable = mkDefault true;
-    biapy.programs.zsh.enable = mkDefault true;
+    biapy.programs = {
+      eza.enable = mkDefault true;
+      fzf.enable = mkDefault true;
+      mcfly.enable = mkDefault true;
+      mise.enable = mkDefault true;
+      skim.enable = mkDefault true;
+      ssh.enable = mkDefault true;
+      zellij.enable = mkDefault true;
+      zsh.enable = mkDefault true;
+    };
   };
 }
