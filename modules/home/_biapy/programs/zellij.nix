@@ -30,14 +30,12 @@ let
 in
 {
   options = {
-    biapy.programs.zellij.enable = {
-      enable = mkEnableOption "Zellij terminal multiplexer";
-    };
+    biapy.programs.zellij.enable = mkEnableOption "Zellij terminal multiplexer";
   };
 
   config = mkIf cfg.enable {
     # Zellij is a terminal multiplexer
-    zellij = {
+    programs.zellij = {
       enable = mkDefault true;
 
       attachExistingSession = mkDefault false;
