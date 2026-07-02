@@ -31,9 +31,7 @@ let
 in
 {
   options = {
-    biapy.programs.mcfly.enable = {
-      enable = mkEnableOption "McFly shell history";
-    };
+    biapy.programs.mcfly.enable = mkEnableOption "McFly shell history";
   };
 
   config = mkIf cfg.enable {
