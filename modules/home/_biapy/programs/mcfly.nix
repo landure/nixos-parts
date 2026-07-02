@@ -1,6 +1,12 @@
 /**
   # McFly
 
+  McFly replaces your default ctrl-r shell history search with an
+  intelligent search engine that takes into account your working
+  directory and the context of recently executed commands.
+  McFly's suggestions are prioritized in real time with a small
+  neural network.
+
   ## 🛠️ Tech Stack
 
   - [McFly @ GitHub](https://github.com/cantino/mcfly).
@@ -52,5 +58,14 @@ in
       # Settings written to ~/.config/mcfly/config.toml.
       # settings = '''';
     };
+
+    home.sessionVariables = {
+      # MCFLY_RESULTS = "50";
+      # MCFLY_DELETE_WITHOUT_CONFIRM = "true";
+      # MCFLY_DISABLE_MENU = "true";
+      # MCFLY_RESULTS_SORT = "LAST_RUN";
+      MCFLY_PROMPT = "❯";
+    };
+
   };
 }
