@@ -17,11 +17,9 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
-  inherit (lib.meta) getExe getExe';
   inherit (lib.modules) mkIf mkDefault;
   inherit (lib.options) mkEnableOption;
 
