@@ -21,7 +21,7 @@
 
   ### 🎨 Stylix
 
-  - [Zed](https://nix-community.github.io/stylix/options/modules/zed.html).
+  - [programs.zed-editor @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.zed-editor.).
 
   ## 🙇 Acknowledgements
 
@@ -35,12 +35,12 @@ let
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
-  cfg = config.biapy.programs.zed;
+  cfg = config.biapy.programs.zed-editor;
 
 in
 {
   options = {
-    biapy.programs.zed.enable = mkEnableOption "Zed editor";
+    biapy.programs.zed-editor.enable = mkEnableOption "Zed editor";
   };
 
   config = mkIf cfg.enable {
