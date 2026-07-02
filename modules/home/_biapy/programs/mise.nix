@@ -8,7 +8,8 @@
   - ([mise-en-place homepage](https://mise.jdx.dev/))
     ([mise @ GitHub](https://github.com/jdx/mise)).
   - [fnox homepage](https://fnox.jdx.dev/)
-    ([fnox @ GitHub](https://github.com/jdx/fnox)).
+    ([fnox @ GitHub](https://github.com/jdx/fnox),
+    [fnox-flake @ GitHub](https://github.com/deepwatrcreatur/fnox-flake)).
 
   ### Mise plugins
 
@@ -84,14 +85,14 @@ in
           plugins = {
             nix = mkDefault "https://github.com/jbadeau/mise-nix";
             php = mkDefault "https://github.com/verzly/mise-php#latest";
-            fnox-env = mkDefault "https://github.com/jdx/mise-env-fnox";
+            # fnox-env = mkDefault "https://github.com/jdx/mise-env-fnox";
           };
 
           env = {
             _ = {
-              fnox-env = {
-                tools = mkDefault true;
-              };
+              # fnox-env = {
+              #   tools = mkDefault true;
+              # };
               php = {
                 pie_extensions = mkDefault "xdebug/xdebug";
               };
