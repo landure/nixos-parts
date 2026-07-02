@@ -15,10 +15,10 @@
 
   ### 🏠 Home Manager
 
-  - [programs.fzf](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.fzf.enable).
-  - [programs.fd](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.fd.enable).
-  - [programs.bat](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bat.enable).
-  - [programs.ripgrep](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.ripgrep.enable).
+  - [programs.fzf @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.fzf.).
+  - [programs.fd @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.fd.).
+  - [programs.bat @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.bat.).
+  - [programs.ripgrep @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.ripgrep.).
 
   ## 🙇 Acknowledgements
 
@@ -51,10 +51,6 @@ in
 
       fzf = {
         enable = mkDefault true;
-
-        # Shell history and completion using fzf in OS.
-        keybindings = mkDefault true;
-        fuzzyCompletion = mkDefault true;
 
         defaultCommand = "${getExe config.programs.fd.package} --type 'f' --hidden --follow --exclude '.git'";
         defaultOptions = [
