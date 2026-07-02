@@ -37,7 +37,7 @@ in
       enable = mkDefault true;
 
       dotDir = "${config.xdg.configHome}/zsh";
-  
+
       enableCompletion = mkDefault true;
       enableVteIntegration = mkDefault true;
       autosuggestion.enable = mkDefault true;
