@@ -37,7 +37,7 @@ in
   config = mkIf cfg.enable {
     # McFly replaces your default ctrl-r shell history search with an
     # intelligent search engine
-    mcfly = {
+    programs.mcfly = {
       enable = mkDefault true;
 
       # enable fuzzy searching. 0 is off; higher numbers weight toward shorter matches.
