@@ -7,8 +7,16 @@
 
   - ([mise-en-place homepage](https://mise.jdx.dev/))
     ([mise @ GitHub](https://github.com/jdx/mise)).
+  - [fnox homepage](https://fnox.jdx.dev/)
+    ([fnox @ GitHub](https://github.com/jdx/fnox)).
 
-  ## Third-party tools
+  ### Mise plugins
+
+  - [verzly/mise-php @ GitHub](https://github.com/verzly/mise-php).
+  - [mise-nix @ GitHub](https://github.com/jbadeau/mise-nix).
+  - [mise-env-fnox @ GitHub](https://github.com/jdx/mise-env-fnox).
+
+  ### Third-party tools
 
   - [mise VS Code homepage](https://hverlin.github.io/mise-vscode/).
 
@@ -62,6 +70,9 @@ in
             experimental = mkDefault true;
             verbose = mkDefault false;
 
+            # prevent most supply chain attacks
+            minimum_release_age = mkDefault "7d";
+
             # Aqua backend SecOps
             aqua = {
               cosign = true; # Cosign checks (sigstore signatures)
@@ -72,7 +83,25 @@ in
 
           plugins = {
             nix = mkDefault "https://github.com/jbadeau/mise-nix";
+            php = mkDefault "https://github.com/verzly/mise-php#latest";
             fnox-env = mkDefault "https://github.com/jdx/mise-env-fnox";
+          };
+
+          env = {
+            _ = {
+              fnox-env = {
+                tools = mkDefault true;
+              };
+              php = {
+                pie_extensions = mkDefault "xdebug/xdebug";
+              };
+            };
+          };
+          tools = {
+            trivy = {
+              # trivy updates are time-sensitive, use a shorter window
+              minimum_release_age = mkDefault "1d";
+            };
           };
         };
       };
