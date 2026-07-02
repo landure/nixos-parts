@@ -97,12 +97,12 @@ in
               };
             };
           };
-          tools = {
-            trivy = {
-              # trivy updates are time-sensitive, use a shorter window
-              minimum_release_age = mkDefault "1d";
-            };
-          };
+          # tools = {
+          #   trivy = {
+          #     # trivy updates are time-sensitive, use a shorter window
+          #     minimum_release_age = mkDefault "1d";
+          #   };
+          # };
         };
       };
     };
