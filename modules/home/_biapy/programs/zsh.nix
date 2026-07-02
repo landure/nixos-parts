@@ -11,7 +11,7 @@
 
   ### 🏠 Home Manager
 
-  - [programs.zsh](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.zsh.enable).
+  - [programs.zsh @ NixOS reference](https://search.nixos.org/options?query=programs.zsh&source=home_manager).
 
   ## 🙇 Acknowledgements
 
@@ -35,6 +35,7 @@ in
 
     programs.zsh = {
       enable = mkDefault true;
+      enableCompletion = mkDefault true;
       enableVteIntegration = mkDefault true;
       autosuggestion.enable = mkDefault true;
       oh-my-zsh.enable = mkDefault true;
