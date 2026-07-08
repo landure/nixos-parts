@@ -72,7 +72,7 @@ in
           ${getExe config.programs.jq.package} ".[0].HostConfig | {Binds, Mounts}" |
           ${getExe config.programs.bat.package} --language="json"
         '')
-    
+
         (pkgs.writeShellScriptBin "dnip" ''
           # Output IP address ranges of each docker network.
           if ! type -f 'docker' >'/dev/null'; then
