@@ -47,10 +47,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    biapy.programs.bat.enable = mkDefault true;
 
     programs = {
       fd.enable = mkDefault true;
-      bat.enable = mkDefault true;
       ripgrep.enable = mkDefault true;
 
       skim = {
@@ -72,7 +72,7 @@ in
         fileWidgetCommand = mkDefault "${getExe config.programs.fd.package} --type 'f' --hidden --follow --exclude '.git'";
         fileWidgetOptions = mkDefault [
           "--preview='${getExe config.programs.bat.package} --style=numbers --color=always --line-range :500 {}'"
-          "--preview-window='right:60%:wrap'"
+          "--preview-window='right:60%:nowrap'"
         ];
 
         # CTRL-R
@@ -83,55 +83,17 @@ in
       };
     };
 
-    home.packages = [
-      (pkgs.writeShellScriptBin "skf" ''
-        # A comfortable UI + preview
-        ${getExe config.programs.skim.package} --ansi --prompt='Files> ' \
-          --preview='${getExe config.programs.bat.package} --style=numbers --color=always --line-range :500 {}' \
-          --preview-window='right:60%:wrap'
-      '')
-
-      (pkgs.writeShellScriptBin "skrg" ''
-        # Live grep
-        ${getExe config.programs.skim.package} --ansi --delimiter ':' --interactive \
-          --cmd='${getExe config.programs.ripgrep.package} --line-number --no-heading --color=always {q}' \
-          --preview='${getExe config.programs.bat.package} --style=numbers --color=always --highlight-line {2} {1}' \
-          --preview-window='right:70%:wrap' \
-          --cmd-query="''${@}"
-      '')
-
-      (pkgs.writeShellScriptBin "skvim" ''
-        # Open with Neovim.
-        # Should use xargs.
-        # see https://ivergara.github.io/Supercharging-shell.html
-        ${getExe config.programs.skim.package} --ansi \
-        --bind "ctrl-p:toggle-preview" \
-        --preview="${getExe config.programs.bat.package} --style=numbers --color=always '{}'" \
-        --preview-window='right:60%:hidden' |
-        xargs -I '{}' ${getExe config.programs.neovim.package} {}
-      '')
-
-      (pkgs.writeShellScriptBin "skhx" ''
-        # Open with Helix.
-        # see https://ivergara.github.io/Supercharging-shell.html
-        ${getExe config.programs.skim.package} --ansi \
-        --bind "ctrl-p:toggle-preview" \
-        --preview="${getExe config.programs.bat.package} --style=numbers --color=always '{}'" \
-        --preview-window='right:60%:hidden' |
-        xargs -I '{}' ${getExe config.programs.helix.package} {}
-      '')
-
-      (pkgs.writeShellScriptBin "skvs" ''
-        # Open with VS code.
-        # see https://ivergara.github.io/Supercharging-shell.html
-        set -o pipefail
-        ${getExe config.programs.skim.package} --ansi \
-        --bind "ctrl-p:toggle-preview" \
-        --preview="${getExe config.programs.bat.package} --color=always {}" \
-        --preview-window='right:60%:hidden' |
-        xargs -I '{}' ${getExe config.programs.vscode.package} :w {}
-      '')
-    ];
+    home.packages =
+      with pkgs.local;
+      [
+        skf
+        skrg
+        skrat
+      ]
+      // (optional config.program.neovim.enable pkgs.local.skvim)
+      // (optional config.program.helix.enable pkgs.local.skhx)
+      // (optional config.program.vscode.enable pkgs.local.skode)
+      // (optional config.program.vscodium.enable pkgs.local.skodium);
   };
 
   /**
