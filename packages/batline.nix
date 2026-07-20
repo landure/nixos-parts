@@ -27,7 +27,7 @@ writeShellApplication {
     auto_range=0
 
     # Parse arguments using while and shift
-    while [[ "''${1}" =~ ^- && "''${1}" != '--' ]]; do
+    while [[ "''${#}" -gt 0 && "''${1}" =~ ^- && "''${1}" != '--' ]]; do
       option="''${1}"
       shift
       

@@ -32,6 +32,7 @@
   ...
 }:
 let
+  inherit (lib.lists) optional;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkDefault;
   inherit (lib.options) mkEnableOption;
@@ -90,10 +91,10 @@ in
         skrg
         skrat
       ]
-      // (optional config.program.neovim.enable pkgs.local.skvim)
-      // (optional config.program.helix.enable pkgs.local.skhx)
-      // (optional config.program.vscode.enable pkgs.local.skode)
-      // (optional config.program.vscodium.enable pkgs.local.skodium);
+      ++ (optional config.programs.neovim.enable pkgs.local.skvim)
+      ++ (optional config.programs.helix.enable pkgs.local.skhx)
+      ++ (optional config.programs.vscode.enable pkgs.local.skode)
+      ++ (optional config.programs.vscodium.enable pkgs.local.skodium);
   };
 
   /**

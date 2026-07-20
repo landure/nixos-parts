@@ -31,14 +31,14 @@ writeShellApplication {
     sk_args=()
 
     # Parse arguments using while and shift
-    while [[ "''${1}" =~ ^- && "''${1}" != '--' ]]; do
+    while [[ "''${#}" -gt 0 && "''${1}" =~ ^- && "''${1}" != '--' ]]; do
       option="''${1}"
       shift
       
       sk_args+=("''${option}")
     done
 
-    ${skCmd} --ansi --delimiter':' --interactive \
+    ${skCmd} --ansi --delimiter=':' --interactive \
     	--no-height --exit-0 --select-1 \
     	--cmd="''${rg_command[*]} {q}" \
     	--skip-to-pattern='[^/]*:' \
