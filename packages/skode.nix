@@ -24,7 +24,9 @@ let
 in
 writeShellApplication {
   name = "skode";
-  meta = {license = lib.licenses.unfree;};
+  meta = {
+    license = lib.licenses.unfree;
+  };
   runtimeInputs = [
     skf
     vscode

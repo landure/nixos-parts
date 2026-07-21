@@ -91,10 +91,34 @@ in
         skrg
         skrat
       ]
-      ++ (optionals config.programs.neovim.enable (with pkgs.local; [skvim skrvim]))
-      ++ (optionals config.programs.helix.enable (with pkgs.local; [skhx skrhx]))
-      ++ (optionals config.programs.vscode.enable (with pkgs.local; [skode skrode]))
-      ++ (optionals config.programs.vscodium.enable (with pkgs.local; [skodium skrodium]))
+      ++ (optionals config.programs.neovim.enable (
+        with pkgs.local;
+        [
+          skvim
+          skrvim
+        ]
+      ))
+      ++ (optionals config.programs.helix.enable (
+        with pkgs.local;
+        [
+          skhx
+          skrhx
+        ]
+      ))
+      ++ (optionals config.programs.vscode.enable (
+        with pkgs.local;
+        [
+          skode
+          skrode
+        ]
+      ))
+      ++ (optionals config.programs.vscodium.enable (
+        with pkgs.local;
+        [
+          skodium
+          skrodium
+        ]
+      ));
   };
 
   /**

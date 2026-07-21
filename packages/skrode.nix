@@ -24,7 +24,9 @@ let
 in
 writeShellApplication {
   name = "skrode";
-  meta = {license = lib.licenses.unfree;};
+  meta = {
+    license = lib.licenses.unfree;
+  };
   runtimeInputs = [
     skrg
     vscode
