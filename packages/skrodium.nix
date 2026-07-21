@@ -23,7 +23,7 @@ let
   xargsCmd = getExe' uutils-findutils "xargs";
 in
 writeShellApplication {
-  name = "skrgodium";
+  name = "skrodium";
   runtimeInputs = [
     skrg
     vscodium
