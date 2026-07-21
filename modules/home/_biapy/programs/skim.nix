@@ -60,8 +60,8 @@ in
         defaultCommand = config.programs.skim.fileWidgetCommand;
 
         defaultOptions = [
-          "--height 40%"
-          "--prompt='⟫'"
+          # "--height 40%"
+          "--prompt='❯ '"
         ];
         # ALT-C
         changeDirWidgetCommand = mkDefault "${getExe config.programs.fd.package} --type 'd' --hidden --follow --exclude '.git'";

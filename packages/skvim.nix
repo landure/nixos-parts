@@ -33,6 +33,6 @@ writeShellApplication {
     # Open with Neovim.
     # see https://ivergara.github.io/Supercharging-shell.html
     ${skfCmd} --no-multi "''${@}" |
-    	${xargsCmd} --no-run-if-empty ${vimCmd}
+    	exec ${xargsCmd} --no-run-if-empty ${vimCmd}
   '';
 }

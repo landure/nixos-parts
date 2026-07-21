@@ -35,16 +35,18 @@ writeShellApplication {
       option="''${1}"
       shift
       
-      sk_args+=("''${option}")
+      if [[ "''${option}" != '--' ]]; then
+        sk_args+=("''${option}")
+      fi
     done
 
-    ${skCmd} --ansi --delimiter=':' --interactive \
-    	--no-height --prompt='rg❯ ' \
-    	--cmd="''${rg_command[*]} {q}" \
+    exec ${skCmd} --ansi --delimiter=':' --interactive --no-height \
     	--skip-to-pattern='[^/]*:' \
     	--preview='${testCmd} -e {1} && ${batlineCmd} --style=numbers --color=always --auto-range {1..2}'  \
     	--preview-window='right:60%:nowrap' \
-    	"''${sk_args[@]}" \
-    	--cmd-query="''${*}"
+      --cmd-prompt='rg❯ ' \
+      --cmd="''${rg_command[*]} {q}" \
+    	--cmd-query="''${*}" \
+    	"''${sk_args[@]}"
   '';
 }

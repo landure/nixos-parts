@@ -36,6 +36,6 @@ writeShellApplication {
     # Open with Visual Studio Code
     # see https://ivergara.github.io/Supercharging-shell.html
     ${skfCmd} --no-multi "''${@}" |
-    	${xargsCmd} --no-run-if-empty ${codeCmd}
+    	exec ${xargsCmd} --no-run-if-empty ${codeCmd}
   '';
 }
