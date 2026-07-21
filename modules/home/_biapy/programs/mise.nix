@@ -7,6 +7,8 @@
 
   - ([mise-en-place homepage](https://mise.jdx.dev/))
     ([mise @ GitHub](https://github.com/jdx/mise)).
+  - [uv](https://docs.astral.sh/uv/)
+    ([uv @ GitHub](https://github.com/astral-sh/uv)).
   - [fnox homepage](https://fnox.jdx.dev/)
     ([fnox @ GitHub](https://github.com/jdx/fnox),
     [fnox-flake @ GitHub](https://github.com/deepwatrcreatur/fnox-flake)).
@@ -30,7 +32,7 @@
   ## 🙇 Acknowledgements
 
   - [La veille des Ours n°31 @ Bearstech's LinkedIn :fr:](https://www.linkedin.com/pulse/la-veille-des-ours-n31-bearstech-gbmgf/).
-  - [Adieu `direnv`, Bonjour `mise` @ Julien Wittouck](https://codeka.io/2025/12/19/adieu-direnv-bonjour-mise/).
+  - [Adieu `direnv`, Bonjour `mise` @ Julien Wittouck :fr:](https://codeka.io/2025/12/19/adieu-direnv-bonjour-mise/).
   - [Mon environnement de développement avec mise et chez-moi @ À l'encre rouillée :fr:](https://david.drugeon-hamon.bzh/blog/2026/02/env-dev-avec-mise-et-chezmoi/).
   - [Mise-en-place & Fnox : mon setup de gestion multi-projets @ Rémi Tech Notes :fr:](https://www.vrchr.fr/posts/2026/04/28/mise-en-place-fnox-setup-multi-projets/).
   - [Mise + Krew : vos plugins kubectl en mode déclaratif @ Une Tasse de Café :fr:](https://une-tasse-de.cafe/expresso/mise-krew/).
@@ -63,11 +65,10 @@ in
       mr = mkDefault "mise run";
     };
 
-    home.packages = with pkgs; [
-      pipx
-    ];
-
     programs = {
+      # Enable uv to provide uvx for pipx backend.
+      uv.enable = mkDefault true;
+
       mise = {
         enable = mkDefault true;
 
@@ -81,10 +82,12 @@ in
 
             # Aqua backend SecOps
             aqua = {
-              cosign = true; # Cosign checks (sigstore signatures)
-              slsa = true; # SLSA checks (builds provenance)
-              github_attestations = true; # GitHub Actions attestations
+              cosign = mkDefault true; # Cosign checks (sigstore signatures)
+              slsa = mkDefault true; # SLSA checks (builds provenance)
+              github_attestations = mkDefault true; # GitHub Actions attestations
             };
+
+            pipx.uvx = mkDefault true;
           };
 
           plugins = {
