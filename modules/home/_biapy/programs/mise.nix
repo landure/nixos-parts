@@ -41,6 +41,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -61,6 +62,10 @@ in
       mx = mkDefault "mise exec";
       mr = mkDefault "mise run";
     };
+
+    home.packages = with pkgs; [
+      pipx
+    ];
 
     programs = {
       mise = {
