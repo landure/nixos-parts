@@ -39,7 +39,7 @@ writeShellApplication {
     done
 
     ${skCmd} --ansi --delimiter=':' --interactive \
-    	--no-height --exit-0 --select-1 \
+    	--no-height --prompt='rg❯ ' \
     	--cmd="''${rg_command[*]} {q}" \
     	--skip-to-pattern='[^/]*:' \
     	--preview='${testCmd} -e {1} && ${batlineCmd} --style=numbers --color=always --auto-range {1..2}'  \
