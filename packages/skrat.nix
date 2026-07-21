@@ -21,7 +21,7 @@ writeShellApplication {
   ];
   text = ''
     # Live grep to bat preview
-    ${skrgCmd} --no-multi --output-format='{1..2}' |
+    ${skrgCmd} --no-multi --output-format='{1..2}' "''${@}" |
     	${xargsCmd} --no-run-if-empty ${batlineCmd}
   '';
 }

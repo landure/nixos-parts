@@ -16,23 +16,23 @@
 }:
 let
   inherit (lib.meta) getExe getExe';
-  inherit (local) skf;
+  inherit (local) skrg;
 
-  skfCmd = getExe skf;
+  skrgCmd = getExe skrg;
   hxCmd = getExe helix;
   xargsCmd = getExe' uutils-findutils "xargs";
 in
 writeShellApplication {
-  name = "skhx";
+  name = "skrghx";
   runtimeInputs = [
-    skf
+    skrg
     helix
     uutils-findutils
   ];
   text = ''
     # Open with Helix.
     # see https://ivergara.github.io/Supercharging-shell.html
-    ${skfCmd} --no-multi "''${@}" |
+    ${skrgCmd} --no-multi --output-format='{1..2}' "''${@}" |
     	${xargsCmd} --no-run-if-empty ${hxCmd}
   '';
 }

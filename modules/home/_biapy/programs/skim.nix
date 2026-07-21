@@ -32,7 +32,7 @@
   ...
 }:
 let
-  inherit (lib.lists) optional;
+  inherit (lib.lists) optionals;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkDefault;
   inherit (lib.options) mkEnableOption;
@@ -91,10 +91,10 @@ in
         skrg
         skrat
       ]
-      ++ (optional config.programs.neovim.enable pkgs.local.skvim)
-      ++ (optional config.programs.helix.enable pkgs.local.skhx)
-      ++ (optional config.programs.vscode.enable pkgs.local.skode)
-      ++ (optional config.programs.vscodium.enable pkgs.local.skodium);
+      ++ (optionals config.programs.neovim.enable (with pkgs.local; [skvim skrvim]))
+      ++ (optionals config.programs.helix.enable (with pkgs.local; [skhx skrhx]))
+      ++ (optionals config.programs.vscode.enable (with pkgs.local; [skode skrode]))
+      ++ (optionals config.programs.vscodium.enable (with pkgs.local; [skodium skrodium]))
   };
 
   /**

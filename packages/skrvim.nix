@@ -11,28 +11,28 @@
   writeShellApplication,
   lib,
   local,
-  helix,
+  neovim,
   uutils-findutils,
 }:
 let
   inherit (lib.meta) getExe getExe';
-  inherit (local) skf;
+  inherit (local) skrg;
 
-  skfCmd = getExe skf;
-  hxCmd = getExe helix;
+  skrgCmd = getExe skrg;
+  vimCmd = getExe neovim;
   xargsCmd = getExe' uutils-findutils "xargs";
 in
 writeShellApplication {
-  name = "skhx";
+  name = "skrvim";
   runtimeInputs = [
-    skf
-    helix
+    skrg
+    neovim
     uutils-findutils
   ];
   text = ''
-    # Open with Helix.
+    # Open with Neovim.
     # see https://ivergara.github.io/Supercharging-shell.html
-    ${skfCmd} --no-multi "''${@}" |
-    	${xargsCmd} --no-run-if-empty ${hxCmd}
+    ${skrgCmd} --no-multi --output-format='{1..2}' "''${@}" |
+    	${xargsCmd} --no-run-if-empty ${vimCmd}
   '';
 }

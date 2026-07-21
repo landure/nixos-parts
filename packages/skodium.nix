@@ -23,7 +23,7 @@ let
   xargsCmd = getExe' uutils-findutils "xargs";
 in
 writeShellApplication {
-  name = "skcodium";
+  name = "skodium";
   runtimeInputs = [
     skf
     vscodium
@@ -32,7 +32,7 @@ writeShellApplication {
   text = ''
     # Open with Visual Studio Code
     # see https://ivergara.github.io/Supercharging-shell.html
-    ${skfCmd} --no-multi --output-format='{1..2}' |
+    ${skfCmd} --no-multi "''${@}" |
     	${xargsCmd} --no-run-if-empty ${codeCmd}
   '';
 }
