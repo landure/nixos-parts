@@ -1,0 +1,3 @@
+[tools]
+"nix:nixfmt-rs" = "latest"
+prek = "latest"

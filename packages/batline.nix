@@ -39,8 +39,7 @@ writeShellApplication {
     	args+=("''${option}")
     done
 
-    if [[ "''${1}" == '--' ]]; then
-    	args+=("''${1}")
+    if [[ "''${1:-}" == '--' ]]; then
     	shift
     fi
 

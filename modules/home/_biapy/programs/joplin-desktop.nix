@@ -104,7 +104,7 @@ in
           jsonFormat = pkgs.formats.json { };
 
           newConfig = jsonFormat.generate "joplin-settings.json" (
-            lib.attrsets.filterAttrs (_n: v: (v != null) && (v != "")) (
+            filterAttrs (_n: v: (v != null) && (v != "")) (
               {
                 "sync.target" = syncTargetId;
                 "locale" = "fr_FR";

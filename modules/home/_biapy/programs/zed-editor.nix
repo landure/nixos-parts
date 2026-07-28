@@ -2,6 +2,7 @@
   # Zed editor
 
   ## 🛠️ Tech Stack
+
   - [Zed homepage](https://zed.dev/)
     ([Zed @ GitHub](https://github.com/zed-industries/zed)).
 
@@ -17,11 +18,12 @@
 
   ### 🏠 Home Manager
 
-  - [programs.zed](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.zed-editor.enable).
+  - [programs.zed @ Home Manager Documentation](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.zed-editor.enable).
+  - [programs.zed-editor @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.zed-editor.).
 
   ### 🎨 Stylix
 
-  - [programs.zed-editor @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.zed-editor.).
+  - [Zed @ Stylix](https://nix-community.github.io/stylix/options/modules/zed.html).
 
   ## 🙇 Acknowledgements
 
@@ -29,7 +31,6 @@
   - [Configuring Zed Editor with Nix: A Modern Development Setup @ Nohup](https://nohup.no/zed-editor/).
   - [Configurer votre éditeur Zed sur le bout des doigts @ Le blog de Seboss666 🇫🇷](https://blog.seboss666.info/2026/04/configurer-votre-editeur-zed-sur-le-bout-des-doigts/).
 */
-
 { config, lib, ... }:
 let
   inherit (lib.modules) mkDefault mkIf;

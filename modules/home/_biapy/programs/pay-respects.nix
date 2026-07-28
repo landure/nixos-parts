@@ -1,0 +1,64 @@
+/**
+  # Pay Respects
+
+  Pay Respects suggests a fix to wrong console commands by pressing `F`.
+
+  ## 🛠️ Tech Stack
+
+  - [Pay Respects @ Codeberg](https://codeberg.org/iff/pay-respects).
+
+  ## 📝 Documentation
+
+  ### 🏠 Home Manager
+
+  - [programs.pay-respects @ Home Manager Documentation](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.pay-respects.enable).
+  - [programs.pay-respects @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.pay-respects.).
+*/
+{ config, lib, ... }:
+let
+  inherit (lib.modules) mkIf;
+  inherit (lib.options) mkEnableOption;
+
+  cfg = config.biapy.programs.pay-respects;
+in
+{
+  options = {
+    biapy.programs.pay-respects = {
+      enable = mkEnableOption "mise";
+    };
+  };
+
+  config = mkIf cfg.enable {
+    # pay-respects ease fixing erroneous commands.
+    programs.pay-respects = {
+      enable = true;
+      options = [
+        "--alias"
+        "f"
+      ];
+
+      rules = {
+        cargo = {
+          command = "cargo";
+          match_err = [
+            {
+              pattern = [ "run `cargo init` to initialize a new rust project" ];
+              suggest = [ "cargo init" ];
+            }
+          ];
+        };
+
+        _PR_GENERAL = {
+          match_err = [
+            {
+              pattern = [ "permission denied" ];
+              suggest = [
+                "#[executable(sudo), !cmd_contains(sudo)]\nsudo {{command}}"
+              ];
+            }
+          ];
+        };
+      };
+    };
+  };
+}

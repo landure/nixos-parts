@@ -25,7 +25,6 @@
   ...
 }:
 let
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkDefault;
   inherit (lib.options) mkEnableOption;
 
@@ -34,13 +33,10 @@ let
 in
 {
   options = {
-    biapy.programs.bat = {
-      enable = mkEnableOption "bat";
-    };
+    biapy.programs.bat.enable = mkEnableOption "bat";
   };
 
   config = mkIf cfg.enable {
-
     programs.bat = {
       enable = mkDefault true;
       extraPackages = with pkgs.bat-extras; [
@@ -51,8 +47,6 @@ in
         pkgs.local.batline
       ];
     };
-
-    #home.packages = with pkgs.local; [ batline ]
   };
 
 }

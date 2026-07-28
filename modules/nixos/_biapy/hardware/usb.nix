@@ -12,15 +12,21 @@
   ### ❄️ NixOS
 
   - [hardware.facter @ NixOS reference](https://search.nixos.org/options?query=hardware.facter.).
-  
+
   ## 🙇 Acknowledgements
 
   - [uhubctl - Couper le courant d'un port USB en une commande @ Korben :fr:](https://korben.info/uhubctl-couper-alimentation-ports-usb.html).
 */
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
+  inherit (lib.lists) length;
+  inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
-  inherit (lib.modules) mkDefault mkIf;
 
   cfg = config.biapy.hardware.usb;
 in
@@ -34,7 +40,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.defaultPackages = with pkgs [
+    environment.defaultPackages = with pkgs; [
       usbutils
       cyme
       uhubctl

@@ -9,10 +9,10 @@ in
   options.biapy.presets.system.enable = mkEnableOption "Base system preset";
 
   config = mkIf cfg.enable {
-    biapy.networking.ntp.enable = mkDefault true;
-
-    biapy.security.sudo.enable = mkDefault true;
-
-    biapy.services.kmscon.enable = mkDefault true;
+    biapy = {
+      networking.ntp.enable = mkDefault true;
+      security.sudo.enable = mkDefault true;
+      services.kmscon.enable = mkDefault true;
+    };
   };
 }

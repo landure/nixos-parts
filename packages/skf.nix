@@ -2,14 +2,12 @@
   writeShellApplication,
   lib,
   bat,
-  fd,
   skim,
 }:
 let
   inherit (lib.meta) getExe;
 
   batCmd = getExe bat;
-  fdCmd = getExe fd;
   skCmd = getExe skim;
 in
 writeShellApplication {
