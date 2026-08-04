@@ -67,6 +67,7 @@ in
     home = {
       packages = with pkgs; [
         kail
+        kind
         ktop
         kty
         stern

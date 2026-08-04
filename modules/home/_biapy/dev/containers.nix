@@ -8,8 +8,6 @@
   - [dtop @ GitHub](https://github.com/StakeSquid/dtop).
   - [LazyDocker @ GitHub](https://github.com/jesseduffield/lazydocker).
   - [podman-tui @ GitHub](https://github.com/containers/podman-tui).
-  - [kind homepage](https://kind.sigs.k8s.io/)
-    ([kind @ GitHub](https://github.com/kubernetes-sigs/kind)).
   - [nerdctl @ GitHub](https://github.com/containerd/nerdctl).
   - [layerx @ GitHub](https://github.com/deveshctl/layerx).
   - [dive @ GitHub](https://github.com/wagoodman/dive).
@@ -61,7 +59,6 @@ in
         dtop
         dive
         podman-tui
-        # kind
         nerdctl
         pkgs-unstable.layerx
 
