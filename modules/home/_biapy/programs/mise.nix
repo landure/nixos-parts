@@ -43,6 +43,7 @@
 {
   config,
   lib,
+  pkgs-unstable,
   ...
 }:
 let
@@ -59,9 +60,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.shellAliases = {
-      mx = mkDefault "mise exec";
-      mr = mkDefault "mise run";
+    home = {
+      shellAliases = {
+        mx = mkDefault "mise exec";
+        mr = mkDefault "mise run";
+      };
     };
 
     programs = {
@@ -70,6 +73,8 @@ in
 
       mise = {
         enable = mkDefault true;
+
+        package = pkgs-unstable.mise;
 
         globalConfig = {
           settings = {
