@@ -25,7 +25,7 @@
   ...
 }:
 let
-  inherit (lib.modules) mkIf mkDefault;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.bat;
@@ -37,6 +37,10 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.shellAliases = {
+      cat = mkDefault "bat --plain --paging=never";
+    };
+
     programs.bat = {
       enable = mkDefault true;
       extraPackages = with pkgs.bat-extras; [

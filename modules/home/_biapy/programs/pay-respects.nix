@@ -5,6 +5,7 @@
 
   ## 🛠️ Tech Stack
 
+  - [nix-index @ GitHub](https://github.com/nix-community/nix-index).
   - [Pay Respects @ Codeberg](https://codeberg.org/iff/pay-respects).
 
   ## 📝 Documentation
@@ -30,33 +31,41 @@ in
 
   config = mkIf cfg.enable {
     # pay-respects ease fixing erroneous commands.
-    programs.pay-respects = {
-      enable = true;
-      options = [
-        "--alias"
-        "f"
-      ];
+    programs = {
+      # Payrespects require nix-locate or nix-search-cli
+      nix-index.enable = mkDefault true;
 
-      rules = {
-        cargo = {
-          command = "cargo";
-          match_err = [
-            {
-              pattern = [ "run `cargo init` to initialize a new rust project" ];
-              suggest = [ "cargo init" ];
-            }
-          ];
-        };
+      # Install comma runner (, some-command).
+      nix-index-database.comma.enable = mkDefault true;
 
-        _PR_GENERAL = {
-          match_err = [
-            {
-              pattern = [ "permission denied" ];
-              suggest = [
-                "#[executable(sudo), !cmd_contains(sudo)]\nsudo {{command}}"
-              ];
-            }
-          ];
+      pay-respects = {
+        enable = true;
+        options = [
+          "--alias"
+          "f"
+        ];
+
+        rules = {
+          cargo = {
+            command = "cargo";
+            match_err = [
+              {
+                pattern = [ "run `cargo init` to initialize a new rust project" ];
+                suggest = [ "cargo init" ];
+              }
+            ];
+          };
+
+          _PR_GENERAL = {
+            match_err = [
+              {
+                pattern = [ "permission denied" ];
+                suggest = [
+                  "#[executable(sudo), !cmd_contains(sudo)]\nsudo {{command}}"
+                ];
+              }
+            ];
+          };
         };
       };
     };

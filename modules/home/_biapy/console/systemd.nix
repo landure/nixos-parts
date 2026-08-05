@@ -7,6 +7,8 @@
     ([isd @ GitHub](https://github.com/kainctl/isd))
     is a systemd TUI
   - [LazyJournal @ GitHub](https://github.com/Lifailon/lazyjournal).
+  - [systeroid](https://systeroid.cli.rs/)
+    ([systeroid @ GitHub](https://github.com/orhun/systeroid)).
 
   ## 🙇 Acknowledgements
 
@@ -36,6 +38,7 @@ in
     home.packages = with pkgs; [
       isd
       lazyjournal
+      systeroid
     ];
   };
 }
