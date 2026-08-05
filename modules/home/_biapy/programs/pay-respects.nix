@@ -17,7 +17,7 @@
 */
 { config, lib, ... }:
 let
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.pay-respects;
@@ -39,13 +39,13 @@ in
       nix-index-database.comma.enable = mkDefault true;
 
       pay-respects = {
-        enable = true;
-        options = [
+        enable = mkDefault true;
+        options = mkDefault [
           "--alias"
           "f"
         ];
 
-        rules = {
+        rules = mkDefault {
           cargo = {
             command = "cargo";
             match_err = [
