@@ -44,7 +44,7 @@ let
   cfg = config.biapy.programs.man;
 
   pagers = {
-    less = "${getExe programs.less.package} --use-color -Dd+r -Du+b";
+    less = "${getExe config.programs.less.package} --use-color -Dd+r -Du+b";
     most = "${getExe pkgs.most}";
   };
 in
