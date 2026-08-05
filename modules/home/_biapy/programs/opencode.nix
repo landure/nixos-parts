@@ -15,6 +15,7 @@
 {
   config,
   lib,
+  pkgs-unstable,
   ...
 }:
 let
@@ -35,6 +36,7 @@ in
     programs.opencode = {
       enable = mkDefault true;
       web.enable = mkDefault true;
+      package = mkDefault pkgs-unstable.opencode;
     };
   };
 }
