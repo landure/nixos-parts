@@ -15,7 +15,7 @@
   - [programs.pay-respects @ Home Manager Documentation](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.pay-respects.enable).
   - [programs.pay-respects @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.pay-respects.).
 */
-{ config, lib, ... }:
+{ config, inputs, lib, ... }:
 let
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
@@ -23,6 +23,10 @@ let
   cfg = config.biapy.programs.pay-respects;
 in
 {
+  imports = [
+    inputs.biapy-parts.inputs.nix-index-database.homeModules.default
+  ];
+
   options = {
     biapy.programs.pay-respects = {
       enable = mkEnableOption "mise";

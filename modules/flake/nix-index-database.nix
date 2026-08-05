@@ -16,10 +16,6 @@ let
   inherit (lib) mkDefault;
 in
 {
-  imports = [
-    (inputs.nix-index-database.homeModules.default or { })
-  ];
-
   flake-file.inputs.nix-index-database = {
     url = mkDefault "github:nix-community/nix-index-database";
     inputs = {
