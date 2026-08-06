@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "file-search": {
+      "source": "massgen/massgen",
+      "sourceType": "github",
+      "skillPath": "massgen/skills/file-search/SKILL.md",
+      "computedHash": "12c1707a6e0bbf3405f013d1bc63bfb72e323878d370be67fd56a06db52d0997"
+    },
     "nix": {
       "source": "knoopx/pi",
       "sourceType": "github",
