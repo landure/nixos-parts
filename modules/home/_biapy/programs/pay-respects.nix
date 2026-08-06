@@ -15,7 +15,12 @@
   - [programs.pay-respects @ Home Manager Documentation](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.pay-respects.enable).
   - [programs.pay-respects @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.pay-respects.).
 */
-{ config, inputs, lib, ... }:
+{
+  config,
+  inputs,
+  lib,
+  ...
+}:
 let
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
