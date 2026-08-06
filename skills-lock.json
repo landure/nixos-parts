@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "nix": {
+      "source": "knoopx/pi",
+      "sourceType": "github",
+      "skillPath": "agent/skills/tools/nix/SKILL.md",
+      "computedHash": "0dfe88424d18a341ce4158631f945bbfd4e6cd2437b841e57b2c2cf19b45a1f1"
+    },
+    "nix-flake": {
+      "source": "knoopx/pi",
+      "sourceType": "github",
+      "skillPath": "agent/skills/tools/nix-flake/SKILL.md",
+      "computedHash": "9ea3bd03add953b74f5099f7d79267baf45c3affc4154a10b77119c7d1dc1e90"
+    }
+  }
+}
