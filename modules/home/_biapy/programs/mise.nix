@@ -76,47 +76,47 @@ in
 
         package = pkgs-unstable.mise;
 
-        globalConfig = {
-          settings = {
-            experimental = mkDefault true;
-            verbose = mkDefault false;
+        # globalConfig = {
+        #   settings = {
+        #     experimental = mkDefault true;
+        #     verbose = mkDefault false;
 
-            # prevent most supply chain attacks
-            minimum_release_age = mkDefault "7d";
+        #     # prevent most supply chain attacks
+        #     minimum_release_age = mkDefault "7d";
 
-            # Aqua backend SecOps
-            aqua = {
-              cosign = mkDefault true; # Cosign checks (sigstore signatures)
-              slsa = mkDefault true; # SLSA checks (builds provenance)
-              github_attestations = mkDefault true; # GitHub Actions attestations
-            };
+        #     # Aqua backend SecOps
+        #     aqua = {
+        #       cosign = mkDefault true; # Cosign checks (sigstore signatures)
+        #       slsa = mkDefault true; # SLSA checks (builds provenance)
+        #       github_attestations = mkDefault true; # GitHub Actions attestations
+        #     };
 
-            pipx.uvx = mkDefault true;
-          };
+        #     pipx.uvx = mkDefault true;
+        #   };
 
-          plugins = {
-            nix = mkDefault "https://github.com/jbadeau/mise-nix";
-            php = mkDefault "https://github.com/verzly/mise-php#latest";
-            # fnox-env = mkDefault "https://github.com/jdx/mise-env-fnox";
-          };
+        #   plugins = {
+        #     nix = mkDefault "https://github.com/jbadeau/mise-nix";
+        #     php = mkDefault "https://github.com/verzly/mise-php#latest";
+        #     # fnox-env = mkDefault "https://github.com/jdx/mise-env-fnox";
+        #   };
 
-          env = {
-            _ = {
-              # fnox-env = {
-              #   tools = mkDefault true;
-              # };
-              php = {
-                pie_extensions = mkDefault "xdebug/xdebug";
-              };
-            };
-          };
-          # tools = {
-          #   trivy = {
-          #     # trivy updates are time-sensitive, use a shorter window
-          #     minimum_release_age = mkDefault "1d";
-          #   };
-          # };
-        };
+        #   env = {
+        #     _ = {
+        #       # fnox-env = {
+        #       #   tools = mkDefault true;
+        #       # };
+        #       php = {
+        #         pie_extensions = mkDefault "xdebug/xdebug";
+        #       };
+        #     };
+        #   };
+        #   # tools = {
+        #   #   trivy = {
+        #   #     # trivy updates are time-sensitive, use a shorter window
+        #   #     minimum_release_age = mkDefault "1d";
+        #   #   };
+        #   # };
+        # };
       };
     };
   };
