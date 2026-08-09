@@ -8,7 +8,6 @@
     ([flake-file @ GitHub](https://github.com/vic/flake-file)).
 */
 {
-  inputs,
   lib,
   ...
 }:

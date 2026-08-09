@@ -40,11 +40,9 @@
   ...
 }:
 let
-  inherit (lib.lists) optionals;
   inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf mkDefault;
-  inherit (lib.options) mkOption mkEnableOption;
-  inherit (lib.types) bool;
+  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.console.cheatsheets;
 

@@ -40,11 +40,9 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 let
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
@@ -68,6 +66,7 @@ in
       packages = with pkgs; [
         kail
         kind
+        kubectl
         ktop
         kty
         stern

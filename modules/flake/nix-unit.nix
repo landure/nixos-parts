@@ -25,7 +25,6 @@ in
       url = mkDefault "github:nix-community/nix-unit";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
-        flake-parts.follows = mkDefault "flake-parts";
       };
     };
   };

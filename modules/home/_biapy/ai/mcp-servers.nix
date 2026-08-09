@@ -12,11 +12,10 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 let
-  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.ai.mcp-servers;
