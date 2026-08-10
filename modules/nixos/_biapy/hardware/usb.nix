@@ -11,7 +11,7 @@
 
   ### ❄️ NixOS
 
-  - [hardware.facter @ NixOS reference](https://search.nixos.org/options?query=hardware.facter.).
+  - [hardware.facter @ NixOS reference](https://search.nixos.org/options?query=hardware.facter.).
 
   ## 🙇 Acknowledgements
 
