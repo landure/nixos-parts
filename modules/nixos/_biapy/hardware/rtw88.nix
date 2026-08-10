@@ -20,11 +20,9 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
-  inherit (lib.lists) elem length;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
 
