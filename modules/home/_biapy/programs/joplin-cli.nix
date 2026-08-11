@@ -70,14 +70,14 @@ in
       enable = mkEnableOption "Joplin CLI";
 
       sync = {
-        interval = options.programs.biapy.joplin-desktop.sync.interval // {
-          default = config.programs.biapy.joplin-desktop.sync.interval;
+        interval = options.biapy.programs.joplin-desktop.sync.interval // {
+          default = config.biapy.programs.joplin-desktop.sync.interval;
         };
-        target = options.programs.biapy.joplin-desktop.sync.target // {
-          default = config.programs.biapy.joplin-desktop.sync.target;
+        target = options.biapy.programs.joplin-desktop.sync.target // {
+          default = config.biapy.programs.joplin-desktop.sync.target;
         };
-        settings = options.programs.biapy.joplin-desktop.sync.settings // {
-          default = config.programs.biapy.joplin-desktop.sync.settings;
+        settings = options.biapy.programs.joplin-desktop.sync.settings // {
+          default = config.biapy.programs.joplin-desktop.sync.settings;
         };
       };
     };

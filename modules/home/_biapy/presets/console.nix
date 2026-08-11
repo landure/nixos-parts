@@ -15,6 +15,7 @@ in
         network.enable = mkDefault true;
         office.enable = mkDefault true;
         systemd.enable = mkDefault true;
+        text-editors.enable = mkDefault true;
       };
 
       programs = {
