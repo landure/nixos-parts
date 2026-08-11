@@ -1,11 +1,10 @@
 /**
-  # Joplin desktop & TUI
+  # Joplin desktop
 
   ## 🛠️ Tech Stack
 
   - [Joplin homepage](https://joplinapp.org/)
     ([Joplin @ GitHub](https://github.com/laurent22/joplin/)).
-  - [Joplin Terminal Application @ Joplin](https://joplinapp.org/help/apps/terminal/).
 
   ## 📝 Documentation
 
@@ -17,7 +16,6 @@
   config,
   options,
   lib,
-  pkgs,
   ...
 }:
 let
@@ -27,7 +25,6 @@ let
     mergeAttrsList
     optionalAttrs
     ;
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) attrs;
@@ -88,70 +85,32 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      joplin-cli
-    ];
-
-    home.activation = {
-      activateJoplinCliConfig =
-        let
-          inherit (lib.attrsets) filterAttrs;
-          inherit (lib.hm.dag) entryAfter;
-
-          configPath = "${config.xdg.configHome}/joplin/settings.json";
-
-          jq_exe = getExe pkgs.jq;
-          jsonFormat = pkgs.formats.json { };
-
-          newConfig = jsonFormat.generate "joplin-settings.json" (
-            filterAttrs (_n: v: (v != null) && (v != "")) (
-              {
-                "sync.target" = syncTargetId;
-                "locale" = "fr_FR";
-              }
-              // (optionalAttrs syncEnabled syncSettings)
-            )
-          );
-        in
-        entryAfter [ "linkGeneration" ] ''
-          # Ensure that settings.json exists.
-          mkdir -p '${dirOf configPath}'
-          touch '${configPath}'
-          # Config has to be written to temporary variable because jq cannot edit files in place.
-          config="$(${jq_exe} -s '.[0] + .[1]' '${configPath}' '${newConfig}')"
-          printf '%s\n' "''${config}" > '${configPath}'
-          unset 'config'
-        '';
-    };
-
-    programs = {
-      joplin-desktop = {
-        enable = mkDefault true;
-        sync.target = cfg.sync.target;
-        sync.interval = cfg.sync.interval;
-        extraConfig = mkDefault (
-          {
-            "editor.codeView" = true;
-            "locale" = "fr_FR";
-            "ocr.enabled" = false;
-            "theme" = 1;
-            "themeAutoDetect" = false;
-            "markdown.plugin.softbreaks" = false;
-            "markdown.plugin.typographer" = false;
-            "markdown.plugin.sub" = true;
-            "markdown.plugin.sup" = true;
-            "markdown.plugin.emoji" = true;
-            "markdown.plugin.insert" = true;
-            "showTrayIcon" = true;
-            "clipperServer.autoStart" = true;
-            "spellChecker.languages" = [
-              "fr"
-              "en-US"
-            ];
-          }
-          // (optionalAttrs syncEnabled syncSettings)
-        );
-      };
+    programs.joplin-desktop = {
+      enable = mkDefault true;
+      sync.target = cfg.sync.target;
+      sync.interval = cfg.sync.interval;
+      extraConfig = mkDefault (
+        {
+          "editor.codeView" = true;
+          "locale" = "fr_FR";
+          "ocr.enabled" = false;
+          "theme" = 1;
+          "themeAutoDetect" = false;
+          "markdown.plugin.softbreaks" = false;
+          "markdown.plugin.typographer" = false;
+          "markdown.plugin.sub" = true;
+          "markdown.plugin.sup" = true;
+          "markdown.plugin.emoji" = true;
+          "markdown.plugin.insert" = true;
+          "showTrayIcon" = true;
+          "clipperServer.autoStart" = true;
+          "spellChecker.languages" = [
+            "fr"
+            "en-US"
+          ];
+        }
+        // (optionalAttrs syncEnabled syncSettings)
+      );
     };
   };
 }

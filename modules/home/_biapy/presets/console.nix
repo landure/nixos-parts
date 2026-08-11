@@ -13,6 +13,7 @@ in
       console = {
         logs.enable = mkDefault true;
         network.enable = mkDefault true;
+        office.enable = mkDefault true;
         systemd.enable = mkDefault true;
       };
 
