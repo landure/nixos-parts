@@ -54,6 +54,8 @@
 
   ## 📝 Documentation
 
+  ### 🏠 Home Manager
+
   - [programs.amber @ Home Manager Configuration Options](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.amber.enable).
   - [programs.bat @ Home Manager Configuration Options](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bat.enable).
   - [programs.fd @ Home Manager Configuration Options](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.fd.enable).
@@ -96,7 +98,6 @@ in
       hck # cut alternative
       moor # pager
       ov # Feature-rich terminal-based text viewer
-      procs # ps alternative
       tuc # cut drop-in replacement writen in Rust
     ];
 

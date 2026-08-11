@@ -8,6 +8,7 @@
   - [doggo homepage](https://doggo.mrkaran.dev/)
     ([doggo @ GitHub](https://github.com/mr-karan/doggo)).
   - [gping @ GitHub](https://github.com/orf/gping).
+  - [snitch @ GitHub](https://github.com/karol-broda/snitch).
 
   ## 🙇 Acknowledgements
 
@@ -37,6 +38,7 @@ in
       dogedns # dig alternative
       doggo
       gping # ping with data visualization
+      snitch # ss alternative
     ];
   };
 }
