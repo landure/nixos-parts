@@ -54,6 +54,8 @@ in
       witr # why is it running.
     ];
 
+    biapy.programs.fastfetch.enable = mkDefault true;
+
     programs = {
       btop.enable = mkDefault true;
       bottom.enable = mkDefault true;
