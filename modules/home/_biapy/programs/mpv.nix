@@ -109,8 +109,8 @@ in
           # read -s -t 1 response <'/dev/tty'
           # echo "$response"
 
-          [[ "''${TERM_PROGRAM}" = 'ghostty' || "''${TERM}" = 'xterm-ghostty' ||
-            "''${TERM}" = 'xterm-kitty' || -n "''${KITTY_PID}" ]] &&
+          [[ "''${TERM_PROGRAM:-}" = 'ghostty' || "''${TERM:-}" = 'xterm-ghostty' ||
+            "''${TERM:-}" = 'xterm-kitty' || -n "''${KITTY_PID:-}" ]] &&
             return 0 ||
             return 1
         }
@@ -128,7 +128,7 @@ in
         supports_sixel &&
           exec ${getExe config.programs.mpv.package} --quiet --ytdl-format=worst --vo=sixel "$@"
 
-        [[ "''${TERM}" = 'xterm-256color' ]] &&
+        [[ "''${TERM:-}" = 'xterm-256color' ]] &&
           exec ${getExe config.programs.mpv.package} --quiet --ytdl-format=worst --vo=tct --vo-tct-256=yes --vo-tct-algo=half-blocks "$@"
 
         exec ${getExe config.programs.mpv.package} --quiet --ytdl-format=worst --vo=tct --vo-tct-algo=plain "$@"
