@@ -12,6 +12,7 @@ in
     biapy = {
       console = {
         logs.enable = mkDefault true;
+        media.enable = mkDefault true;
         network.enable = mkDefault true;
         office.enable = mkDefault true;
         systemd.enable = mkDefault true;

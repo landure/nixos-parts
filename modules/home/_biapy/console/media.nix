@@ -29,9 +29,7 @@ let
 in
 {
   options = {
-    biapy.console.media = {
-      enable = mkEnableOption "command-line media tools";
-    };
+    biapy.console.media.enable = mkEnableOption "command-line media tools";
   };
 
   config = mkIf cfg.enable {
@@ -46,6 +44,7 @@ in
 
     biapy.programs = {
       cava.enable = mkDefault true;
+      radio-cli.enable = mkDefault true;
       mpv.enable = mkDefault true;
       yt-dlp.enable = mkDefault true;
     };
