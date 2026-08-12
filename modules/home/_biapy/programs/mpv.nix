@@ -15,6 +15,7 @@
   ## 🙇 Acknowledgements
 
   - [Scripts I wrote that I use all the time @ Evan Hahn](https://evanhahn.com/scripts-i-wrote-that-i-use-all-the-time/).
+  - [True Color, Image Protocols and Modern Terminal Features @ Linux Junkies](https://linuxjunkies.org/guides/terminal-true-color-and-images).
   - [mpv Wiki](https://github.com/mpv-player/mpv/wiki).
   - [mpv @ Official NixOS Wiki](https://wiki.nixos.org/wiki/MPV).
   - [MPV @ NixOS Wiki](https://nixos.wiki/wiki/MPV).
@@ -65,7 +66,7 @@ in
         }
       );
 
-      bindings = {
+      bindings = mkDefault {
         # @see https://mpv.io/manual/stable/#input-key-bindings
         "h" = mkOptionDefault "seek -1";
         "j" = mkOptionDefault "seek -5";
@@ -73,19 +74,20 @@ in
         "l" = mkOptionDefault "seek +1";
         "space" = mkOptionDefault "cycle pause";
         "q" = mkOptionDefault "quit";
+        "Ctrl+q" = mkOptionDefault "quit";
 
         WHEEL_UP = mkOptionDefault "seek 10";
         WHEEL_DOWN = mkOptionDefault "seek -10";
         "Alt+0" = mkOptionDefault "set window-scale 0.5";
       };
 
-      config = {
-        profile = mkDefault "gpu-hq";
-        force-window = mkDefault true;
-        ytdl-format = mkDefault "bestvideo+bestaudio";
-        cache-default = mkDefault 4000000;
+      config = mkDefault {
+        profile = mkOptionDefault "gpu-hq";
+        force-window = mkOptionDefault "no";
+        ytdl-format =  mkOptionDefault "best";
+        demuxer-max-bytes = mkOptionDefault "64MiB";
       };
-      defaultProfiles = [
+      defaultProfiles = mkDefault [
         "gpu-hq"
         "high-quality"
       ];
@@ -94,13 +96,42 @@ in
     home.packages = [
       (pkgs.writeShellScriptBin "tuivid" ''
         # tuivid: mpv wrapper to play video in the terminal.
-        # It’s cursed and I love it, even if I never use it.
+        # It's cursed and I love it, even if I never use it.
         # see https://codeberg.org/EvanHahn/dotfiles/src/branch/main/home/bin/bin/tuivid
         set -e
         set -u
         set -o pipefail
 
-        exec ${getExe config.programs.mpv.package} --quiet --vo=tct --vo-tct-256=yes --vo-tct-algo=plain --framedrop=vo "$@"
+        supports_kitty() {
+          # TODO fix this
+
+          # printf '\033_Gi=1,s=1,v=1,a=q,t=d,f=24;AAAA\033\\\033[c'; sleep 0.1
+          # read -s -t 1 response <'/dev/tty'
+          # echo "$response"
+
+          [[ "''${TERM_PROGRAM}" = 'ghostty' || "''${TERM}" = 'xterm-ghostty' ||
+            "''${TERM}" = 'xterm-kitty' || -n "''${KITTY_PID}" ]] &&
+            return 0 ||
+            return 1
+        }
+
+        supports_sixel() {
+          # TODO fix this
+          infocmp -L | grep --quiet 'Sm=\|Rm=' &&
+            return 0 ||
+            return 1
+        }
+
+        supports_kitty &&
+          exec ${getExe config.programs.mpv.package} --quiet --ytdl-format=worst --vo=kitty "$@"
+
+        supports_sixel &&
+          exec ${getExe config.programs.mpv.package} --quiet --ytdl-format=worst --vo=sixel "$@"
+
+        [[ "''${TERM}" = 'xterm-256color' ]] &&
+          exec ${getExe config.programs.mpv.package} --quiet --ytdl-format=worst --vo=tct --vo-tct-256=yes --vo-tct-algo=half-blocks "$@"
+
+        exec ${getExe config.programs.mpv.package} --quiet --ytdl-format=worst --vo=tct --vo-tct-algo=plain "$@"
       '')
 
       (pkgs.writeShellScriptBin "tunes" ''
@@ -111,7 +142,7 @@ in
         set -u
         set -o pipefail
 
-        exec ${getExe config.programs.mpv.package} --no-video --ytdl-format=worstaudio "$@"
+        exec ${getExe config.programs.mpv.package} --no-video --ytdl-format=bestaudio "$@"
       '')
 
       # (pkgs.writeShellScriptBin "radio" ''
