@@ -24,9 +24,9 @@ let
     "fresh-editor"
     "helix"
     "kakoune"
+    "micro"
     "msedit"
     "ne"
-    "micro"
     "neovim"
     "vim"
   ];
@@ -41,9 +41,10 @@ in
         default = [
           "fresh-editor"
           "helix"
-          "lazyvim"
-          "neovim"
+          "micro"
+          "msedit"
           "ne"
+          "neovim"
         ];
         description = ''
           What editors to enable.
