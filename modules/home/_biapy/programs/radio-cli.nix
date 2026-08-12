@@ -23,7 +23,7 @@
   ...
 }:
 let
-  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.modules) mkDefault mkIf mkOptionDefault;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.radio-cli;
@@ -37,10 +37,10 @@ in
   config = mkIf cfg.enable {
     programs.radio-cli = {
       enable = mkDefault true;
-      settings = {
+      settings = mkDefault {
         config_version = "2.3.0";
-        country = mkDefault "FR";
-        data = mkDefault builtins.attrValues (
+        country = mkOptionDefault "FR";
+        data = mkOptionDefault (builtins.attrValues (
           builtins.mapAttrs
             (station: url: {
               inherit station;
@@ -61,8 +61,8 @@ in
               "HBR1.com I.D.M. Tranceponder 🎶" = "http://radio.hbr1.com/stream/trance.ogg";
               "HBR1.com Tronic Lounge 🎶" = "http://radio.hbr1.com/stream/tronic.ogg";
             }
-        );
-        max_lines = mkDefault 7;
+        ));
+        max_lines = mkOptionDefault 7;
       };
     };
   };
