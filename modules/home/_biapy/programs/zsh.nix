@@ -26,9 +26,7 @@ let
 in
 {
   options = {
-    biapy.programs.zsh = {
-      enable = mkEnableOption "command-line UX enhancements";
-    };
+    biapy.programs.zsh.enable = mkEnableOption "zsh";
   };
 
   config = mkIf cfg.enable {
@@ -36,7 +34,7 @@ in
     programs.zsh = {
       enable = mkDefault true;
 
-      dotDir = "${config.xdg.configHome}/zsh";
+      dotDir = mkDefault "${config.xdg.configHome}/zsh";
 
       enableCompletion = mkDefault true;
       enableVteIntegration = mkDefault true;

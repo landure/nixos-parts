@@ -11,8 +11,11 @@ in
   config = mkIf cfg.enable {
     biapy = {
       console = {
+        cheatsheets.enable = mkDefault true;
+        files.enable = mkDefault true;
         logs.enable = mkDefault true;
         media.enable = mkDefault true;
+        monitoring.enable = mkDefault true;
         network.enable = mkDefault true;
         office.enable = mkDefault true;
         systemd.enable = mkDefault true;
@@ -20,6 +23,7 @@ in
       };
 
       programs = {
+        bash.enable = mkDefault true;
         eza.enable = mkDefault true;
         fzf.enable = mkDefault true;
         mcfly.enable = mkDefault true;

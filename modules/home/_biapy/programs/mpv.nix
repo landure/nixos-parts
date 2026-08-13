@@ -84,7 +84,7 @@ in
       config = mkDefault {
         profile = mkOptionDefault "gpu-hq";
         force-window = mkOptionDefault "no";
-        ytdl-format =  mkOptionDefault "best";
+        ytdl-format = mkOptionDefault "best";
         demuxer-max-bytes = mkOptionDefault "64MiB";
       };
       defaultProfiles = mkDefault [

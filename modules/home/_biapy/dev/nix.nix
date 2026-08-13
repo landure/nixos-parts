@@ -8,6 +8,8 @@
   - [nixf-diagnose @ GitHub](https://github.com/inclyc/nixf-diagnose).
   - [nixfmt-rs](https://mic92.github.io/nixfmt-rs/)
     ([nixfmt-rs @ GitHub](https://github.com/Mic92/nixfmt-rs)).
+  - [nurl @ GitHub](https://github.com/nix-community/nurl)
+    generates Nix fetcher calls from URLs
   - [statix @ GitHub](https://github.com/oppiliappan/statix).
 
   ## 📝 Documentation
@@ -45,6 +47,7 @@ in
       nixd
       nixf-diagnose
       nixfmt-rs
+      nurl
       statix
     ];
   };

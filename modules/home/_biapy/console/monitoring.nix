@@ -12,8 +12,6 @@
     ([inxi @ Codeberg](https://codeberg.org/smxi/inxi)).
   - [iotop @ GitHub](https://github.com/Tomas-M/iotop)
     is a top utility for IO.
-  - [macchina @ GitHub](https://github.com/Macchina-CLI/macchina)
-    is a system information frontend with an emphasis on performance.
   - [procs @ GitHub](https://github.com/dalance/procs)
     is a modern replacement for ps written in Rust.
   - [ramfetch @ Codeberg](https://codeberg.org/jahway603/ramfetch).
@@ -30,8 +28,6 @@
   - [programs.btop @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.btop.).
   - [programs.bottom @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bottom.enable).
   - [programs.bottom @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.bottom.).
-  - [programs.macchina @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.macchina.enable).
-  - [programs.macchina @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.macchina.).
 
   ### 🎨 Stylix
 
@@ -67,12 +63,14 @@ in
       witr # why is it running.
     ];
 
-    biapy.programs.fastfetch.enable = mkDefault true;
+    biapy.programs = {
+      fastfetch.enable = mkDefault true;
+      macchina.enable = mkDefault true;
+    };
 
     programs = {
       btop.enable = mkDefault true;
       bottom.enable = mkDefault true;
-      macchina.enable = mkDefault true;
     };
   };
 }
