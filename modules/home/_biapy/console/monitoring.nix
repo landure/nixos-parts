@@ -6,20 +6,32 @@
   - [BTOP++ @ GitHub](https://github.com/aristocratos/btop).
   - [bottom homepage](https://bottom.pages.dev/)
     ([bottom @ GitHub](https://github.com/ClementTsang/bottom)).
-  - [dool @ GitHub](https://github.com/scottchiefbaker/dool).
+  - [dool @ GitHub](https://github.com/scottchiefbaker/dool)
+    monitors many aspects of a Linux system: CPU, Memory, Network, …
   - [inxi homepage](https://smxi.org/docs/inxi.htm)
     ([inxi @ Codeberg](https://codeberg.org/smxi/inxi)).
-  - [iotop @ GitHub](https://github.com/Tomas-M/iotop).
-  - [procs @ GitHub](https://github.com/dalance/procs).
+  - [iotop @ GitHub](https://github.com/Tomas-M/iotop)
+    is a top utility for IO.
+  - [macchina @ GitHub](https://github.com/Macchina-CLI/macchina)
+    is a system information frontend with an emphasis on performance.
+  - [procs @ GitHub](https://github.com/dalance/procs)
+    is a modern replacement for ps written in Rust.
+  - [ramfetch @ Codeberg](https://codeberg.org/jahway603/ramfetch).
+    is a fetch which displays memory info using `/proc/meminfo`.
   - [witr playground](https://pranshuparmar.github.io/witr/)
-    ([witr @ GitHub](https://github.com/pranshuparmar/witr)).
+    ([witr @ GitHub](https://github.com/pranshuparmar/witr))
+    trace any process, port, container, or file back to what started it.
 
   ## 📝 Documentation
 
   ### 🏠 Home Manager
 
   - [programs.btop @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.btop.enable).
+  - [programs.btop @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.btop.).
   - [programs.bottom @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bottom.enable).
+  - [programs.bottom @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.bottom.).
+  - [programs.macchina @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.macchina.enable).
+  - [programs.macchina @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.macchina.).
 
   ### 🎨 Stylix
 
@@ -51,6 +63,7 @@ in
       inxi
       iotop
       procs # ps alternative
+      ramfetch
       witr # why is it running.
     ];
 
@@ -59,6 +72,7 @@ in
     programs = {
       btop.enable = mkDefault true;
       bottom.enable = mkDefault true;
+      macchina.enable = mkDefault true;
     };
   };
 }
