@@ -75,6 +75,7 @@ in
   config = mkIf cfg.enable {
     biapy.programs = {
       emacs.enable = mkDefault (elem "emacs" cfg.editors);
+      fresh-editor.enable = mkDefault (elem "fresh-editor" cfg.editors);
       helix.enable = mkDefault (elem "helix" cfg.editors);
       kakoune.enable = mkDefault (elem "kakoune" cfg.editors);
       micro.enable = mkDefault (elem "micro" cfg.editors);
