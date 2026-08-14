@@ -30,6 +30,8 @@ in
         mise.enable = mkDefault true;
         skim.enable = mkDefault true;
         ssh.enable = mkDefault true;
+        starship.enable = mkDefault true;
+        tirith.enable = mkDefault false;
         zellij.enable = mkDefault true;
         zsh.enable = mkDefault true;
       };
