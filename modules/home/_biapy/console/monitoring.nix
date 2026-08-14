@@ -65,7 +65,6 @@ in
 
     biapy.programs = {
       fastfetch.enable = mkDefault true;
-      macchina.enable = mkDefault true;
     };
 
     programs = {

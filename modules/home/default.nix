@@ -19,11 +19,24 @@
 {
   config,
   inputs,
+  lib,
   ...
 }:
-
+let
+  inherit (lib.modules) mkDefault;
+in
 {
+  flake-file.inputs = {
+    quien = {
+      url = mkDefault "github:retlehs/quien";
+      inputs = {
+        nixpkgs.follows = mkDefault "nixpkgs";
+      };
+    };
+  };
+
   flake = {
+
     modules.homeManager = {
       default = config.flake.modules.homeManager.biapy;
       biapy = inputs.import-tree ./_biapy;
