@@ -17,10 +17,6 @@
     is a better `whois` and domain intelligence toolkit
   - [snitch @ GitHub](https://github.com/karol-broda/snitch)
     is a friendler `ss`/`netstat` for humans.
-  - [Trippy homepage](https://trippy.rs/)
-    ([Trippy @ GitHub](https://github.com/fujiapple852/trippy))
-    combines the functionality of `traceroute` and `ping`
-    and is designed to assist with the analysis of networking issues.
 
   ## 🙇 Acknowledgements
 
@@ -30,7 +26,6 @@
 */
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -55,9 +50,9 @@ in
       gping # ping with data visualization
       snitch # ss alternative
 
-      inputs.biapy-parts.inputs.quien.packages.quien
+      local.quien
     ];
 
-    programs.trippy.enable = mkDefault true;
+    biapy.programs.trippy.enable = mkDefault true;
   };
 }

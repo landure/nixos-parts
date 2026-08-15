@@ -1,3 +1,8 @@
 [tools]
 "nix:nixfmt-rs" = "latest"
 prek = "latest"
+
+[shell_alias]
+wf = "nix run .#write-flake"
+flup = "nix flake update"
+flin = "nix flake metadata"

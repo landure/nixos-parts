@@ -3,6 +3,10 @@
 
   ## 🛠️ Tech Stack
 
+  - [Home Manager homepage](https://home-manager.dev/)
+    ([Home Manager @ GitHub](https://github.com/nix-community/home-manager)).
+  - [Stylix homepage](https://nix-community.github.io/stylix)
+    ([Stylix @ GitHub](https://github.com/nix-community/stylix)).
   - [flake-parts homepage](https://flake.parts/)
     ([flake-parts @ GitHub](https://github.com/hercules-ci/flake-parts)).
   - [flake-file homepage](https://flake-file.oeiuwq.com/)
@@ -27,10 +31,26 @@ let
 in
 {
   flake-file.inputs = {
+    nixpkgs-lib.follows = mkDefault "nixpkgs";
+    home-manager = {
+      url = mkDefault "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = mkDefault "nixpkgs";
+    };
+    stylix = {
+      url = mkDefault "github:nix-community/stylix/release-26.05";
+      inputs = {
+        nixpkgs.follows = mkDefault "nixpkgs";
+        flake-parts.follows = mkDefault "flake-parts";
+      };
+    };
+
+    flake-utils.url = "github:numtide/flake-utils";
+
     quien = {
       url = mkDefault "github:retlehs/quien";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
+        flake-utils.follows = "flake-utils";
       };
     };
   };

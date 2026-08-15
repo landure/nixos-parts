@@ -16,7 +16,10 @@ let
 in
 {
   flake-file.inputs = {
-    devshell.url = mkDefault "github:numtide/devshell";
+    devshell = {
+      url = mkDefault "github:numtide/devshell";
+      inputs.nixpkgs.follows = mkDefault "nixpkgs";
+    };
   };
 
   imports = [

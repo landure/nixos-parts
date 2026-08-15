@@ -24,7 +24,7 @@ in
   flake-file = {
     description = "Dendritic NixOS and Home Manager modules for flake-file and flake-parts.";
 
-    formatter = pkgs: pkgs.nixfmt;
+    formatter = pkgs: pkgs.nixfmt-rs;
     prune-lock.enable = mkDefault true;
 
     inputs = {
@@ -53,6 +53,6 @@ in
   perSystem =
     { pkgs, ... }:
     {
-      formatter = pkgs.nixfmt-tree;
+      formatter = pkgs.nixfmt-rs;
     };
 }
