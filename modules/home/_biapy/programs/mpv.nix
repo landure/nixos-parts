@@ -122,6 +122,11 @@ in
             return 1
         }
 
+        # see https://github.com/ghostty-org/ghostty/discussions/7470
+        [[ "''${TERM_PROGRAM:-}" = 'ghostty' ]] &&
+          exec ${getExe config.programs.mpv.package} --really-quiet --ytdl-format=worst \
+            --vo=kitty --vo-kitty-use-shm=yes --profile=sw-fast --hwdec=auto "$@"
+
         supports_kitty &&
           exec ${getExe config.programs.mpv.package} --quiet --ytdl-format=worst --vo=kitty "$@"
 
