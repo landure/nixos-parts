@@ -45,7 +45,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    cfg.api-base =
+    biapy.services.ollama.api-base =
       "http://${config.services.ollama.host}:${builtins.toString config.services.ollama.port}/v1";
 
     services.ollama = {
