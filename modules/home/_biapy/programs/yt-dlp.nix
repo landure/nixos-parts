@@ -62,7 +62,7 @@ in
           downloader = mkOptionDefault (getExe config.programs.aria2.package);
           downloader-args = mkOptionDefault "aria2c:'-c -x8 -s8 -k1M'";
           # 2026-08-18: see https://github.com/yt-dlp/yt-dlp/issues/17456
-          extractor-args = mkOptionDefault "youtube:player_client=android"
+          extractor-args = mkOptionDefault "youtube:player_client=android";
         };
       };
     };
