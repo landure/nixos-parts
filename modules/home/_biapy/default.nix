@@ -11,6 +11,6 @@
 { inputs, ... }:
 {
   imports = [
-    (inputs.stylix.homeModules.stylix or { })
+    #   (inputs.stylix.homeModules.stylix or { })
   ];
 }
