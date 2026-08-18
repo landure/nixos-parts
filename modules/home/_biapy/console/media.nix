@@ -5,6 +5,9 @@
 
   - [castero @ GitHub](https://github.com/xgi/castero)
     is a TUI podcast client for the terminal.
+  - [GopherTube @ GitHub](https://github.com/KrishnaSSh/GopherTube)
+    is a modern terminal user interface for searching and watching YouTube
+    videos using `mpv` and `chafa`.
   - [kew homepage](https://kewplayer.com/)
     ([kew @ GitHub](https://github.com/ravachol/kew))
     is an immersive and fast music player that allows to listen to music with privacy.
@@ -47,7 +50,8 @@ in
   config = mkIf cfg.enable {
 
     home.packages = with pkgs; [
-      castero # Podcast player
+      castero
+      gophertube
       # pamixer
       mufetch
       pulsemixer

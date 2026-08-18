@@ -13,6 +13,7 @@ in
       console = {
         cheatsheets.enable = mkDefault true;
         files.enable = mkDefault true;
+        graphics.enable = mkDefault true;
         logs.enable = mkDefault true;
         media.enable = mkDefault true;
         monitoring.enable = mkDefault true;

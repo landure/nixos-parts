@@ -28,7 +28,7 @@
 }:
 let
   inherit (lib.meta) getExe;
-  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.modules) mkDefault mkIf mkOptionDefault;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.yt-dlp;
@@ -55,12 +55,14 @@ in
 
         package = mkDefault pkgs-unstable.yt-dlp;
 
-        settings = {
-          embed-thumbnail = mkDefault true;
-          embed-subs = mkDefault true;
-          sub-langs = mkDefault "en,fr";
-          downloader = mkDefault (getExe config.programs.aria2.package);
-          downloader-args = mkDefault "aria2c:'-c -x8 -s8 -k1M'";
+        settings = mkDefault {
+          embed-thumbnail = mkOptionDefault true;
+          embed-subs = mkOptionDefault true;
+          sub-langs = mkOptionDefault "en,fr";
+          downloader = mkOptionDefault (getExe config.programs.aria2.package);
+          downloader-args = mkOptionDefault "aria2c:'-c -x8 -s8 -k1M'";
+          # 2026-08-18: see https://github.com/yt-dlp/yt-dlp/issues/17456
+          extractor-args = mkOptionDefault "youtube:player_client=android"
         };
       };
     };
