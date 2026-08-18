@@ -3,16 +3,26 @@
 
   ## 🛠️ Tech Stack
 
-  - [castero @ GitHub](https://github.com/xgi/castero).
-  - [pamixer @ GitHub](https://github.com/cdemoulins/pamixer).
+  - [castero @ GitHub](https://github.com/xgi/castero)
+    is a TUI podcast client for the terminal.
+  - [kew homepage](https://kewplayer.com/)
+    ([kew @ GitHub](https://github.com/ravachol/kew))
+    is an immersive and fast music player that allows to listen to music with privacy.
   - [pulsemixer @ GitHub](https://github.com/GeorgeFilipkin/pulsemixer).
-  - [PyRadio @ GitHub](https://github.com/coderholic/pyradio).
-  - [radio-active @ GitHub](https://github.com/deep5050/radio-active).
-  - [wiremix @ GitHub](https://github.com/tsowell/wiremix).
+  - [PyRadio @ GitHub](https://github.com/coderholic/pyradio)
+    is a Curses based internet radio player.
+  - [radio-active @ GitHub](https://github.com/deep5050/radio-active)
+    plays any radios around the globe right from the terminal ⚡.
+  - [wiremix @ GitHub](https://github.com/tsowell/wiremix)
+    is a simple TUI audio mixer for PipeWire.
 
   ## 📝 Documentation
 
   - [programs.radio-active @ Home Manager Configuration Options](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.radio-active.enable).
+
+  ## 🙇 Acknowledgements
+
+  - [pamixer @ GitHub](https://github.com/cdemoulins/pamixer).
 */
 {
   config,
@@ -36,10 +46,10 @@ in
 
     home.packages = with pkgs; [
       castero # Podcast player
-      wiremix # Pipewire mixer
       # pamixer
       pulsemixer
       pyradio
+      wiremix # Pipewire mixer
     ];
 
     biapy.programs = {
