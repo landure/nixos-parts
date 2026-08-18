@@ -33,7 +33,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = [
+    home.packages = with pkgs; [
       grim
       slurp
       wl-clipboard-rs
