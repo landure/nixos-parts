@@ -8,6 +8,8 @@
   - [kew homepage](https://kewplayer.com/)
     ([kew @ GitHub](https://github.com/ravachol/kew))
     is an immersive and fast music player that allows to listen to music with privacy.
+  - [mufetch @ GitHub](https://github.com/ashish0kumar/mufetch)
+    is a Neofetch-style CLI for music.
   - [pulsemixer @ GitHub](https://github.com/GeorgeFilipkin/pulsemixer).
   - [PyRadio @ GitHub](https://github.com/coderholic/pyradio)
     is a Curses based internet radio player.
@@ -47,6 +49,7 @@ in
     home.packages = with pkgs; [
       castero # Podcast player
       # pamixer
+      mufetch
       pulsemixer
       pyradio
       wiremix # Pipewire mixer
