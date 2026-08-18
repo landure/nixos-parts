@@ -51,7 +51,7 @@ in
     biapy.programs.bat.enable = mkDefault true;
 
     home.shellAliases = {
-      scd = ''scd_function() { local git_root_or_working="$(git rev-parse --show-toplevel 2>/dev/null || pwd)" && local target="${WD}/$(fd --base-directory="''${git_root_or_working}" --type 'd' | sk --query="''${1}")" && cd "''${target}"; }; scd_function'';
+      scd = ''scd_function() { local git_root_or_working="$(git rev-parse --show-toplevel 2>/dev/null || pwd)" && local target="''${git_root_or_working}/$(fd --base-directory="''${git_root_or_working}" --type 'd' | sk --query="''${1}")" && cd "''${target}"; }; scd_function'';
     };
 
     programs = {
