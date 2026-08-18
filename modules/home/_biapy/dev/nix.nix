@@ -12,16 +12,6 @@
     generates Nix fetcher calls from URLs
   - [statix @ GitHub](https://github.com/oppiliappan/statix).
 
-  ## 📝 Documentation
-
-  ### 🏠 Home Manager
-
-  - [programs.lazydocker](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.lazydocker.enable).
-
-  ## 🙇 Acknowledgements
-
-  - [CTOP, le htop pour conteneurs ! @ Tips4tech.fr :fr:](https://blog.tips4tech.fr/ctop-le-htop-pour-conteneurs/).
-  - [Analysez vos images Docker avec Dive @ DevSecOps :fr:](https://blog.stephane-robert.info/docs/conteneurs/outils/dive/).
 */
 {
   config,
