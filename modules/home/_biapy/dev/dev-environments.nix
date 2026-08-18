@@ -51,7 +51,6 @@ in
       devbox
       devenv
       devcontainer
-      flox
     ];
 
     programs.direnv.enable = mkDefault true;
