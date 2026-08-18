@@ -48,6 +48,7 @@ in
       dogedns # dig alternative
       doggo
       gping # ping with data visualization
+      nbping
       snitch # ss alternative
 
       local.quien
