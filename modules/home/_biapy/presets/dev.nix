@@ -12,7 +12,7 @@ in
     biapy.dev = {
       containers.enable = mkDefault true;
       dev-environments.enable = mkDefault true;
-      diff = mkDefault true;
+      diff.enable = mkDefault true;
       k8s.enable = mkDefault true;
       nix.enable = mkDefault true;
     };
