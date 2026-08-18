@@ -51,7 +51,7 @@ in
     biapy.programs.bat.enable = mkDefault true;
 
     home.shellAliases = {
-      scd = ''cd "$(fd --type 'd' "$(git rev-parse --show-toplevel 2>/dev/null || pwd)" | sk)"'';
+      scd = ''cd "$(fd --base-directory="$(git rev-parse --show-toplevel 2>/dev/null || pwd)" --type 'd' | sk)"'';
     };
 
     programs = {
