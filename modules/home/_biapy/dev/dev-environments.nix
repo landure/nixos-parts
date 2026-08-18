@@ -28,7 +28,7 @@ let
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
-  cfg = config.dev.dev-environments;
+  cfg = config.biapy.dev.dev-environments;
 in
 {
   options = {
