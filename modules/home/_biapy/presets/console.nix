@@ -20,6 +20,7 @@ in
         office.enable = mkDefault true;
         systemd.enable = mkDefault true;
         text-editors.enable = mkDefault true;
+        ux.enable = mkDefault true;
       };
 
       programs = {

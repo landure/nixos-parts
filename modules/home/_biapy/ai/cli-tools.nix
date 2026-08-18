@@ -15,7 +15,6 @@
 
   - [Gorilla CLI @ GitHub](https://github.com/gorilla-llm/gorilla-cli).
   - [Tenere @ GitHub](https://github.com/pythops/tenere).
-
 */
 {
   config,

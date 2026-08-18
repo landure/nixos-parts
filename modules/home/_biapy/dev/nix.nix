@@ -11,7 +11,6 @@
   - [nurl @ GitHub](https://github.com/nix-community/nurl)
     generates Nix fetcher calls from URLs
   - [statix @ GitHub](https://github.com/oppiliappan/statix).
-
 */
 {
   config,

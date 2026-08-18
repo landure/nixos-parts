@@ -62,12 +62,12 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-        doxx
-        dstask
-        glow
-        rucola
-        tdf
-      ];
+      doxx
+      dstask
+      glow
+      rucola
+      tdf
+    ];
 
     biapy.programs.joplin-cli.enable = mkDefault true;
 

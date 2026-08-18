@@ -50,8 +50,13 @@ in
   config = mkIf cfg.enable {
     biapy.programs.bat.enable = mkDefault true;
 
+    home.shellAliases = {
+      scd = ''cd "$(fd --type 'd' "$(git rev-parse --show-toplevel 2>/dev/null || pwd)" | sk)"'';
+    };
+
     programs = {
       fd.enable = mkDefault true;
+      git.enable = mkDefault true;
       ripgrep.enable = mkDefault true;
 
       skim = {
