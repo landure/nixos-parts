@@ -13,6 +13,8 @@
   - [jrnl homepage](https://jrnl.sh/en/stable/)
     ([jrnl @ GitHub](https://github.com/jrnl-org/jrnl))
     is a journal application for the command line.
+  - [glow @ GitHub](https://github.com/charmbracelet/glow)
+    renders markdown on the CLI, with pizzazz! 💅🏻
   - [Taskwarrior homepage](https://taskwarrior.org/)
     ([Taskwarrior @ GitHub](https://github.com/GothenburgBitFactory/taskwarrior))
     is a command line task list management utility.
@@ -53,21 +55,18 @@ in
   };
 
   config = mkIf cfg.enable {
-    home = {
-      packages = with pkgs; [
+    home.packages = with pkgs; [
         doxx
         dstask
+        glow
         rucola
         tdf
       ];
-    };
 
     biapy.programs.joplin-cli.enable = mkDefault true;
 
     programs = {
-      jrnl = {
-        enable = mkDefault true;
-      };
+      jrnl.enable = mkDefault true;
 
       taskwarrior.enable = mkDefault true;
     };
