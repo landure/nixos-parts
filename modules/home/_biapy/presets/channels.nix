@@ -17,7 +17,7 @@
   ...
 }:
 let
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.presets.channels;
@@ -26,6 +26,8 @@ in
   options.biapy.presets.channels.enable = mkEnableOption "Nix channels";
 
   config = mkIf cfg.enable {
+    biapy.programs.nh.enable = mkDefault true;
+
     nix.channels = { inherit (inputs) nixpkgs nixpkgs-unstable; };
   };
 }

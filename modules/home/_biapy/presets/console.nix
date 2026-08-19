@@ -26,15 +26,12 @@ in
 
       programs = {
         bash.enable = mkDefault true;
-        eza.enable = mkDefault true;
         fzf.enable = mkDefault true;
-        mcfly.enable = mkDefault true;
         mise.enable = mkDefault true;
+        nh.enable = mkDefault true;
         skim.enable = mkDefault true;
         ssh.enable = mkDefault true;
-        starship.enable = mkDefault true;
         tirith.enable = mkDefault false;
-        zellij.enable = mkDefault true;
         zsh.enable = mkDefault true;
       };
     };

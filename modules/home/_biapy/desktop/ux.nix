@@ -9,12 +9,11 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 let
   inherit (lib.options) mkEnableOption;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkDefault mkIf;
 
   cfg = config.biapy.desktop.ux;
 in
@@ -26,8 +25,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      voxtype
-    ];
+    biapy.programs.voxtype.enable = mkDefault true;
   };
 }

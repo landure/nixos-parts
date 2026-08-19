@@ -46,6 +46,12 @@ in
 
     flake-utils.url = "github:numtide/flake-utils";
 
+    flyline = {
+      url = mkDefault "github:HalFrgrd/flyline";
+      inputs = {
+        nixpkgs.follows = mkDefault "nixpkgs";
+      };
+    };
     quien = {
       url = mkDefault "github:retlehs/quien";
       inputs = {
