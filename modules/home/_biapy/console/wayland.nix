@@ -11,7 +11,7 @@
     is a safe Rust crate for working with the Wayland clipboard.
   - [wl-screenrec @ GitHub](https://github.com/russelltg/wl-screenrec).
     is a high performance screen recorder for wlroots Wayland.
- */
+*/
 {
   config,
   lib,
@@ -19,8 +19,7 @@
   ...
 }:
 let
-  inherit (lib.meta) getExe getExe';
-  inherit (lib.modules) mkIf mkDefault;
+  inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.console.wayland;

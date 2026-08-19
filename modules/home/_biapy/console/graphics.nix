@@ -10,7 +10,6 @@
     or ANSI/Unicode character art suitable for display in a terminal.
   - [timg @ GitHub](https://github.com/hzeller/timg)
     is a terminal image and video viewer.
-
 */
 {
   config,
@@ -20,7 +19,7 @@
 }:
 let
   inherit (lib.options) mkEnableOption;
-  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.modules) mkIf;
 
   cfg = config.biapy.console.graphics;
 in
