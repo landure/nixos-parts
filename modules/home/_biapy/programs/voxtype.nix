@@ -33,7 +33,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      voxtype
+      local.voxtype
       dotool
       ydotool
       wtype
