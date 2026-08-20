@@ -16,7 +16,7 @@
   ...
 }:
 let
-  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) package;
 
@@ -39,7 +39,7 @@ in
   config = mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
-    programs.bash.initExtra = mkDefault ''
+    programs.bash.initExtra = mkAfter ''
       enable -f '${cfg.package}/lib/${libraryName}' 'flyline'
     '';
   };
