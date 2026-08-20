@@ -34,7 +34,7 @@
 let
   inherit (lib.lists) optionals;
   inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf mkDefault;
+  inherit (lib.modules) mkAfter mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.skim;
@@ -50,11 +50,31 @@ in
   config = mkIf cfg.enable {
     biapy.programs.bat.enable = mkDefault true;
 
-    home.shellAliases = {
-      scd = ''scd_function() { local git_root_or_working="$(git rev-parse --show-toplevel 2>/dev/null || pwd)" && local target="''${git_root_or_working}/$(fd --base-directory="''${git_root_or_working}" --type 'd' | sk --query="''${1}")" && cd "''${target}"; }; scd_function'';
-    };
+    # home.shellAliases = {
+    #  scd = ''scd_function() { local git_root_or_working="$(git rev-parse --show-toplevel 2>/dev/null || pwd)" && local target="''${git_root_or_working}/$(fd --base-directory="''${git_root_or_working}" --type 'd' | sk --query="''${1}")" && cd "''${target}"; }; scd_function'';
+    # };
 
     programs = {
+      bash.initExtra = mkAfter ''
+        scd() {
+          local find_base="$(
+              git rev-parse --show-toplevel 2>/dev/null ||
+              pwd
+            )"
+          local target
+          local selection
+
+          selection="$(
+              fd --base-directory="''${find_base}" --type 'd' |
+              sk --query="''${1}"
+            )" ||
+            return 1
+
+          target="''${git_root_or_working}/''${selection}"
+          cd "''${target}"
+        }
+      '';
+
       fd.enable = mkDefault true;
       git.enable = mkDefault true;
       ripgrep.enable = mkDefault true;
@@ -77,7 +97,7 @@ in
         # CTRL-T
         fileWidgetCommand = mkDefault "${getExe config.programs.fd.package} --type 'f' --hidden --follow --exclude '.git'";
         fileWidgetOptions = mkDefault [
-          "--preview='${getExe config.programs.bat.package} --style=numbers --color=always --line-range :500 {}'"
+          "--preview='test -f {} && ${getExe config.programs.bat.package} --style=numbers --color=always --line-range :500 {}'"
           "--preview-window='right:60%:nowrap'"
         ];
 
