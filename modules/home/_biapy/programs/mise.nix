@@ -67,6 +67,10 @@ in
       };
     };
 
+    biapy.programs = {
+      cargo.enable = mkDefault true;
+    };
+
     programs = {
       # Enable uv to provide uvx for pipx backend.
       uv.enable = mkDefault true;
