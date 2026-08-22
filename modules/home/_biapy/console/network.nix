@@ -51,7 +51,7 @@ in
       nbping
       snitch # ss alternative
 
-      local.quien
+      biapy-parts.quien
     ];
 
     biapy.programs.trippy.enable = mkDefault true;

@@ -1,18 +1,18 @@
 /**
-   # Rust's cargo
+  # Rust's cargo
 
-   ## 🛠️ Tech Stack
+  ## 🛠️ Tech Stack
 
-   - [Rust homepage](https://www.rust-lang.org/).
+  - [Rust homepage](https://www.rust-lang.org/).
 
-   ## 📝 Documentation
+  ## 📝 Documentation
 
-   - [Configuration @ The Cargo book](https://doc.rust-lang.org/cargo/reference/config.html).
+  - [Configuration @ The Cargo book](https://doc.rust-lang.org/cargo/reference/config.html).
 
-   ### 🏠 Home Manager
+  ### 🏠 Home Manager
 
-   - [programs.cargo @ NixOS reference](https://search.nixos.org/options?query=programs.cargo&source=home_manager).
-   - [programs.cargo @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.cargo.enable).
+  - [programs.cargo @ NixOS reference](https://search.nixos.org/options?query=programs.cargo&source=home_manager).
+  - [programs.cargo @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.cargo.enable).
 
   ## 🙇 Acknowledgements
 

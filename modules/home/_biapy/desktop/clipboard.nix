@@ -48,8 +48,7 @@
   ...
 }:
 let
-  inherit (builtins) toString;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) enum int package;
 
@@ -96,13 +95,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
+    home.packages = [
       cfg.package
     ];
     services = {
       clipcat = {
         enable = mkDefault (cfg.history.tool == "clipcat");
-        daemonSetting = {
+        daemonSettings = {
           daemonize = true;
           max_history = cfg.history.size;
         };

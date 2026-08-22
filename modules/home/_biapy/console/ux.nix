@@ -3,6 +3,9 @@
 
   ## 🛠️ Tech Stack
 
+  - [sd - search & displace @ GitHub](https://github.com/chmln/sd)
+    is an intuitive find & replace CLI (`sed` alternative).
+
   ## 📝 Documentation
 
   ### 🏠 Home Manager
@@ -88,6 +91,8 @@ in
     };
 
     services.ssh-agent.enable = mkDefault true;
+
+    home.packages = with pkgs; [ sd ];
 
     biapy.programs = {
       bash.enable = mkDefault true;

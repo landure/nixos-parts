@@ -39,6 +39,7 @@
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
     nixpkgs-lib.follows = "nixpkgs";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     pkgs-by-name-for-flake-parts.url = "github:drupol/pkgs-by-name-for-flake-parts";
     quien = {
       url = "github:retlehs/quien";

@@ -70,7 +70,7 @@ in
             )" ||
             return 1
 
-          target="''${git_root_or_working}/''${selection}"
+          target="''${find_base}/''${selection}"
           cd "''${target}"
         }
       '';

@@ -1,5 +1,5 @@
 /**
-  # home-manager integration
+  # biapy-parts' packages & overlay
 
   ## 🛠️ Tech Stack
 
@@ -49,5 +49,4 @@ in
         }
       );
   };
-
 }

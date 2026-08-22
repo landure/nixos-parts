@@ -69,6 +69,7 @@ in
 
     biapy.programs = {
       cargo.enable = mkDefault true;
+      go.enable = mkDefault true;
     };
 
     programs = {
