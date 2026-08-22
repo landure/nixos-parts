@@ -1,14 +1,14 @@
 {
   writeShellApplication,
   lib,
-  local,
+  biapy-parts,
   ripgrep,
   skim,
   uutils-coreutils-noprefix,
 }:
 let
   inherit (lib.meta) getExe getExe';
-  inherit (local) batline;
+  inherit (biapy-parts) batline;
 
   batlineCmd = getExe batline;
   rgCmd = getExe ripgrep;

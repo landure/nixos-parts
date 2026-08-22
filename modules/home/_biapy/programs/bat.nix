@@ -48,7 +48,7 @@ in
         batman
         batgrep
         batwatch
-        pkgs.local.batline
+        pkgs.biapy-parts.batline
       ];
     };
   };

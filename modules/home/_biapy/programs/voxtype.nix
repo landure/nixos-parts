@@ -33,7 +33,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      local.voxtype
+      biapy-parts.voxtype
       dotool
       ydotool
       wtype

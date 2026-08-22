@@ -10,13 +10,13 @@
 {
   writeShellApplication,
   lib,
-  local,
+  biapy-parts,
   helix,
   uutils-findutils,
 }:
 let
   inherit (lib.meta) getExe getExe';
-  inherit (local) skf;
+  inherit (biapy-parts) skf;
 
   skfCmd = getExe skf;
   hxCmd = getExe helix;

@@ -45,7 +45,7 @@ in
       withSystem prev.stdenv.hostPlatform.system (
         { config, ... }:
         {
-          local = config.packages;
+          biapy-parts = config.packages;
         }
       );
   };

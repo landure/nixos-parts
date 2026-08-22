@@ -43,7 +43,7 @@ in
     programs.tirith = {
       enable = mkDefault true;
 
-      package = mkDefault pkgs.local.tirith;
+      package = mkDefault pkgs.biapy-parts.tirith;
 
       policy = mkDefault {
         version = mkOptionDefault 1;

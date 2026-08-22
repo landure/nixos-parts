@@ -110,35 +110,35 @@ in
     };
 
     home.packages =
-      with pkgs.local;
+      with pkgs.biapy-parts;
       [
         skf
         skrg
         skrat
       ]
       ++ (optionals config.programs.neovim.enable (
-        with pkgs.local;
+        with pkgs.biapy-parts;
         [
           skvim
           skrvim
         ]
       ))
       ++ (optionals config.programs.helix.enable (
-        with pkgs.local;
+        with pkgs.biapy-parts;
         [
           skhx
           skrhx
         ]
       ))
       ++ (optionals config.programs.vscode.enable (
-        with pkgs.local;
+        with pkgs.biapy-parts;
         [
           skode
           skrode
         ]
       ))
       ++ (optionals config.programs.vscodium.enable (
-        with pkgs.local;
+        with pkgs.biapy-parts;
         [
           skodium
           skrodium

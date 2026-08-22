@@ -1,12 +1,12 @@
 {
   writeShellApplication,
   lib,
-  local,
+  biapy-parts,
   uutils-findutils,
 }:
 let
   inherit (lib.meta) getExe getExe';
-  inherit (local) batline skrg;
+  inherit (biapy-parts) batline skrg;
 
   batlineCmd = getExe batline;
   skrgCmd = getExe skrg;

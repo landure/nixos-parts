@@ -22,7 +22,7 @@ let
 
   cfg = config.biapy.programs.flyline;
 
-  defaultPackage = pkgs.local.flyline;
+  defaultPackage = pkgs.biapy-parts.flyline;
   libraryName = "libflyline${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}";
 in
 {
