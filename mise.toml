@@ -1,8 +1,14 @@
 [tools]
-"nix:nixfmt-rs" = "latest"
+"github:Mic92/nixfmt-rs" = "latest"
 prek = "latest"
+taplo = "latest"
+
+[tasks.format]
+alias = "fmt"
+run = "nixfmt ."
 
 [shell_alias]
 wf = "nix run .#write-flake"
 flup = "nix flake update"
 flin = "nix flake metadata"
+fmt = "mise run format"
