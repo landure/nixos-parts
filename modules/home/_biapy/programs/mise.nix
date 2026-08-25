@@ -43,7 +43,7 @@
 {
   config,
   lib,
-  pkgs-unstable,
+  pkgs,
   ...
 }:
 let
@@ -79,7 +79,7 @@ in
       mise = {
         enable = mkDefault true;
 
-        package = pkgs-unstable.mise;
+        package = pkgs.mise;
 
         # globalConfig = {
         #   settings = {

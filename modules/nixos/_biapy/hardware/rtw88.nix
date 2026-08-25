@@ -31,7 +31,7 @@ let
   network_controllers = config.hardware.facter.report.hardware.network_controller or [ ];
 in
 {
-  options.biapy.facter.detected.networking.broadcom = {
+  options = {
     biapy.hardware.rtw88.enable = mkEnableOption "Enable the RTW88 module" // {
 
       default = lib.any (

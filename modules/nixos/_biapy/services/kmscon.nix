@@ -31,25 +31,20 @@
 */
 {
   config,
-  flake,
   lib,
   pkgs,
   ...
 }:
 let
-  inherit (flake.inputs) nixpkgs-unstable;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
   inherit (lib.strings) concatStringsSep;
-
-  # Use pkgs-unstable to get kmscon > 9.2 with mouse support.
-  pkgs-unstable = import nixpkgs-unstable { inherit (pkgs.stdenv.hostPlatform) system; };
 
   cfg = config.biapy.services.kmscon;
 
   # Set custom compiler flags for kmscon,
   # to ensure compatibility between Zellij shortcuts and backspace key.
-  # zellijCompatibleKmscon = pkgs-unstable.kmscon.overrideAttrs {
+  # zellijCompatibleKmscon = pkgs.unstable.kmscon.overrideAttrs {
   #   mesonFlags = [ "-Dbackspace_sends_delete=true" ];
   # };
 in
@@ -70,7 +65,7 @@ in
         # Use kmscon as the virtual console instead of gettys
         enable = mkDefault true;
 
-        package = mkDefault pkgs-unstable.kmscon;
+        package = mkDefault pkgs.unstable.kmscon;
 
         # Configure keymap from xserver keyboard settings (not needed)
         useXkbConfig = mkDefault true;

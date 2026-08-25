@@ -24,10 +24,13 @@
   config,
   inputs,
   lib,
+  self,
   ...
 }:
 let
+  inherit (lib.lists) elem;
   inherit (lib.modules) mkDefault;
+  inherit (lib.strings) getName;
 in
 {
   flake-file.inputs = {
@@ -63,10 +66,28 @@ in
 
   flake = {
 
-    modules.homeManager = {
-      default = config.flake.modules.homeManager.biapy;
-      biapy = inputs.import-tree ./_biapy;
-    };
+    modules.homeManager =
+      let
+        localFlake = {
+          inputs = { inherit (inputs) import-tree nix-index-database stylix; };
+          self = { inherit (self) homeModules overlays; };
+        };
+
+        biapyHomeModule = localFlake: _: {
+          # nixpkgs.overlays = [
+          #   localFlake.self.overlays.default
+          # ];
+          imports = [
+            localFlake.inputs.nix-index-database.homeModules.default
+            localFlake.inputs.stylix.homeModules.stylix
+            (localFlake.inputs.import-tree ./_biapy)
+          ];
+        };
+      in
+      {
+        default = config.flake.modules.homeManager.biapy;
+        biapy = biapyHomeModule localFlake;
+      };
 
     homeModules = {
       biapy = config.flake.modules.homeManager.biapy;

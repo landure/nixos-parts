@@ -12,6 +12,7 @@
 {
   inputs,
   lib,
+  self,
   withSystem,
   ...
 }:
@@ -40,13 +41,17 @@ in
     };
 
   flake = {
-    overlays.default =
+    overlays.default = (localFlake:
       final: prev:
       withSystem prev.stdenv.hostPlatform.system (
-        { config, ... }:
+        { config, system, ... }:
         {
-          biapy-parts = config.packages;
+          unstable = import localFlake.inputs.nixpkgs-unstable { inherit system; nixpkgs.config = config.nixpkgs.config; };
+          biapy-parts = localFlake.packages.${system};
         }
-      );
+      )) {
+      inputs = {inherit (inputs) nixpkgs-unstable;};
+      inherit (self) packages;
+    };
   };
 }

@@ -27,7 +27,6 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 let
@@ -60,7 +59,7 @@ in
         dive
         podman-tui
         nerdctl
-        pkgs-unstable.layerx
+        unstable.layerx
 
         (pkgs.writeShellScriptBin "dockvol" ''
           # List container volumes
@@ -83,8 +82,6 @@ in
             {{- end }}'
         '')
       ];
-
     };
-
   };
 }

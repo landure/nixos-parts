@@ -23,7 +23,7 @@
 {
   config,
   lib,
-  pkgs-unstable,
+  pkgs,
   ...
 }:
 let
@@ -44,7 +44,7 @@ in
     programs = {
       aria2 = {
         enable = mkDefault true;
-        package = pkgs-unstable.aria2;
+        package = pkgs.aria2;
         settings = {
           ftp-pasv = true;
         };
@@ -53,7 +53,7 @@ in
       yt-dlp = {
         enable = mkDefault true;
 
-        package = mkDefault pkgs-unstable.yt-dlp;
+        package = mkDefault pkgs.yt-dlp;
 
         settings = mkDefault {
           embed-thumbnail = mkOptionDefault true;

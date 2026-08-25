@@ -17,7 +17,6 @@
   config,
   lib,
   pkgs,
-  pkgs-unstable,
   ...
 }:
 let
@@ -40,7 +39,7 @@ in
 
     home.packages = with pkgs; [
       diffutils
-      pkgs-unstable.hunk
+      unstable.hunk
     ];
   };
 }

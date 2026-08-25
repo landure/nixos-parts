@@ -17,7 +17,6 @@
 */
 {
   config,
-  inputs,
   lib,
   ...
 }:
@@ -28,9 +27,9 @@ let
   cfg = config.biapy.programs.pay-respects;
 in
 {
-  imports = [
-    inputs.biapy-parts.inputs.nix-index-database.homeModules.default
-  ];
+  # imports = [
+  #  localFlake.inputs.nix-index-database.homeModules.default
+  # ];
 
   options = {
     biapy.programs.pay-respects = {
