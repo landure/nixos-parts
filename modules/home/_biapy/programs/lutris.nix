@@ -42,10 +42,7 @@ in
     programs.lutris = {
       enable = mkDefault true;
       steamPackage = mkDefault (
-        if osConfig.programs.steam.enable or false then
-          osConfig.programs.steam.package
-        else
-          pkgs.steam
+        if osConfig.programs.steam.enable or false then osConfig.programs.steam.package else pkgs.steam
       );
     };
   };
