@@ -28,9 +28,7 @@
   ...
 }:
 let
-  inherit (lib.lists) elem;
   inherit (lib.modules) mkDefault;
-  inherit (lib.strings) getName;
 in
 {
   flake-file.inputs = {
@@ -39,16 +37,7 @@ in
       url = mkDefault "github:nix-community/home-manager";
       inputs.nixpkgs.follows = mkDefault "nixpkgs";
     };
-    stylix = {
-      url = mkDefault "github:nix-community/stylix/release-26.05";
-      inputs = {
-        nixpkgs.follows = mkDefault "nixpkgs";
-        flake-parts.follows = mkDefault "flake-parts";
-      };
-    };
-
     flake-utils.url = "github:numtide/flake-utils";
-
     flyline = {
       url = mkDefault "github:HalFrgrd/flyline";
       inputs = {
@@ -62,6 +51,19 @@ in
         flake-utils.follows = "flake-utils";
       };
     };
+    spicetify = {
+      url = mkDefault "github:Gerg-L/spicetify-nix";
+      inputs = {
+        nixpkgs.follows = mkDefault "nixpkgs";
+      };
+    };
+    stylix = {
+      url = mkDefault "github:nix-community/stylix/release-26.05";
+      inputs = {
+        nixpkgs.follows = mkDefault "nixpkgs";
+        flake-parts.follows = mkDefault "flake-parts";
+      };
+    };
   };
 
   flake = {
@@ -69,7 +71,14 @@ in
     modules.homeManager =
       let
         localFlake = {
-          inputs = { inherit (inputs) import-tree nix-index-database stylix; };
+          inputs = {
+            inherit (inputs)
+              import-tree
+              nix-index-database
+              spicetify-nix
+              stylix
+              ;
+          };
           self = { inherit (self) homeModules overlays; };
         };
 
@@ -80,6 +89,7 @@ in
           imports = [
             localFlake.inputs.nix-index-database.homeModules.default
             localFlake.inputs.stylix.homeModules.stylix
+            localFlake.inputs.spicetify-nix.homeManagerModules.spicetify
             (localFlake.inputs.import-tree ./_biapy)
           ];
         };

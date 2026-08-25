@@ -17,6 +17,7 @@
 {
   config,
   lib,
+  osConfig,
   pkgs,
   ...
 }:
@@ -42,16 +43,11 @@ in
       with pkgs;
       [
         gamehub
-        steam
         heroic
         protontricks
         umu-launcher
       ]
+      ++ (optional (!osConfig.programs.steam.enable) pkgs.steam)
       ++ (optional (hasAmdGpu || hasNvidiaGpu) pkgs.lact);
-
-    biapy.system.unfree.allow = [
-      "steam"
-      "steam-unwrapped"
-    ];
   };
 }

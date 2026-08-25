@@ -41,17 +41,24 @@ in
     };
 
   flake = {
-    overlays.default = (localFlake:
-      final: prev:
-      withSystem prev.stdenv.hostPlatform.system (
-        { config, system, ... }:
+    overlays.default =
+      (
+        localFlake: final: prev:
+        withSystem prev.stdenv.hostPlatform.system (
+          { config, system, ... }:
+          {
+            unstable = import localFlake.inputs.nixpkgs-unstable {
+              inherit system;
+              nixpkgs.config = config.nixpkgs.config;
+            };
+            biapy-parts = localFlake.packages.${system};
+            spicetify-nix = localFlake.inputs.spicetify-nix.legacyPackages.${system};
+          }
+        )
+      )
         {
-          unstable = import localFlake.inputs.nixpkgs-unstable { inherit system; nixpkgs.config = config.nixpkgs.config; };
-          biapy-parts = localFlake.packages.${system};
-        }
-      )) {
-      inputs = {inherit (inputs) nixpkgs-unstable;};
-      inherit (self) packages;
-    };
+          inputs = { inherit (inputs) nixpkgs-unstable spicetify-nix; };
+          inherit (self) packages;
+        };
   };
 }

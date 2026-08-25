@@ -19,7 +19,7 @@
 }:
 let
   inherit (lib.options) mkEnableOption;
-  inherit (lib.modules) mkIf mkDefault;
+  inherit (lib.modules) mkDefault mkIf;
 
   cfg = config.biapy.desktop.retro-gaming;
 in
@@ -32,6 +32,6 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ dolphin ];
-    programs.lutris.enable = mkDefault true;
+    biapy.programs.lutris.enable = mkDefault true;
   };
 }

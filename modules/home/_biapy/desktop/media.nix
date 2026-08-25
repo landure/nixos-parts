@@ -6,10 +6,12 @@
   ## 🛠️ Tech Stack
 
   - [Handbrake homepage](https://handbrake.fr/)
-    ([Handbrake @ GitHub](https://github.com/HandBrake/HandBrake)).
+    ([Handbrake @ GitHub](https://github.com/HandBrake/HandBrake))
+    is an open-source video transcoder.
   - [Spotify homepage](https://spotify.com/).
-  - [Spicetify-nix](https://gerg-l.github.io/spicetify-nix/)
-    ([Spicetify-nix @ GitHub](https://github.com/Gerg-L/spicetify-nix)).
+  - [Spicetify homepage](https://spicetify.app/)
+    ([Spicetify @ GitHub](https://github.com/spicetify/cli))
+    is a command-line tool to customize spotify.
   - [VLC media player homepage](https://www.videolan.org/vlc/).
 
   ### Removed
@@ -23,18 +25,9 @@
 
   - [programs.spotify-player @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.spotify-player.enable).
   - [services.jellyfin-mpv-shim @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-services.jellyfin-mpv-shim.enable).
-
-  ### 🎨 Stylix
-
-  - [Spicetify](https://nix-community.github.io/stylix/options/modules/spicetify.html).
-
-  ## 🙇 Acknowledgements
-
-  - [Spicetify-Nix @ Official NixOS Wiki](https://wiki.nixos.org/wiki/Spicetify-Nix).
 */
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
@@ -42,8 +35,6 @@
 let
   inherit (lib.options) mkEnableOption;
   inherit (lib.modules) mkIf mkDefault;
-
-  spicePkgs = inputs.spicetify-nix.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 
   cfg = config.biapy.desktop.media;
 in
@@ -60,26 +51,11 @@ in
       vlc
     ];
 
-    programs.spotify-player.enable = mkDefault (!config.programs.spicetify.enable);
+    # enable spotify if spicetify is manually removed.
+    programs.spotify-player.enable = mkDefault (!config.biapy.programs.spicetify.enable);
 
     # services.jellyfin-mpv-shim.enable = mkDefault true;
 
-    programs.spicetify = {
-      enable = mkDefault true;
-      enabledExtensions = with spicePkgs.extensions; [
-        adblockify
-        hidePodcasts
-        shuffle # shuffle+ (special characters are sanitized out of extension names)
-      ];
-
-      # theme = spicePkgs.themes.catppuccin;
-      # colorScheme = "mocha";
-    };
-
-    biapy.system.unfree.allow = [
-      "spicetify-cli"
-      "spotify"
-      "spicetify-Default"
-    ];
+    biapy.programs.spicetify.enable = mkDefault true;
   };
 }
