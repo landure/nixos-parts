@@ -48,6 +48,10 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
+    spicetify = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     stylix = {
       url = "github:nix-community/stylix/release-26.05";
       inputs = {
