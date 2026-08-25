@@ -440,11 +440,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pkgs-by-name-for-flake-parts": "pkgs-by-name-for-flake-parts",
         "quien": "quien",
-        "spicetify": "spicetify",
+        "spicetify-nix": "spicetify-nix",
         "stylix": "stylix"
       }
     },
-    "spicetify": {
+    "spicetify-nix": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"

@@ -51,7 +51,7 @@ in
         flake-utils.follows = "flake-utils";
       };
     };
-    spicetify = {
+    spicetify-nix = {
       url = mkDefault "github:Gerg-L/spicetify-nix";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
