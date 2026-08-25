@@ -85,7 +85,7 @@ in
 
         # generate the manual page index caches using mandb(8).
         # This allows searching for a page or keyword using utilities like apropos(1).
-        generateCaches = mkDefault true;
+        cache.enable = mkDefault true;
 
         man-db.enable = mkDefault true;
       };
