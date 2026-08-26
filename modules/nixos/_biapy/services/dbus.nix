@@ -37,8 +37,8 @@ let
 in
 {
   options.biapy.services.dbus = {
-      enable = mkEnableOption "D-Bus defaults";
-    };
+    enable = mkEnableOption "D-Bus defaults";
+  };
 
   config = mkIf cfg.enable {
     services.dbus = {
