@@ -20,7 +20,7 @@ let
   cfg = config.biapy.system.nix-sane-defaults;
 in
 {
-  options.biapy.nix-sane-defaults.enable = mkEnableOption "Sane Defaults";
+  options.biapy.system.nix-sane-defaults.enable = mkEnableOption "Sane Defaults";
 
   config = mkIf cfg.enable {
     biapy.programs.nh.enable = mkDefault true;
