@@ -16,14 +16,54 @@
 }:
 let
   # inherit (lib)  warn;
-  inherit (lib.types) path str;
   inherit (lib.modules) mkDefault;
   inherit (lib.options) mkOption;
   inherit (lib.strings) toUpper;
+  inherit (lib.types) path str submodule;
 
   cfg = config.biapy.userIdentity;
 
   osIdentity = osConfig.biapy.users.users.${config.home.username}.identity;
+
+  gecosIdentityOptions = {
+    options = {
+      firstname = mkOption {
+        type = str;
+        default = osIdentity.firstname or null;
+        description = "User firstname";
+      };
+      lastname = mkOption {
+        type = str;
+        default = osIdentity.lastname or null;
+        description = "User lastname";
+      };
+      email = mkOption {
+        type = str;
+        default = osIdentity.email or null;
+        description = "User email address";
+      };
+      fullname = mkOption {
+        type = str;
+        default = osIdentity.fullname or "${cfg.firstname} ${toUpper cfg.lastname}";
+        description = "User fullname";
+      };
+      roomNumber = mkOption {
+        type = str;
+        default = osIdentity.roomNumber or "";
+        description = "User room number";
+      };
+      workPhone = mkOption {
+        type = str;
+        default = osIdentity.workPhone or "";
+        description = "User work phone";
+      };
+      homePhone = mkOption {
+        type = str;
+        default = mkOption.workPhone or "";
+        description = "User home phone";
+      };
+    };
+  };
 
   # secretsDir = "${self}/secrets/users/${username}.yaml";
 
@@ -42,42 +82,12 @@ let
   #     warn "Warning: user '${username}' `sops.defaultSopsFile` '${homeSecretsPath}' doesn't exists." false;
 in
 {
-  options.biapy.userIdentity = {
-    firstname = mkOption {
-      type = str;
-      default = osIdentity.firstname or null;
-      description = "User firstname";
+  options.biapy.user = {
+    identity = mkOption {
+      type = submodule gecosIdentityOptions;
+      description = "User identity informations";
     };
-    lastname = mkOption {
-      type = str;
-      default = osIdentity.lastname or null;
-      description = "User lastname";
-    };
-    fullname = mkOption {
-      type = str;
-      default = osIdentity.fullname or "${cfg.firstname} ${toUpper cfg.lastname}";
-      description = "User fullname";
-    };
-    email = mkOption {
-      type = str;
-      default = osIdentity.email or null;
-      description = "User email address";
-    };
-    roomNumber = mkOption {
-      type = str;
-      default = osIdentity.roomNumber or "";
-      description = "User room number";
-    };
-    workPhone = mkOption {
-      type = str;
-      default = osIdentity.workPhone or "";
-      description = "User work phone";
-    };
-    homePhone = mkOption {
-      type = str;
-      default = osIdentity.homePhone or "";
-      description = "User home phone";
-    };
+
     sopsFile = mkOption {
       type = path;
       default = "${self}/secrets/users/${config.home.username}.${config.biapy.userIdentity.sopsFormat}";
@@ -98,8 +108,8 @@ in
   config = {
     programs.git.settings = {
       user = {
-        name = mkDefault cfg.fullname;
-        email = mkDefault cfg.email;
+        name = mkDefault cfg.identity.fullname;
+        email = mkDefault cfg.identity.email;
       };
     };
 

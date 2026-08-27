@@ -76,38 +76,40 @@ let
     else
       "yaml";
 
-  gecosOptions = {
-    firstname = mkOption {
-      type = str;
-      description = "User firstname";
-    };
-    lastname = mkOption {
-      type = str;
-      description = "User lastname";
-    };
-    email = mkOption {
-      type = str;
-      description = "User email address";
-    };
-    fullname = mkOption {
-      type = str;
-      default = "${cfg.firstname} ${toUpper cfg.lastname}";
-      description = "User fullname";
-    };
-    roomNumber = mkOption {
-      type = str;
-      default = "";
-      description = "User room number";
-    };
-    workPhone = mkOption {
-      type = str;
-      default = "";
-      description = "User work phone";
-    };
-    homePhone = mkOption {
-      type = str;
-      default = "";
-      description = "User home phone";
+  gecosIdentityOptions = {
+    options = {
+      firstname = mkOption {
+        type = str;
+        description = "User firstname";
+      };
+      lastname = mkOption {
+        type = str;
+        description = "User lastname";
+      };
+      email = mkOption {
+        type = str;
+        description = "User email address";
+      };
+      fullname = mkOption {
+        type = str;
+        default = "${cfg.firstname} ${toUpper cfg.lastname}";
+        description = "User fullname";
+      };
+      roomNumber = mkOption {
+        type = str;
+        default = "";
+        description = "User room number";
+      };
+      workPhone = mkOption {
+        type = str;
+        default = "";
+        description = "User work phone";
+      };
+      homePhone = mkOption {
+        type = str;
+        default = "";
+        description = "User home phone";
+      };
     };
   };
 
@@ -124,7 +126,7 @@ let
         };
 
         identity = mkOption {
-          type = submodule gecosOptions;
+          type = submodule gecosIdentityOptions;
           description = "User identity informations";
         };
 
