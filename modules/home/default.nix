@@ -29,6 +29,32 @@
 }:
 let
   inherit (lib.modules) mkDefault;
+
+  localFlake = {
+    inputs = {
+      inherit (inputs)
+        import-tree
+        sops-nix
+        nix-index-database
+        spicetify-nix
+        stylix
+        ;
+    };
+    self = { inherit (self) homeModules overlays; };
+  };
+
+  biapyHomeModule = localFlake: _: {
+    # nixpkgs.overlays = [
+    #   localFlake.self.overlays.default
+    # ];
+    imports = [
+      localFlake.inputs.sops-nix.homeManagerModules.sops
+      localFlake.inputs.nix-index-database.homeModules.default
+      localFlake.inputs.stylix.homeModules.stylix
+      localFlake.inputs.spicetify-nix.homeManagerModules.spicetify
+      (localFlake.inputs.import-tree ./_biapy)
+    ];
+  };
 in
 {
   flake-file.inputs = {
@@ -37,7 +63,11 @@ in
       url = mkDefault "github:nix-community/home-manager";
       inputs.nixpkgs.follows = mkDefault "nixpkgs";
     };
-    flake-utils.url = "github:numtide/flake-utils";
+    sops-nix = {
+      url = mkDefault "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = mkDefault "nixpkgs";
+    };
+    flake-utils.url = mkDefault "github:numtide/flake-utils";
     flyline = {
       url = mkDefault "github:HalFrgrd/flyline";
       inputs = {
@@ -67,42 +97,12 @@ in
   };
 
   flake = {
-
-    modules.homeManager =
-      let
-        localFlake = {
-          inputs = {
-            inherit (inputs)
-              import-tree
-              nix-index-database
-              spicetify-nix
-              stylix
-              ;
-          };
-          self = { inherit (self) homeModules overlays; };
-        };
-
-        biapyHomeModule = localFlake: _: {
-          # nixpkgs.overlays = [
-          #   localFlake.self.overlays.default
-          # ];
-          imports = [
-            localFlake.inputs.nix-index-database.homeModules.default
-            localFlake.inputs.stylix.homeModules.stylix
-            localFlake.inputs.spicetify-nix.homeManagerModules.spicetify
-            (localFlake.inputs.import-tree ./_biapy)
-          ];
-        };
-      in
-      {
-        default = config.flake.modules.homeManager.biapy;
-        biapy = biapyHomeModule localFlake;
-      };
-
-    homeModules = {
-      biapy = config.flake.modules.homeManager.biapy;
-      default = config.flake.homeModules.biapy;
+    modules.homeManager = {
+      default = config.flake.modules.homeManager.biapy;
+      biapy = biapyHomeModule localFlake;
     };
+
+    homeModules = config.flake.modules.homeManager;
 
     tests = {
       "modules.home" = {

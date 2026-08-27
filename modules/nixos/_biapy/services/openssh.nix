@@ -115,6 +115,8 @@ in
       openssh = {
         enable = mkDefault true;
 
+        authorizedKeysInHomedir = mkDefault true;
+
         settings = mkDefault {
           PermitRootLogin = "no";
           PasswordAuthentication = false;
