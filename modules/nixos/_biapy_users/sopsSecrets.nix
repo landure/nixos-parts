@@ -22,14 +22,14 @@ in
   options = {
     biapy.users.secretsDirectory = mkOption {
       type = path;
-      default = "${self}/secrets/users/";
-      defaultText = "<flake>/secrets/users/";
+      default = "${self}/secrets/users";
+      defaultText = "<flake>/secrets/users";
       description = "Path of the users SOPS secrets files";
     };
   };
 
   config = {
-    sops.secrets = lib.traceVal (
+    sops.secrets = (
       mergeAttrsList (
         attrValues (
           mapAttrs (
@@ -60,7 +60,7 @@ in
       )
     );
 
-    users.users = lib.traceVal (
+    users.users = (
       mapAttrs (username: _: {
         hashedPasswordFile = mkDefault config.sops.secrets."${username}:hashedPassword".path;
       }) cfg
