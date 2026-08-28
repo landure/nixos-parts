@@ -19,9 +19,10 @@
   ...
 }:
 let
+  inherit (lib.meta) getExe';
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkOption;
   inherit (lib.types) bool;
-  inherit (lib.modules) mkIf mkDefault;
 
   cfg = config.biapy.security.sudo;
 
@@ -41,31 +42,30 @@ in
   config = mkIf cfg.enable {
     # Enable sudo for users in wheel group, and allow sudoers reboot and poweroff
     # @see https://nixos.wiki/wiki/Sudo
-    security.sudo = {
+    security.sudo-rs = {
       enable = mkDefault true;
       extraRules = [
         {
           commands = [
             {
-              command = "${pkgs.systemd}/bin/systemctl suspend";
+              command = "${getExe' pkgs.systemd "systemctl"} suspend";
               options = [ "NOPASSWD" ];
             }
             {
-              command = "${pkgs.systemd}/bin/reboot";
+              command = getExe' pkgs.systemd "reboot";
               options = [ "NOPASSWD" ];
             }
             {
-              command = "${pkgs.systemd}/bin/poweroff";
+              command = getExe' pkgs.systemd "poweroff";
               options = [ "NOPASSWD" ];
             }
 
             # Allow passwordless use of nixos-rebuild switch --use-remote-sudo --target-host "user@host"
             {
-              command = "${pkgs.nix}/bin/nix-env -p /nix/var/nix/profiles/system --set /nix/store/*nixos-system*";
+              command = "${getExe' pkgs.nix "nix-env"} -p /nix/var/nix/profiles/system --set /nix/store/*nixos-system*";
               options = [ "NOPASSWD" ];
             }
           ];
-          groups = [ "wheel" ];
         }
       ];
     };

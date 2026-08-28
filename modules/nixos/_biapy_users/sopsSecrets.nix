@@ -7,12 +7,11 @@
 }:
 let
   inherit (lib.attrsets)
-    attrNames
     attrValues
     mapAttrs
     mergeAttrsList
     ;
-  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.modules) mkDefault;
   inherit (lib.options) mkOption;
   inherit (lib.types) path;
 

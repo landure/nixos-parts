@@ -19,28 +19,29 @@
 */
 { config, lib, ... }:
 let
-  inherit (lib.attrsets) mapAttrs;
-  inherit (lib.options) mkOption;
+  inherit (lib.attrsets) attrNames mapAttrs;
+  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.options) mkEnableOption mkOption ;
   inherit (lib.types)
-    bool
+    str
     # path
     # nullOr
     # submodule
     ;
-  inherit (lib.modules) mkIf mkDefault;
 
   cfg = config.biapy.services.openssh;
 in
 {
   options = {
     biapy.services.openssh = {
-      enable = mkOption {
-        type = bool;
+      enable = mkEnableOption "OpenSSH server, with fail2ban" // {
         default = true;
-        example = true;
-        description = ''
-          Whether to enable OpenSSH server, with fail2ban.
-        '';
+      };
+
+      allowedGroup = mkOption {
+        type = str;
+        default = "ssh-users";
+        description = "Group which users are allowed to connect to the host by using SSH";
       };
 
       # ed25519_key = mkOption {
@@ -70,10 +71,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users = {
-      groups.ssh-users = { };
-      users = mapAttrs (_: _: { extraGroups = [ "ssh-users" ]; }) config.home-manager.users;
-    };
+    users.groups.${cfg.allowedGroup}.members = mkDefault (attrNames  config.home-manager.users);
 
     # sops.secrets = {
     #   "openssh/private_key" = {
@@ -121,7 +119,7 @@ in
           PermitRootLogin = "no";
           PasswordAuthentication = false;
           KbdInteractiveAuthentication = false;
-          AllowGroups = [ "ssh-users" ];
+          AllowGroups = [cfg.allowedGroup  ];
         };
 
         hostKeys = [
