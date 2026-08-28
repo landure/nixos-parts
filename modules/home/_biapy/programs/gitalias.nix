@@ -38,7 +38,7 @@ in
     home.file = {
       ${gitalias_path}.source = mkDefault (fetchurl {
         url = "https://raw.githubusercontent.com/GitAlias/gitalias/7653169af41a9fa93d6f5c5e2aedb4c7ce801840/gitalias.txt";
-        hash = "sha256-EDiSwNYXTtG8bbWHs6p6SU+aV4nbPQeNAYa8NenvZuo=";
+        hash = "sha256-S2yrTL2C6sowtKj626N+PMbKRuqaYOkpvOAYs/qupa8=";
       });
     };
 
