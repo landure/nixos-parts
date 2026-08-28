@@ -59,18 +59,15 @@ in
   };
 
   config = mkIf cfg.enable {
-    biapy.networking.systemd-networkd.enable = mkDefault with_networkd;
+    biapy.networking = {
+      systemd-networkd.enable = mkDefault with_networkd;
+      networkmanager.enable = mkDefault with_networkmanager;
+    };
 
     services.connman.enable = mkDefault with_connman;
 
     networking = {
       dhcpcd.enable = mkDefault true;
-
-      networkmanager = {
-        enable = mkDefault with_networkmanager;
-        dhcp = if config.networking.dhcpcd.enable then "dhcpcd" else "internal";
-      };
-
       firewall.enable = mkDefault true;
       nftables.enable = mkDefault (!config.virtualisation.docker.enable);
       wireless.enableHardening = mkDefault true;

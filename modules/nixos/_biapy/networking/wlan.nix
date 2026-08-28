@@ -72,10 +72,6 @@ in
 
     services.connman.wifi.backend = mkDefault cfg.backend;
 
-    #users.groups.${config.networking.wireless.userControlled.group}.members = [
-    #  config.biapy.nixos-unified.nixos.main-user
-    #];
-
     networking = {
       networkmanager.wifi.backend = mkDefault cfg.backend;
 

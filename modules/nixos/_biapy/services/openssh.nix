@@ -71,7 +71,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.groups.${cfg.allowedGroup}.members = mkDefault (attrNames config.home-manager.users);
+    users.groups.${cfg.allowedGroup}.members = attrNames config.home-manager.users;
 
     # sops.secrets = {
     #   "openssh/private_key" = {

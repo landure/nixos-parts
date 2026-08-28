@@ -113,17 +113,16 @@ in
       };
     };
 
-    sops =
-      mkIf (null != cfg.secretsSopsFile) {
-        defaultSopsFile = cfg.secretsSopsFile;
-        defaultSopsFormat = cfg.secretsFormat;
+    sops = mkIf (null != cfg.secretsSopsFile) {
+      defaultSopsFile = cfg.secretsSopsFile;
+      defaultSopsFormat = cfg.secretsFormat;
 
-        secrets = {
-          "ssh/identities/id_ed25519/public_key".path =
-            mkDefault "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
-          "ssh/identities/id_ed25519/private_key".path =
-            mkDefault "${config.home.homeDirectory}/.ssh/id_ed25519";
-        };
+      secrets = {
+        "ssh/identities/id_ed25519/public_key".path =
+          mkDefault "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+        "ssh/identities/id_ed25519/private_key".path =
+          mkDefault "${config.home.homeDirectory}/.ssh/id_ed25519";
       };
+    };
   };
 }
