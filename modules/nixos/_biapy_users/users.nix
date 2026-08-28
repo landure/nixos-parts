@@ -26,7 +26,7 @@ let
     hasSuffix
     toUpper
     ;
-  inherit (lib.trivial) pathExists throwIfNot;
+  inherit (lib.trivial) pathExists;
   inherit (lib.types)
     attrsOf
     enum
@@ -37,18 +37,6 @@ let
     ;
 
   cfg = config.biapy.users.users;
-
-  getUserConfigurationPath =
-    username:
-    let
-      base = "${config.biapy.users.configurationsDirectory}/${username}";
-    in
-    if pathExists "${base}.nix" then
-      "${base}.nix"
-    else if pathExists "${base}/default.nix" then
-      base
-    else
-      throw "Error: configuration for user '${username}' not found in '${config.biapy.users.configurationsDirectory}'.";
 
   getUserSecretsFile =
     username:
@@ -128,14 +116,6 @@ let
         identity = mkOption {
           type = submodule gecosIdentityOptions;
           description = "User identity informations";
-        };
-
-        configurationPath = mkOption {
-          type = path;
-          description = "Path of user configuration";
-          default = getUserConfigurationPath name;
-          defaultText = "<flake>/configurations/users/<username>/default.nix or <flake>/configurations/users/<username>.nix";
-          apply = value: throwIfNot (pathExists value) "Error: configuration '${value}' doesn't exists" value;
         };
 
         secretsSopsFile = mkOption {

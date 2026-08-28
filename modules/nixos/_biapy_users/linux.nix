@@ -22,6 +22,7 @@ let
 
   buildUserSettings = username: _: {
     isNormalUser = mkDefault true;
+    createHome = mkDefault true;
   };
 in
 {
