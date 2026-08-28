@@ -18,7 +18,7 @@ let
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkOption;
   inherit (lib.strings) toUpper;
-  inherit (lib.types) path str submodule;
+  inherit (lib.types) nullOr path str submodule;
 
   cfg = config.biapy.user;
 
@@ -89,7 +89,7 @@ in
     };
 
     secretsSopsFile = mkOption {
-      type = path;
+      type = nullOr path;
       default = osConfig.biapy.users.users.${config.home.username}.secretsSopsFile or null;
       description = ''
         Users secrets, stored in a SOPS file. Must contains:
