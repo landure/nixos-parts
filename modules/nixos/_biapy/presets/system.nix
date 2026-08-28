@@ -13,6 +13,7 @@ in
       networking.ntp.enable = mkDefault true;
       security.sudo.enable = mkDefault true;
       services.kmscon.enable = mkDefault true;
+      system.kernel.enable = mkDefault true;
     };
   };
 }
