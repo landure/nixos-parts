@@ -19,7 +19,7 @@
 */
 { config, lib, ... }:
 let
-  inherit (lib.attrsets) mapAttrs;
+  inherit (lib.attrsets) attrNames;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types)
@@ -71,12 +71,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users = {
-      groups.${cfg.allowedGroup} = { };
-      users = mapAttrs (_: _: {
-        extraGroups = mkDefault [ cfg.allowedGroup ];
-      }) config.home-manager.users;
-    };
+    users.groups.${cfg.allowedGroup}.members = mkDefault (attrNames config.home-manager.users);
 
     # sops.secrets = {
     #   "openssh/private_key" = {

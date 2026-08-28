@@ -38,24 +38,10 @@ let
 
   cfg = config.biapy.users.users;
 
-  getUserSecretsFile =
-    username:
-    let
-      base = "${config.biapy.users.secretsDirectory}/${username}";
-    in
-    if pathExists "${base}.yaml" then
-      "${base}.yaml"
-    else if pathExists "${base}.json" then
-      "${base}.json"
-    else if pathExists "${base}.ini" then
-      "${base}.ini"
-    else
-      null;
-
   getUserSecretsFormat =
     username:
     let
-      secretsFile = getUserSecretsFile username;
+      secretsFile = config.biapy.users.users.${username}.secretsSopsFile or "";
     in
     if hasSuffix ".json" secretsFile then
       "json"
@@ -121,8 +107,7 @@ let
         secretsSopsFile = mkOption {
           type = nullOr path;
           description = "Path of user secrets SOPS file";
-          default = getUserSecretsFile name;
-          defaultText = "<flake>/secrets/users/<username>.yaml";
+          default = null;
           apply =
             value:
             if value == null then

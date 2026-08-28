@@ -11,17 +11,16 @@
   config,
   lib,
   osConfig,
-  self,
   ...
 }:
 let
   # inherit (lib)  warn;
-  inherit (lib.modules) mkDefault;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkOption;
   inherit (lib.strings) toUpper;
   inherit (lib.types) path str submodule;
 
-  cfg = config.biapy.userIdentity;
+  cfg = config.biapy.user;
 
   osIdentity = osConfig.biapy.users.users.${config.home.username}.identity;
 
@@ -70,6 +69,7 @@ let
   # getUserHomeSecretsPath =
   #   username:
   #   let
+  #
   #     secretsFile = secretsDir + "/${username}.yaml";
   #   in
   #   if builtins.pathExists secretsFile then secretsFile else null;
@@ -88,9 +88,9 @@ in
       description = "User identity informations";
     };
 
-    sopsFile = mkOption {
+    secretsSopsFile = mkOption {
       type = path;
-      default = "${self}/secrets/users/${config.home.username}.${config.biapy.userIdentity.sopsFormat}";
+      default = osConfig.biapy.users.users.${config.home.username}.secretsSopsFile or null;
       description = ''
         Users secrets, stored in a SOPS file. Must contains:
 
@@ -98,9 +98,9 @@ in
         - `ssh/identities/id_ed25519/public_key`: ed25519 cryptographic identity public key
       '';
     };
-    sopsFormat = mkOption {
+    secretsFormat = mkOption {
       type = str;
-      default = "yaml";
+      default = osConfig.biapy.users.users.${config.home.username}.secretsFormat or "yaml";
       description = "User secrets SOPS file format";
     };
   };
@@ -113,16 +113,17 @@ in
       };
     };
 
-    sops = {
-      defaultSopsFile = cfg.sopsFile;
-      defaultSopsFormat = "yaml";
+    sops =
+      mkIf (null != cfg.secretsSopsFile) {
+        defaultSopsFile = cfg.secretsSopsFile;
+        defaultSopsFormat = cfg.secretsFormat;
 
-      secrets = {
-        "ssh/identities/id_ed25519/public_key".path =
-          mkDefault "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
-        "ssh/identities/id_ed25519/private_key".path =
-          mkDefault "${config.home.homeDirectory}/.ssh/id_ed25519";
+        secrets = {
+          "ssh/identities/id_ed25519/public_key".path =
+            mkDefault "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
+          "ssh/identities/id_ed25519/private_key".path =
+            mkDefault "${config.home.homeDirectory}/.ssh/id_ed25519";
+        };
       };
-    };
   };
 }

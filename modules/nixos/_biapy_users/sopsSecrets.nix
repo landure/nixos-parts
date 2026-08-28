@@ -2,7 +2,6 @@
 {
   config,
   lib,
-  self,
   ...
 }:
 let
@@ -12,21 +11,10 @@ let
     mergeAttrsList
     ;
   inherit (lib.modules) mkDefault;
-  inherit (lib.options) mkOption;
-  inherit (lib.types) path;
 
   cfg = config.biapy.users.users;
 in
 {
-  options = {
-    biapy.users.secretsDirectory = mkOption {
-      type = path;
-      default = "${self}/secrets/users";
-      defaultText = "<flake>/secrets/users";
-      description = "Path of the users SOPS secrets files";
-    };
-  };
-
   config = {
     sops.secrets = (
       mergeAttrsList (
@@ -40,6 +28,9 @@ in
                   key = "hashedPassword";
                   sopsFile = userConfig.secretsSopsFile;
                   format = userConfig.secretsFormat;
+                  owner = "root";
+                  group = "root";
+                  mode = "0400";
                 };
 
                 # Install users age keys indepently of Home Manager.

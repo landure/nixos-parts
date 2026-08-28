@@ -19,7 +19,7 @@
   ...
 }:
 let
-  inherit (lib.attrsets) mapAttrs;
+  inherit (lib.attrsets) attrNames;
   inherit (lib.meta) getExe';
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkOption;
@@ -41,7 +41,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    users.users = mapAttrs (_: _: { extraGroups = mkDefault [ "wheel" ]; }) config.home-manager.users;
+    users.groups.wheel.members = mkDefault (attrNames config.home-manager.users);
 
     # Enable sudo for users in wheel group, and allow sudoers reboot and poweroff
     # @see https://nixos.wiki/wiki/Sudo
