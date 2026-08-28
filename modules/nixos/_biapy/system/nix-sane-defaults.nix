@@ -34,7 +34,7 @@ in
       };
 
       gc = {
-        automatic = mkDefault true;
+        automatic = mkDefault (!(config.programs.nh.enable && config.programs.nh.clean.enable));
         # dates = mkDefault "weekly";
         options = mkDefault "--delete-older-than 7d";
       };
