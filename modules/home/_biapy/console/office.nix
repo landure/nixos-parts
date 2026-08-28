@@ -19,9 +19,10 @@
     is ripgrep, but also search in PDFs, E-Books, Office documents, `zip`, `tar.gz`, …
   - [rucola @ GitHub](https://github.com/Linus-Mussmaecher/rucola)
     is a terminal-based markdown note manager..
-    - [Taskwarrior homepage](https://taskwarrior.org/)
-      ([Taskwarrior @ GitHub](https://github.com/GothenburgBitFactory/taskwarrior))
-      is a command line task list management utility.
+  - [Taskwarrior homepage](https://taskwarrior.org/)
+    ([Taskwarrior @ GitHub](https://github.com/GothenburgBitFactory/taskwarrior))
+    is a command line task list management utility.
+  - [taskwarrior-tui @ GitHub](https://github.com/kdheepak/taskwarrior-tui).
   - [tdf @ GitHub](https://github.com/itsjunetime/tdf)
     is a terminal-based PDF viewer.
 
@@ -38,7 +39,7 @@
 
   ## 🙇 Acknowledgements
 
-  - [Episode 619: The Trouble with TUIs @ Linux Unplugged](https://linuxunplugged.com/619).
+  - [Episode 619: The Trouble with TUIs @ Linux Unplugged](https://linuxunplugged.com/619).
   - [Doxx - Pour lire vos fichiers Word depuis le terminal @ Korben 🇫🇷](https://korben.info/doxx-terminal-viewer-word-rust.html).
 */
 {
@@ -66,6 +67,7 @@ in
       dstask
       glow
       rucola
+      taskwarrior-tui
       tdf
     ];
 
@@ -74,7 +76,10 @@ in
     programs = {
       jrnl.enable = mkDefault true;
       ripgrep-all.enable = mkDefault true;
-      taskwarrior.enable = mkDefault true;
+      taskwarrior = {
+        enable = mkDefault true;
+        package = pkgs.taskwarrior3;
+      };
     };
 
     # services.taskwarrior-sync.enable = mkDefault true;

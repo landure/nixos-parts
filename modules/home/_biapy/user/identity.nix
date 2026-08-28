@@ -18,7 +18,12 @@ let
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkOption;
   inherit (lib.strings) toUpper;
-  inherit (lib.types) nullOr path str submodule;
+  inherit (lib.types)
+    nullOr
+    path
+    str
+    submodule
+    ;
 
   cfg = config.biapy.user;
 

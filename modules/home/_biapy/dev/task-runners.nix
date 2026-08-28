@@ -3,12 +3,18 @@
 
   ## 🛠️ Tech Stack
 
-  ### Tasks runners
-
   - [Just homepage](https://just.systems/)
-    ([Just @ GitHub](https://github.com/casey/just)).
+    ([Just @ GitHub](https://github.com/casey/just))
+    is a handy way to save and run project-specific commands.
   - [Taskfile homepage](https://taskfile.dev/)
-    ([Taskfile @ GitHub](https://github.com/go-task/task)).
+    ([Taskfile @ GitHub](https://github.com/go-task/task))
+    is a fast, cross-platform build tool inspired by Make,
+    designed for modern workflows.
+
+  ## 🙇 Acknowledgements
+
+  - [How do I deal with a new package whose binary name is identical to an
+    existing one? @ nixOS discourse](https://discourse.nixos.org/t/how-do-i-deal-with-a-new-package-whose-binary-name-is-identical-to-an-existing-one/35231).
 */
 {
   config,
@@ -17,30 +23,23 @@
   ...
 }:
 let
+  inherit (lib.meta) getExe';
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.dev.task-runners;
 in
 {
-  options = {
-    biapy.dev.task-runners = {
-      enable = mkEnableOption "task runners";
-    };
-  };
+  options.biapy.dev.task-runners.enable = mkEnableOption "task runners";
 
   config = mkIf cfg.enable {
-    biapy.dev = {
-      containers.enable = mkDefault true;
-      dev-environments.enable = mkDefault true;
-      k8s.enable = mkDefault true;
-      nix.enable = mkDefault true;
-    };
+    home = {
+      packages = with pkgs; [
+        just
+      ];
 
-    home.packages = with pkgs; [
-      just
-      go-task
-    ];
+      shellAliases.tsk = getExe' pkgs.go-task "task";
+    };
   };
 
 }
