@@ -53,7 +53,7 @@ let
       mapAttrs (
         name: value:
         let
-          prefix = "sync.${builtins.toString syncTargetId}";
+          prefix = "sync.${toString syncTargetId}";
         in
         {
           "${prefix}.${name}" = value;

@@ -45,6 +45,8 @@ in
     programs.ssh = {
       enable = mkDefault true;
 
+      package = pkgs.openssh_gssapi;
+
       # default config is replaced by settings."*"
       enableDefaultConfig = mkDefault false;
 

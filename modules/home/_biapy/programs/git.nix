@@ -81,7 +81,11 @@ in
         enable = mkDefault true;
 
         # Use a git version with SSH support (eg: pkgs.gitFull).
-        package = mkDefault pkgs.gitFull;
+        package = mkDefault (
+          pkgs.gitFull.override {
+            openssh = if config.programs.ssh.package != null then config.programs.ssh.package else pkgs.openssh;
+          }
+        );
 
         signing = {
           format = mkDefault "ssh";
@@ -91,24 +95,27 @@ in
 
         settings = {
           # See
-          signing.signer =
-            let
-              defaultSigners = {
-                openpgp = getExe config.programs.gpg.package;
-                ssh =
-                  if config.programs.ssh.enable then
-                    if config.programs.ssh.package != null then
-                      getExe' config.programs.ssh.package "ssh-keygen"
+          signing = {
+            format = mkOptionDefault config.programs.git.signing.format;
+            signer =
+              let
+                defaultSigners = {
+                  openpgp = getExe config.programs.gpg.package;
+                  ssh =
+                    if config.programs.ssh.enable then
+                      if config.programs.ssh.package != null then
+                        getExe' config.programs.ssh.package "ssh-keygen"
+                      else
+                        "ssh-keygen"
                     else
-                      "ssh-keygen"
-                  else
-                    getExe' pkgs.openssh "ssh-keygen";
-                x509 = getExe' config.programs.gpg.package "gpgsm";
-              };
-            in
-            mkIf (config.programs.git.signing.format != null) (
-              mkOptionDefault defaultSigners.${config.programs.git.signing.format}
-            );
+                      getExe' pkgs.openssh "ssh-keygen";
+                  x509 = getExe' config.programs.gpg.package "gpgsm";
+                };
+              in
+              mkIf (config.programs.git.signing.format != null) (
+                mkOptionDefault defaultSigners.${config.programs.git.signing.format}
+              );
+          };
 
           url = {
             "git@github.com:".insteadOf = mkDefault "https://github.com/";
