@@ -48,8 +48,9 @@
   ...
 }:
 let
+  inherit (lib.meta) getExe getExe';
+  inherit (lib.modules) mkDefault mkIf mkOptionDefault;
   inherit (lib.options) mkEnableOption;
-  inherit (lib.modules) mkDefault mkIf;
 
   cfg = config.biapy.programs.git;
 
@@ -64,15 +65,15 @@ in
     };
 
     programs = {
-      ssh.matchBlocks = {
+      ssh.settings = {
         "gitlab.com" = {
           user = mkDefault "git";
-          extraOptions.PreferredAuthentications = mkDefault "publickey";
+          PreferredAuthentications = mkDefault "publickey";
         };
 
         "github.com" = {
           user = mkDefault "git";
-          extraOptions.PreferredAuthentications = mkDefault "publickey";
+          PreferredAuthentications = mkDefault "publickey";
         };
       };
 
@@ -89,6 +90,26 @@ in
         };
 
         settings = {
+          # See
+          signing.signer =
+            let
+              defaultSigners = {
+                openpgp = getExe config.programs.gpg.package;
+                ssh =
+                  if config.programs.ssh.enable then
+                    if config.programs.ssh.package != null then
+                      getExe' config.programs.ssh.package "ssh-keygen"
+                    else
+                      "ssh-keygen"
+                  else
+                    getExe' pkgs.openssh "ssh-keygen";
+                x509 = getExe' config.programs.gpg.package "gpgsm";
+              };
+            in
+            mkIf (config.programs.git.signing.format != null) (
+              mkOptionDefault defaultSigners.${config.programs.git.signing.format}
+            );
+
           url = {
             "git@github.com:".insteadOf = mkDefault "https://github.com/";
             "git@gitlab.com:".insteadOf = mkDefault "https://gitlab.com/";
