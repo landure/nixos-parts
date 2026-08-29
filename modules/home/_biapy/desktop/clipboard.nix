@@ -132,7 +132,6 @@ in
           "-max-items"
           (toString cfg.history.size)
         ];
-
       };
       clipman = {
         enable = mkDefault (cfg.history.tool == "clipman");

@@ -24,11 +24,7 @@ let
   cfg = config.biapy.desktop.retro-gaming;
 in
 {
-  options = {
-    biapy.desktop.retro-gaming = {
-      enable = mkEnableOption "retro-gaming tools";
-    };
-  };
+  options.biapy.desktop.retro-gaming.enable = mkEnableOption "retro-gaming tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ dolphin ];

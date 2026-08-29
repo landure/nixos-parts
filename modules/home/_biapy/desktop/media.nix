@@ -39,11 +39,7 @@ let
   cfg = config.biapy.desktop.media;
 in
 {
-  options = {
-    biapy.desktop.media = {
-      enable = mkEnableOption "Music and video tools";
-    };
-  };
+  options.biapy.desktop.media.enable = mkEnableOption "Music and video tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
@@ -53,9 +49,9 @@ in
 
     # enable spotify if spicetify is manually removed.
     programs.spotify-player.enable = mkDefault (!config.biapy.programs.spicetify.enable);
+    biapy.programs.spicetify.enable = mkDefault true;
 
     # services.jellyfin-mpv-shim.enable = mkDefault true;
 
-    biapy.programs.spicetify.enable = mkDefault true;
   };
 }

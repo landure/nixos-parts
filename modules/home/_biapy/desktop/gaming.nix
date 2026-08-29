@@ -32,11 +32,7 @@ let
   hasNvidiaGpu = config.hardware.facter.detected.graphics.nvidia.enable;
 in
 {
-  options = {
-    biapy.desktop.gaming = {
-      enable = mkEnableOption "gaming tools";
-    };
-  };
+  options.biapy.desktop.gaming.enable = mkEnableOption "gaming tools";
 
   config = mkIf cfg.enable {
     home.packages =

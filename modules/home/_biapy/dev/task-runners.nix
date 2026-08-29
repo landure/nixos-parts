@@ -24,7 +24,7 @@
 }:
 let
   inherit (lib.meta) getExe';
-  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.dev.task-runners;
