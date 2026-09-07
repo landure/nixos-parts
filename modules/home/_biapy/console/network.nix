@@ -3,6 +3,8 @@
 
   ## 🛠️ Tech Stack
 
+  - [cloudflare-speed-cli @ GitHub](https://github.com/kavehtehrani/cloudflare-speed-cli)
+    is a CLI for internet speed test via cloudflare.
   - [dog-community homepage](https://dog.ramfield.net/)
     ([dog-community @ GitHub](https://github.com/Dj-Codeman/dog_community))
     is a modern `dig` written in Rust.
@@ -50,6 +52,8 @@ in
       gping # ping with data visualization
       nbping
       snitch # ss alternative
+
+      unstable.cloudflare-speed-cli
 
       biapy-parts.quien
     ];
