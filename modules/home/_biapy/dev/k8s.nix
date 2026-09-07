@@ -20,16 +20,18 @@
   - [krew homepage](https://krew.sigs.k8s.io/)
     (krew @ GitHub)(https://github.com/kubernetes-sigs/krew)
     is the plugin manager for `kubectl` command-line tool.
-  - [kubecolor homepage](https://kubecolor.github.io/)
-    ([kubecolor @ GitHub](https://github.com/kubecolor/kubecolor))
-     is a `kubectl` wrapper used to add colors to its output.
-  - [kubectl @ GitHub](https://github.com/kubernetes/kubectl).
   - [ktop homepage](https://ktop.app/)
     ([ktop @ GitHub](https://github.com/vladimirvivien/ktop))
     is a top-like tool for Kubernetes cluster metrics.
   - [kty homepage](https://kty.dev/)
     ([kty @ GitHub](https://github.com/grampelberg/kty))
     is a terminal for Kubernetes.
+  - [ku @ GitHub](https://github.com/bjarneo/ku)
+    is a fast, keyboard-driven Kubernetes TUI.
+  - [kubecolor homepage](https://kubecolor.github.io/)
+    ([kubecolor @ GitHub](https://github.com/kubecolor/kubecolor))
+     is a `kubectl` wrapper used to add colors to its output.
+  - [kubectl @ GitHub](https://github.com/kubernetes/kubectl).
   - [stern @ GitHub](https://github.com/stern/stern)
     provides multi pod and container log tailing for Kubernetes.
   - [talosctl homepage](https://www.siderolabs.com/talos-linux)
@@ -89,6 +91,8 @@ in
         talosctl
         talos-pilot
         helm-ls
+
+        unstable.ku
 
         (wrapHelm kubernetes-helm {
           plugins = with pkgs.kubernetes-helmPlugins; [
