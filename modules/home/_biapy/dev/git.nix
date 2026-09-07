@@ -23,6 +23,11 @@
   - [GitHub CLI homepage](https://cli.github.com/)
     ([GitHub CLI @ GitHub](https://github.com/cli/cli)).
   - [GLab @ GitLab](https://gitlab.com/gitlab-org/cli).
+  - [glab-tui @ GitHub](https://github.com/rcieri/glab-tui)
+    is a terminal user interface (TUI) for GitLab and GitHub,
+    built on top of `glab` and `gh`.
+    It allows to browse issues, pull requests / merge requests, pipelines,
+    runners, and releases without leaving the terminal.
 
   - [difftastic homepage](https://difftastic.wilfred.me.uk/)
     ([difftastic @ GitHub](https://github.com/Wilfred/difftastic)).
@@ -121,6 +126,7 @@ in
     home.packages = with pkgs; [
       glab
       onefetch
+      unstable.glab-tui
     ];
 
     programs = {
