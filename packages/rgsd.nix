@@ -21,7 +21,10 @@ writeShellApplication {
   ];
   text = ''
     if [[ ''${#} -lt 2 || ''${#} -gt 3 ]]; then
-      echo "Usage: ''${0##*/} <search> <replace> [path]" >&2
+      cat >&2 <<EOF
+    Usage: ''${0##*/} <search> <replace> [path]"
+    Tip: consider using ambr
+    EOF
       exit 1
     fi
 
