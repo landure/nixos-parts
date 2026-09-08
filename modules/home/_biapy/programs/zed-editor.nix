@@ -31,7 +31,12 @@
   - [Configuring Zed Editor with Nix: A Modern Development Setup @ Nohup](https://nohup.no/zed-editor/).
   - [Configurer votre éditeur Zed sur le bout des doigts @ Le blog de Seboss666 🇫🇷](https://blog.seboss666.info/2026/04/configurer-votre-editeur-zed-sur-le-bout-des-doigts/).
 */
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
@@ -49,6 +54,12 @@ in
 
     programs.zed-editor = {
       enable = mkDefault true;
+
+      # Use unstable packages to benefits from newest features.
+      # Use FHS variant for generic linux hosts.
+      package =
+        with pkgs.unstable;
+        if config.targets.genericLinux.enable then zed-editor-fhs else zed-editor;
 
       # A list of the extensions Zed should install on startup.
       # See https://github.com/zed-industries/extensions/tree/main/extensions
@@ -126,8 +137,9 @@ in
 
         languages.PHP = {
           language_servers = mkDefault [
+            "phpantom"
             "!intelephense"
-            "phpactor"
+            "!phpactor"
             "phpcs"
             "psalm"
             "phpmd"
