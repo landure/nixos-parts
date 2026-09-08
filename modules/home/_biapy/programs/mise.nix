@@ -27,7 +27,8 @@
 
   ### 🏠 Home Manager
 
-  - [programs.mise](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.mise.enable).
+  - [programs.mise @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.mise.enable).
+  - [programs.mise @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.mise.).
 
   ## 🙇 Acknowledgements
 
@@ -79,7 +80,26 @@ in
       mise = {
         enable = mkDefault true;
 
-        package = pkgs.mise;
+        package = pkgs.unstable.mise;
+        # package = pkgs.mise-flake.mise.overrideAttrs (
+        #   finalAttrs: previousAttrs: {
+        #     checkPhase = previousAttrs.checkPhase + '' \
+        #       --skip agecrypt::plugin_tests::plugin_protocol_roundtrip_and_software_recovery \
+        #       --skip backend::spm::tests::test_inline_install_command_uses_install_environment \
+        #       --skip cmd::tests::test_direct_inline_supervision \
+        #       --skip inline_command::unix::tests::native_argv0_and_logical_pwd \
+        #       --skip system::packages::brew::cask::tests::adopts_only_an_identical_existing_app \
+        #       --skip system::packages::brew::cask::tests::auto_updates_reads_string_versions_from_xml_and_binary_plists \
+        #       --skip system::packages::brew::cask::tests::ditto_into_rejects_preplanted_symlink_destination \
+        #       --skip system::packages::brew::cask::tests::ensure_trusted_appdir_creates_missing_tail \
+        #       --skip system::packages::brew::cask::tests::ensure_trusted_appdir_rejects_symlinked_tail \
+        #       --skip system::packages::brew::cask::tests::ensure_trusted_appdir_stays_bound_after_same_uid_replacement \
+        #       --skip system::packages::brew::cask::tests::ensure_trusted_appdir_walks_from_unreplaceable_root \
+        #       --skip system::packages::brew::cask::tests::failed_app_activation_preserves_caskroom_copy \
+        #       --skip system::packages::brew::cask::tests::self_updating_cask_adopts_a_different_existing_app
+        #     '';
+        #   }
+        # );
 
         # globalConfig = {
         #   settings = {

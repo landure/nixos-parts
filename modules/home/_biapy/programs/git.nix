@@ -67,12 +67,12 @@ in
     programs = {
       ssh.settings = {
         "gitlab.com" = {
-          user = mkDefault "git";
+          User = mkDefault "git";
           PreferredAuthentications = mkDefault "publickey";
         };
 
         "github.com" = {
-          user = mkDefault "git";
+          User = mkDefault "git";
           PreferredAuthentications = mkDefault "publickey";
         };
       };

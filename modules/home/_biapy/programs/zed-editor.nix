@@ -56,10 +56,7 @@ in
       enable = mkDefault true;
 
       # Use unstable packages to benefits from newest features.
-      # Use FHS variant for generic linux hosts.
-      package =
-        with pkgs.unstable;
-        if config.targets.genericLinux.enable then zed-editor-fhs else zed-editor;
+      package = pkgs.unstable.zed-editor;
 
       # A list of the extensions Zed should install on startup.
       # See https://github.com/zed-industries/extensions/tree/main/extensions
