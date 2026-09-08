@@ -16,7 +16,7 @@
   ...
 }:
 let
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.dev.console;
@@ -29,9 +29,12 @@ in
   };
 
   config = mkIf cfg.enable {
+    programs.ripgrep.enable = mkDefault true;
+
     home.packages = with pkgs; [
       ast-grep
       sd
+      local.rgsd
     ];
   };
 
