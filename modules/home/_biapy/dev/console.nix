@@ -29,13 +29,12 @@ in
   };
 
   config = mkIf cfg.enable {
-    programs.ripgrep.enable = mkDefault true;
-
     home.packages = with pkgs; [
       ast-grep
       sd
-      local.rgsd
+      biapy-parts.rgsd
     ];
-  };
 
+    programs.ripgrep.enable = mkDefault true;
+  };
 }

@@ -155,7 +155,7 @@ in
       sd
       tuc # cut drop-in replacement writen in Rust
 
-      local.rgsd
+      biapy-parts.rgsd
     ];
 
     biapy.programs = {
