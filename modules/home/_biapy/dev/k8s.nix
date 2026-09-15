@@ -32,6 +32,9 @@
     ([kubecolor @ GitHub](https://github.com/kubecolor/kubecolor))
      is a `kubectl` wrapper used to add colors to its output.
   - [kubectl @ GitHub](https://github.com/kubernetes/kubectl).
+  - [sofka homepage](https://sofka.rs/)
+    ([sofka @ GitHub](https://github.com/nklmilojevic/sofka))
+    is a Kubernetes terminal interface inspired by `k9s`.
   - [stern @ GitHub](https://github.com/stern/stern)
     provides multi pod and container log tailing for Kubernetes.
   - [talosctl homepage](https://www.siderolabs.com/talos-linux)
