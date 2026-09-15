@@ -5,6 +5,7 @@
 
   - [castero @ GitHub](https://github.com/xgi/castero)
     is a TUI podcast client for the terminal.
+    It's unmaintained.
   - [GopherTube @ GitHub](https://github.com/KrishnaSSh/GopherTube)
     is a modern terminal user interface for searching and watching YouTube
     videos using `mpv` and `chafa`.
@@ -20,6 +21,11 @@
     plays any radios around the globe right from the terminal ⚡.
   - [wiremix @ GitHub](https://github.com/tsowell/wiremix)
     is a simple TUI audio mixer for PipeWire.
+
+  ### Others
+
+  - [Podliner @ GitHub](https://github.com/timkicker/podliner)
+    is a TUI podcast client with gPodder sync feature.
 
   ## 📝 Documentation
 
