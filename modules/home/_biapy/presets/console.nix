@@ -24,6 +24,11 @@ in
         ux.enable = mkDefault true;
       };
 
+      dev = {
+        json.enable = mkDefault true;
+        yaml.enable = mkDefault true;
+      };
+
       programs = {
         bash.enable = mkDefault true;
         fzf.enable = mkDefault true;
