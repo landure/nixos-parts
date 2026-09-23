@@ -23,7 +23,7 @@ in
   config = mkIf cfg.enable {
     wsl = {
       enable = mkDefault true;
-      # defaultUser = mkDefault (config.biapy.nixos-unified.nixos.main-user or "nixos");
+      defaultUser = mkDefault (config.biapy.defaultUser or "nixos");
     };
   };
 }

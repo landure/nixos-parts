@@ -26,6 +26,7 @@
   ...
 }:
 let
+  inherit (lib.attrsets) genAttrs;
   inherit (lib.options) mkEnableOption;
   inherit (lib.modules) mkIf;
 
@@ -54,8 +55,10 @@ in
         input = { };
       };
 
-      # Add the main user to the video group so they can use brightnessctl.
-      # users."${config.biapy.nixos-unified.nixos.main-user}".extraGroups = [ "video" ];
+      # Add normal users to the video group so they can use brightnessctl.
+      users = genAttrs config.biapy.normalUsers (_: {
+        extraGroups = [ "video" ];
+      });
     };
 
     # Light is deprecated (?)
