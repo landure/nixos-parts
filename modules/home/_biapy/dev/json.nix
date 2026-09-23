@@ -12,6 +12,10 @@
     with regular path expressions.
   - [Json Incremental Digger (`jid`) @ GitHub](https://github.com/simeji/jid)
     drills down JSON interactively.
+  - [jless homepage](https://jless.io/)
+    ([jless @ GitHub](https://github.com/PaulJuliusMartinez/jless))
+    is a command-line JSON viewer designed for reading, exploring,
+    and searching through JSON data.
   - [jq homepage](https://jqlang.org/)
     ([jq @ GitHub](https://github.com/jqlang/jq))
     is a lightweight and flexible command-line JSON processor akin to `sed`.
@@ -49,6 +53,7 @@ in
       fx
       jsongrep
       jid
+      jless
     ];
 
     programs = {
