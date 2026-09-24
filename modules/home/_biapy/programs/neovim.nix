@@ -29,15 +29,15 @@ let
 
 in
 {
-  options = {
-    biapy.programs.neovim.enable = mkEnableOption "neovim";
-  };
+  options.biapy.programs.neovim.enable = mkEnableOption "neovim";
 
   config = mkIf cfg.enable {
     programs.neovim = {
       enable = mkDefault true;
+
       # Whether to configure nvim as the default editor using the EDITOR environment variable.
       defaultEditor = mkDefault (config.biapy.console.text-editors.default == "neovim");
+
       # The extra Lua packages required for your plugins to work.
       # This option accepts a function that takes a Lua package set as an argument,
       # and selects the required Lua packages from this package set.
@@ -68,6 +68,5 @@ in
       # Enable ruby provider.
       withRuby = mkDefault true;
     };
-
   };
 }

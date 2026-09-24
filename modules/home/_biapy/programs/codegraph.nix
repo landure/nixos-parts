@@ -8,9 +8,13 @@
 
   - [CodeGraph homepage](https://colbymchenry.github.io/codegraph/).
   - [CodeGraph @ GitHub](https://github.com/colbymchenry/codegraph).
-
-  */
-{ config, lib, pkgs, ... }:
+*/
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption;
