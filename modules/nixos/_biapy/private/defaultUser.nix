@@ -1,9 +1,8 @@
 /**
- # System default user
+  # System default user
 
- Set the main user of the system.
-
- */
+  Set the main user of the system.
+*/
 { config, lib, ... }:
 let
   inherit (lib.modules) mkDefault;
