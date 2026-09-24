@@ -26,11 +26,7 @@ let
 
 in
 {
-  options = {
-    biapy.programs.opencode = {
-      enable = mkEnableOption "opencode";
-    };
-  };
+  options.biapy.programs.opencode.enable = mkEnableOption "opencode";
 
   config = mkIf cfg.enable {
     programs.opencode = {

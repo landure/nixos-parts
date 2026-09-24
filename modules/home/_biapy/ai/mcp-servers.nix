@@ -16,7 +16,7 @@
 }:
 let
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkEnableOption;
+  inherit (lib.options) mkDefault mkEnableOption;
 
   cfg = config.biapy.ai.mcp-servers;
 
@@ -27,6 +27,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    biapy.programs.codegraph.enable = mkDefault true;
+
     home.packages = with pkgs; [
       mcp-nixos
       mcp-server-git
