@@ -55,6 +55,8 @@ in
     programs.zed-editor = {
       enable = mkDefault true;
 
+      enableMcpIntegration = mkDefault true;
+
       # Use unstable packages to benefits from newest features.
       package = pkgs.unstable.zed-editor;
 

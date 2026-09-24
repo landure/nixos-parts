@@ -1,5 +1,7 @@
 [tools]
 "github:Mic92/nixfmt-rs" = "latest"
+"nix:nil" = "latest"
+"nix:nixd" = "latest"
 prek = "latest"
 taplo = "latest"
 

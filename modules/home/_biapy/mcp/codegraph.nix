@@ -23,19 +23,23 @@
   ...
 }:
 let
+  inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
-  inherit (lib.options) mkEnableOption;
+  inherit (lib.options) mkEnableOption mkPackageOption;
 
   cfg = config.biapy.mcp.codegraph;
 in
 {
-  options.biapy.mcp.codegraph.enable = mkEnableOption "CodeGraph";
+  options.biapy.mcp.codegraph = {
+    enable = mkEnableOption "CodeGraph";
+    package = mkPackageOption pkgs.unstable "codegraph" {};
+  };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ unstable.codegraph ];
+    home.packages = [ cfg.package ];
 
     programs.mcp.servers.codegraph = {
-      command = mkDefault "codegraph";
+      command = mkDefault (getExe cfg.package);
       args = mkDefault [
         "serve"
         "--mcp"

@@ -27,7 +27,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    biapy.mcp.codegraph.enable = mkDefault true;
+    biapy.mcp = {
+      codegraph.enable = mkDefault true;
+      context7.enable = mkDefault true;
+    };
 
     programs.mcp.enable = mkDefault true;
 
@@ -37,7 +40,6 @@ in
       mcp-server-fetch
       mcp-server-filesystem
       mcp-language-server
-      context7-mcp
     ];
   };
 }
