@@ -39,7 +39,7 @@ in
 {
   options.biapy.mcp.context7 = {
     enable = mkEnableOption "Context7";
-    package = mkPackageOption pkgs "context7-mcp" {};
+    package = mkPackageOption pkgs "context7-mcp" { };
     apiKey = mkOption {
       type = nullOr (oneOf [
         str

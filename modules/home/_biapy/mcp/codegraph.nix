@@ -32,7 +32,7 @@ in
 {
   options.biapy.mcp.codegraph = {
     enable = mkEnableOption "CodeGraph";
-    package = mkPackageOption pkgs.unstable "codegraph" {};
+    package = mkPackageOption pkgs.unstable "codegraph" { };
   };
 
   config = mkIf cfg.enable {

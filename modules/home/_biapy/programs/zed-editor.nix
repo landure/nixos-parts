@@ -62,9 +62,8 @@ in
 
       # A list of the extensions Zed should install on startup.
       # See https://github.com/zed-industries/extensions/tree/main/extensions
-      extensions = mkDefault [
+      extensions = [
         "git-firefly" # Git Syntax Highlighting
-        "nix"
         "opentofu"
         "php"
         "phpcs"
@@ -73,7 +72,6 @@ in
         "php-snippets"
         "dockerfile"
         "docker-compose"
-        "helm"
         "markdownlint"
         "marksman"
         "catppucin"
@@ -148,18 +146,6 @@ in
         lsp = {
           psalm.settings.require_config_file = mkDefault true;
           phpmd.settings.rulesets = mkDefault "./phpmd.xml";
-        };
-
-        # Use Helm language highlighting for some yaml files.
-        "file_types" = {
-          "Helm" = mkDefault [
-            "**/templates/**/*.tpl"
-            "**/templates/**/*.yaml"
-            "**/templates/**/*.yml"
-            "**/helmfile.d/**/*.yaml"
-            "**/helmfile.d/**/*.yml"
-            "**/values*.yaml"
-          ];
         };
 
         #   features = {
