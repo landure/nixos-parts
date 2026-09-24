@@ -80,12 +80,7 @@ in
       git = {
         enable = mkDefault true;
 
-        # Use a git version with SSH support (eg: pkgs.gitFull).
-        package = mkDefault (
-          pkgs.gitFull.override {
-            openssh = if config.programs.ssh.package != null then config.programs.ssh.package else pkgs.openssh;
-          }
-        );
+        package = mkDefault pkgs.gitFull;
 
         signing = {
           format = mkDefault "ssh";
@@ -94,6 +89,21 @@ in
         };
 
         settings = {
+          core = {
+            # Enable file changes watching and caching to quicken commands
+            # such as `git status`
+            fsmonitor = mkDefault true;
+            untrackedcache = mkDefault true;
+
+            # Set SSH command to custom one to match system global configuration
+            sshCommand = mkDefault (
+              if config.targets.genericLinux.enable then
+                if config.programs.ssh.package == null then "/usr/bin/ssh" else getExe config.programs.ssh.package
+              else
+                null
+            );
+          };
+
           # See
           signing = {
             format = mkOptionDefault config.programs.git.signing.format;
@@ -147,13 +157,6 @@ in
 
           # Use `histogram` as `git diff` algorithm for better readability.
           diff.algorithm = mkDefault "histogram";
-
-          core = {
-            # Enable file changes watching and caching to quicken commands
-            # such as `git status`
-            fsmonitor = mkDefault true;
-            untrackedcache = mkDefault true;
-          };
 
           # Enable rebasing by default on pull requests.
           pull.rebase = mkDefault true;
