@@ -65,11 +65,6 @@ in
       extensions = [
         "git-firefly" # Git Syntax Highlighting
         "opentofu"
-        "php"
-        "phpcs"
-        "phpmd"
-        "psalm"
-        "php-snippets"
         "dockerfile"
         "docker-compose"
         "markdownlint"
@@ -131,22 +126,6 @@ in
         };
 
         buffer_font_size = mkDefault 12.0;
-
-        languages.PHP = {
-          language_servers = mkDefault [
-            "phpantom"
-            "!intelephense"
-            "!phpactor"
-            "phpcs"
-            "psalm"
-            "phpmd"
-          ];
-        };
-
-        lsp = {
-          psalm.settings.require_config_file = mkDefault true;
-          phpmd.settings.rulesets = mkDefault "./phpmd.xml";
-        };
 
         #   features = {
         #     copilot = false;

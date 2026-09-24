@@ -16,6 +16,7 @@ in
       diff.enable = mkDefault true;
       k8s.enable = mkDefault true;
       nix.enable = mkDefault true;
+      php.enable = mkDefault true;
       task-runners.enable = mkDefault true;
       tui-api-clients.enable = mkDefault true;
       tui-db-clients.enable = mkDefault true;
