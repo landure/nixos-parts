@@ -27,7 +27,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    biapy.programs.codegraph.enable = mkDefault true;
+    biapy.mcp.codegraph.enable = mkDefault true;
+
+    programs.mcp.enable = mkDefault true;
 
     home.packages = with pkgs; [
       mcp-nixos
