@@ -27,9 +27,13 @@ in
   };
 
   config = mkIf cfg.enable {
-    biapy.mcp = {
-      codegraph.enable = mkDefault true;
-      context7.enable = mkDefault true;
+    biapy = {
+      mcp = {
+        codegraph.enable = mkDefault true;
+        context7.enable = mkDefault true;
+      };
+
+      programs.rtk.enable = mkDefault true;
     };
 
     programs.mcp.enable = mkDefault true;
