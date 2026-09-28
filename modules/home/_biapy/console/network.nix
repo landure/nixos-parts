@@ -14,11 +14,19 @@
   - [gping @ GitHub](https://github.com/orf/gping)
     is `ping`, but with a graph.
   - [NBping @ GitHub](https://github.com/hanshuaikang/NBping)
-    is a `ping` tool in Rust with real-time data and visualizations
+    is a `ping` tool in Rust with real-time data and visualizations.
+  - [NetWatch homepage](https://netwatchlabs.com/)
+    ([NetWatch @ GitHub](https://github.com/matthart1983/netwatch))
+    is a TUI providing real-time network diagnostics.
+  - [netop @ GitHub](https://github.com/ZingerLittleBee/netop)
+    helps to watch network traffic with `bpf`.
   - [quien @ GitHub](https://github.com/retlehs/quien)
     is a better `whois` and domain intelligence toolkit
   - [snitch @ GitHub](https://github.com/karol-broda/snitch)
     is a friendler `ss`/`netstat` for humans.
+  - [Trippy homepage](https://trippy.rs/).
+    ([Trippy @ GitHub](https://github.com/fujiapple852/trippy))
+    combines the capabilities of `traceroute` and `ping`.
 
   ## 🙇 Acknowledgements
 
@@ -51,7 +59,10 @@ in
       doggo
       gping # ping with data visualization
       nbping
+      netop
+      netwatch
       snitch # ss alternative
+      trippy
 
       unstable.cloudflare-speed-cli
 
