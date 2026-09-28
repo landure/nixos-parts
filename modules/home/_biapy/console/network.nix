@@ -60,10 +60,10 @@ in
       gping # ping with data visualization
       nbping
       netop
-      netwatch
       snitch # ss alternative
       trippy
 
+      unstable.netwatch
       unstable.cloudflare-speed-cli
 
       biapy-parts.quien
