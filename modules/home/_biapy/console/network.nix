@@ -56,6 +56,7 @@ in
       unstable.cloudflare-speed-cli
 
       biapy-parts.quien
+      biapy-parts.pktz
     ];
 
     biapy.programs.trippy.enable = mkDefault true;
