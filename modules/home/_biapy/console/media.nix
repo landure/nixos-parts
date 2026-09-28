@@ -6,6 +6,9 @@
   - [castero @ GitHub](https://github.com/xgi/castero)
     is a TUI podcast client for the terminal.
     It's unmaintained.
+  - [cliamp homepage](https://www.cliamp.stream/)
+    ([cliamp @ GitHub](https://github.com/bjarneo/cliamp))
+    is a Terminal music player inspired by winamp.
   - [GopherTube @ GitHub](https://github.com/KrishnaSSh/GopherTube)
     is a modern terminal user interface for searching and watching YouTube
     videos using `mpv` and `chafa`.
@@ -57,7 +60,9 @@ in
 
     home.packages = with pkgs; [
       castero
+      cliamp
       gophertube
+      kew
       # pamixer
       mufetch
       pulsemixer
