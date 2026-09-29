@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "create-nix-package": {
+      "source": "iamruinous/nix-config",
+      "sourceType": "github",
+      "skillPath": ".opencode/skills/create-nix-package/SKILL.md",
+      "computedHash": "871b56facca25dd1e934d20a29e9e7f5bffe37e2221560bebc787300f3ee7eaf"
+    },
     "file-search": {
       "source": "massgen/massgen",
       "sourceType": "github",
