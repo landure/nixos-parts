@@ -6,6 +6,8 @@
   ## 🛠️ Tech Stack
 
   - [OpenSSH homepage](https://www.openssh.org/).
+  - [ssh-audit @ GitHub](https://github.com/jtesta/ssh-audit)
+    is an SSH server & client configuration auditor.
 
   ## 📝 Documentation
 
@@ -35,11 +37,7 @@ let
   ssh-copy-id_exe = getExe' pkgs.openssh "ssh-copy-id";
 in
 {
-  options = {
-    biapy.programs.ssh = {
-      enable = mkEnableOption "ssh";
-    };
-  };
+  options.biapy.programs.ssh.enable = mkEnableOption "ssh";
 
   config = mkIf cfg.enable {
     programs.ssh = {
@@ -68,6 +66,7 @@ in
     services.ssh-agent.enable = mkDefault true;
 
     home.packages = [
+      pkgs.ssh-audit
       (pkgs.writeShellScriptBin "passh" ''
         # ssh with public key authentication turned off
         # see https://serverfault.com/questions/493213/temporarily-disable-ssh-public-key-authentication-from-client

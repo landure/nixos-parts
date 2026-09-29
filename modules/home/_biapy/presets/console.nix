@@ -19,6 +19,7 @@ in
         monitoring.enable = mkDefault true;
         network.enable = mkDefault true;
         office.enable = mkDefault true;
+        security.enable = mkDefault true;
         systemd.enable = mkDefault true;
         text-editors.enable = mkDefault true;
         ux.enable = mkDefault true;
