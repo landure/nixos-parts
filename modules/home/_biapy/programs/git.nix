@@ -40,6 +40,7 @@
   - [A Trick To Use mkMerge at The Top Level of a NixOS module @ Samara's GitHub Gist](https://gist.github.com/udf/4d9301bdc02ab38439fd64fbda06ea43).
   - [Git Worktree Comme Un Chef @ Metal3d 🇫🇷](https://www.metal3d.org/blog/2026/git-worktree-comme-un-chef/).
   - [The Git Commands I Run Before Reading Any Code @ Ally Piechowski](https://piechowski.io/post/git-commands-before-reading-code/).
+  - [Git Hygiene: How to Automatically Delete Stale Local Branches @ adityathebe.com](https://www.adityathebe.com/delete-stale-git-branches/).
 */
 {
   config,
@@ -208,9 +209,10 @@ in
             amend = mkDefault "commit --amend --no-edit"; # amend last commit
             undomerge = mkDefault "reset --hard ORIG_HEAD"; # undo last merge, if not pushed to origin
             # display enhanced `git` logs:
-            lg = mkDefault "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+            lpg = mkDefault "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
             logfull = mkDefault "log --pretty=fuller --graph --stat -p"; # display full git logs
             pickaxe = mkDefault "log -S"; # give you all commits that added or removed a string in a codebase.
+            clean-gone = mkDefault "!git branch -vv | rg '\\[.*gone.*\\]' | sed 's/^..//' | cut -d' ' -f1 | xargs -r git branch -D";
 
             # archive git branch as tag
             # @see https://etc.octavore.com/2025/12/archiving-git-branches-as-tags/
