@@ -10,9 +10,11 @@
       ]
     }
   },
-  "mcpServers": {
+  "mcp": {
     "nixos": {
-      "command": "mcp-nixos"
+      "type": "local",
+      "command": ["mcp-nixos"],
+      "enabled": true
     }
   }
 }
