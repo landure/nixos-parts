@@ -36,10 +36,16 @@ in
   config = mkIf cfg.enable {
     biapy.programs.gpg.enable = mkDefault true;
 
-    home.packages = with pkgs; [
-      betterleaks # Code scanner for leaked secrets.
-      trufflehog # Find leaked credentials, keys and tokens.
-      apg # Automated Password Generator.
-    ];
+    home = {
+      shellAliases = {
+        genpass = mkDefault ''apg -M SNCL -m 12 -x 20 -t -c "$(openssl rand 128)"'';
+      };
+
+      packages = with pkgs; [
+        betterleaks # Code scanner for leaked secrets.
+        trufflehog # Find leaked credentials, keys and tokens.
+        apg # Automated Password Generator.
+      ];
+    };
   };
 }
