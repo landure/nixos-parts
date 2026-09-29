@@ -9,5 +9,10 @@
         ".nix"
       ]
     }
+  },
+  "mcpServers": {
+    "nixos": {
+      "command": "mcp-nixos"
+    }
   }
 }

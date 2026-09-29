@@ -13,6 +13,12 @@
       "skillPath": "agent/skills/tools/nix/SKILL.md",
       "computedHash": "0dfe88424d18a341ce4158631f945bbfd4e6cd2437b841e57b2c2cf19b45a1f1"
     },
+    "nix-best-practices": {
+      "source": "alleneubank/claude-code",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/nix-best-practices/SKILL.md",
+      "computedHash": "f6d14bf40d4b505dd50cb389711eae74bc1459740adb27f4641cd75c21042311"
+    },
     "nix-flake": {
       "source": "knoopx/pi",
       "sourceType": "github",
