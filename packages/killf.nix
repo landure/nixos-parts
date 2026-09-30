@@ -34,7 +34,7 @@ writeShellApplication {
     # see https://www.tsukie.com/en/technologies/use-cli-like-a-modern-tech-bro/
     ps -ef |
     tail --lines +2 |
-    fzf --with-nth=2,8 --accept-nth=2 \
+    fzf --with-nth=2,8.. --accept-nth=2 \
       --no-multi --header='Select process to kill' \
       --height=100% --layout=default --border --info=inline \
       --preview-window=right:40%:wrap \
