@@ -60,9 +60,15 @@ in
   options.biapy.programs.git.enable = mkEnableOption "Git";
 
   config = mkIf cfg.enable {
-    home.shellAliases = {
-      g = mkDefault "git";
-      gco = mkDefault "git commit";
+    home = {
+      shellAliases = {
+        g = mkDefault "git";
+        gco = mkDefault "git commit";
+      };
+
+      packages = with pkgs.biapy-parts; [
+        git-when-added
+      ];
     };
 
     programs = {

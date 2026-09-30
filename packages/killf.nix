@@ -1,12 +1,12 @@
 /**
- # killf
+  # killf
 
- Fuzzy Kill Process.
+  Fuzzy Kill Process.
 
- ## 🙇 Acknowledgements
+  ## 🙇 Acknowledgements
 
- - [Use CLI like a modern tech bro @ Tsukie](https://www.tsukie.com/en/technologies/use-cli-like-a-modern-tech-bro/).
- */
+  - [Use CLI like a modern tech bro @ Tsukie](https://www.tsukie.com/en/technologies/use-cli-like-a-modern-tech-bro/).
+*/
 {
   writeShellApplication,
   fzf,
@@ -25,10 +25,10 @@ writeShellApplication {
     witr
   ];
   bashOptions = [
-          "errexit"
-          "nounset"
-          "pipefail"
-        ];
+    "errexit"
+    "nounset"
+    "pipefail"
+  ];
   text = ''
     # killf: Fuzzy Kill Process.
     # see https://www.tsukie.com/en/technologies/use-cli-like-a-modern-tech-bro/
