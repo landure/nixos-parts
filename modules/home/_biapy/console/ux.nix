@@ -3,6 +3,10 @@
 
   ## 🛠️ Tech Stack
 
+  - [gawk homepage](https://www.gnu.org/software/gawk/)
+    handles simple data-reformatting jobs with just a few lines of code.
+  - [gum @ GitHub](https://github.com/charmbracelet/gum)
+    is a tool for glamorous shell scripts.
   - [sd - search & displace @ GitHub](https://github.com/chmln/sd)
     is an intuitive find & replace CLI (`sed` alternative).
 
@@ -19,7 +23,7 @@
   ...
 }:
 let
-  inherit (lib.meta) getExe getExe';
+  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkDefault;
   inherit (lib.options) mkEnableOption;
 
@@ -70,29 +74,16 @@ in
           ${getExe config.programs.fzf.package} --preview "${getExe config.programs.bat.package} --color='always' --style='numbers' {}"
         '';
       };
-
-      ".local/bin/killf" = {
-        enable = mkDefault true;
-        executable = mkDefault true;
-        text = mkDefault ''
-          #!/usr/bin/env bash
-          # killf: Fuzzy Kill Process.
-          # see https://www.tsukie.com/en/technologies/use-cli-like-a-modern-tech-bro/
-          set -e
-          set -u
-          set -o pipefail
-
-          ps -ef |
-          ${getExe config.programs.fzf.package} --header "Select process to kill" |
-          ${getExe pkgs.gawk} '{print ''$2}' |
-          ${getExe' pkgs.uutils-findutils "xargs"} ${getExe' pkgs.uutils-coreutils-noprefix "kill"} -9
-        '';
-      };
     };
 
     services.ssh-agent.enable = mkDefault true;
 
-    home.packages = with pkgs; [ sd ];
+    home.packages = with pkgs; [
+      gawk
+      gum
+      sd
+      biapy-parts.killf
+    ];
 
     biapy.programs = {
       bash.enable = mkDefault true;
