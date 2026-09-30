@@ -15,6 +15,8 @@
   - [jrnl homepage](https://jrnl.sh/en/stable/)
     ([jrnl @ GitHub](https://github.com/jrnl-org/jrnl))
     is a journal application for the command line.
+  - [Markless @ GitHub](https://github.com/jvanderberg/markless)
+    is a terminal markdown viewer with image support.
   - [ripgrep-all (rga) @ GitHub](https://github.com/phiresky/ripgrep-all)
     is ripgrep, but also search in PDFs, E-Books, Office documents, `zip`, `tar.gz`, …
   - [rucola @ GitHub](https://github.com/Linus-Mussmaecher/rucola)
@@ -69,6 +71,8 @@ in
       rucola
       taskwarrior-tui
       tdf
+
+      unstable.markless
     ];
 
     biapy.programs.joplin-cli.enable = mkDefault true;
