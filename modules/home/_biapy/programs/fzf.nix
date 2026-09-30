@@ -65,6 +65,7 @@ in
     };
 
     home.packages = [
+      pkgs.biapy-parts.killf
       (pkgs.writeShellScriptBin "fzrg" ''
         # Live grep
         ${getExe config.programs.ripgrep.package} --line-number --no-heading --color=always "" |
@@ -98,19 +99,6 @@ in
 
         ${getExe config.programs.fd.package} --type 'f' "''${@}" |
         ${getExe config.programs.fzf.package} --preview "${getExe config.programs.bat.package} --color='always' --style='numbers' {}"
-      '')
-
-      (pkgs.writeShellScriptBin "killf" ''
-        # killf: Fuzzy Kill Process.
-        # see https://www.tsukie.com/en/technologies/use-cli-like-a-modern-tech-bro/
-        set -e
-        set -u
-        set -o pipefail
-
-        ps -ef |
-        ${getExe config.programs.fzf.package} --header "Select process to kill" |
-        ${getExe pkgs.gawk} '{print ''$2}' |
-        ${getExe' pkgs.uutils-findutils "xargs"} ${getExe' pkgs.uutils-coreutils-noprefix "kill"} -9
       '')
     ];
   };
