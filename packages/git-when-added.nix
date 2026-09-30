@@ -27,12 +27,12 @@ writeShellApplication {
   ];
   text = ''
     usage() {
-      echo "''${0}"
+      echo "''${0##*/}"
       echo ""
       echo "Find the commits in which a given path was added,"
       echo "allow to select a commit, and output the commit hash."
       echo ""
-      echo "Usage: ''${0} <path>"
+      echo "Usage: ''${0##*/} <path>"
     }
 
     if ! command -v 'git' &>'/dev/null'; then
@@ -40,15 +40,15 @@ writeShellApplication {
       exit 1
     fi
 
-    if [[ "''${1}" == "-h" || "''${1}" == "-?" || "''${1}" == "--help" ]]; then
-      usage
-      exit 0
-    fi
-
-    if [[ $# -ne 1 ]]; then
+    if [[ ''${#} -ne 1 ]]; then
       gum log --level=error "exactly 1 argument required."
       usage
       exit 1
+    fi
+
+    if [[ "''${1}" == "-h" || "''${1}" == "-?" || "''${1}" == "--help" ]]; then
+      usage
+      exit 0
     fi
 
     # Find the commit in which a given file was added.
