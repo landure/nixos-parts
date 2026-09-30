@@ -37,7 +37,6 @@ writeShellApplication {
     fzf --with-nth=2,8 --accept-nth=2 \
       --no-multi --header='Select process to kill' \
       --height=100% --layout=default --border --info=inline \
-      --style=numbers --color=always \
       --preview-window=right:40%:wrap \
       --preview='witr --pid {2}' |
     xargs kill -9
