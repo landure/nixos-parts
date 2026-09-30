@@ -36,13 +36,12 @@ writeShellApplication {
     }
 
     if ! command -v 'git' &>'/dev/null'; then
-      gum log --level=error "git is not installed or not in PATH."
+      gum log --level=error "git is not installed or not in PATH." >&2
       exit 1
     fi
 
     if [[ ''${#} -ne 1 ]]; then
-      gum log --level=error "exactly 1 argument required."
-      usage
+      gum log --level=error "exactly 1 argument required." >&2
       exit 1
     fi
 
