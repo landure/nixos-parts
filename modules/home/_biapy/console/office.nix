@@ -75,7 +75,10 @@ in
       unstable.markless
     ];
 
-    biapy.programs.joplin-cli.enable = mkDefault true;
+    biapy.programs = {
+      joplin-cli.enable = mkDefault true;
+      zk.enable = mkDefault true;
+    };
 
     programs = {
       jrnl.enable = mkDefault true;
