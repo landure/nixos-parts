@@ -18,17 +18,13 @@
   ...
 }:
 let
-  inherit (lib.options) mkEnableOption;
   inherit (lib.modules) mkIf;
+  inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.console.graphics;
 in
 {
-  options = {
-    biapy.console.graphics = {
-      enable = mkEnableOption "command-line graphics tools";
-    };
-  };
+  options.biapy.console.graphics.enable = mkEnableOption "command-line graphics tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

@@ -32,15 +32,13 @@ let
   cfg = config.biapy.services.ollama;
 in
 {
-  options = {
-    biapy.services.ollama = {
-      enable = mkEnableOption "Ollama service";
+  options.biapy.services.ollama = {
+    enable = mkEnableOption "Ollama service";
 
-      api-base = mkOption {
-        type = str;
-        description = "Ollama service API URL";
-        readOnly = true;
-      };
+    api-base = mkOption {
+      type = str;
+      description = "Ollama service API URL";
+      readOnly = true;
     };
   };
 

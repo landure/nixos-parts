@@ -19,7 +19,7 @@
   ...
 }:
 let
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.console.wayland;
@@ -33,10 +33,10 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      grim
-      slurp
       wl-clipboard-rs
       wl-screenrec
     ];
+
+    biapy.programs.grim.enable = mkDefault true;
   };
 }
