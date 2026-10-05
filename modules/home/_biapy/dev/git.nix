@@ -98,8 +98,7 @@
   ...
 }:
 let
-  inherit (lib.attrsets) mergeAttrsList;
-  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.modules) mkDefault mkIf mkMerge;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) bool enum nullOr;
 
@@ -131,7 +130,7 @@ in
     };
   };
 
-  config = mergeAttrsList [
+  config = mkMerge [
     (mkIf cfg.enable {
       biapy.programs = {
         gh.enable = mkDefault true;
@@ -192,7 +191,7 @@ in
     (mkIf (cfg.enable && cfg.diffPager == "delta") {
       programs.delta = {
         enable = mkDefault true;
-        enableGitIntegration.enable = mkDefault true;
+        enableGitIntegration = mkDefault true;
         enableJujutsuIntegration = mkDefault config.programs.jujutsu.enable;
       };
     })
@@ -200,7 +199,7 @@ in
     (mkIf (cfg.enable && cfg.diffPager == "diffnav") {
       biapy.programs.diffnav = {
         enable = mkDefault true;
-        enableGitIntegration.enable = mkDefault true;
+        enableGitIntegration = mkDefault true;
       };
     })
 
@@ -218,14 +217,14 @@ in
     (mkIf (cfg.enable && cfg.diffPager == "diff-so-fancy") {
       programs.diff-so-fancy = {
         enable = mkDefault true;
-        enableGitIntegration.enable = mkDefault true;
+        enableGitIntegration = mkDefault true;
       };
     })
 
     (mkIf (cfg.enable && cfg.diffPager == "riff") {
       programs.riff = {
         enable = mkDefault true;
-        enableGitIntegration.enable = mkDefault true;
+        enableGitIntegration = mkDefault true;
       };
     })
   ];
