@@ -217,7 +217,7 @@ in
             # display enhanced `git` logs:
             lpg = mkDefault "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
             logfull = mkDefault "log --pretty=fuller --graph --stat -p"; # display full git logs
-            pickaxe = mkDefault "log -S"; # give you all commits that added or removed a string in a codebase.
+            pickaxe = mkDefault "!f() { lpg \"-S\${1}\"; }; f"; # give you all commits that added or removed a string in a codebase.
             clean-gone = mkDefault "!git branch -vv | rg '\\[.*gone.*\\]' | sed 's/^..//' | cut -d' ' -f1 | xargs -r git branch -D";
 
             # archive git branch as tag
