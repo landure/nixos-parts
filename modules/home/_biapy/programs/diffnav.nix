@@ -21,9 +21,8 @@
   ...
 }:
 let
-  inherit (lib.hm.git) diffPagerConfig;
   inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf mkMerge;
+  inherit (lib.modules) mkDefault mkIf mkMerge;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types)
     attrsOf
@@ -36,6 +35,7 @@ let
     ;
 
   cfg = config.biapy.programs.diffnav;
+  deltaCfg = config.programs.delta;
 in
 {
   options.biapy.programs.diffnav = {
@@ -100,7 +100,27 @@ in
       };
     })
     (mkIf (cfg.enable && cfg.enableGitIntegration) {
-      programs.git.iniContent = diffPagerConfig (getExe cfg.package);
+      programs = {
+        delta.enable = mkDefault true;
+
+        git.iniContent =
+          let
+            diffnavCommand = getExe cfg.package;
+            deltaCommand = getExe deltaCfg.package;
+          in
+          {
+            pager = {
+              diff = diffnavCommand;
+              log = deltaCommand;
+              show = deltaCommand;
+              blame = deltaCommand;
+            };
+
+            interactive.diffFilter = "${deltaCommand} --color-only";
+
+            delta = deltaCfg.options;
+          };
+      };
     })
   ];
 }
