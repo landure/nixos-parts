@@ -38,6 +38,8 @@
   - [riff @ GitHub](https://github.com/walles/riff).
   - [Patdiff homepage](https://opensource.janestreet.com/patdiff/)
     ([Patdiff @ GitHub](https://github.com/janestreet/patdiff)).
+
+  - [ec @ GitHub](https://github.com/chojs23/ec).
   - [Mergiraf homepage](https://mergiraf.org/)
     ([Mergiraf @ Codeberg](https://codeberg.org/mergiraf/mergiraf)).
 
@@ -53,11 +55,14 @@
   ### 🏠 Home Manager Configuration Options
 
   - [programs.delta](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.delta.enable).
+  - [programs.ec @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.ec.enable).
+  - [programs.ec @ NixOS reference](https://search.nixos.org/options?query=programs.ec.).
   - [programs.gh](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.gh.enable).
   - [programs.git-credential-keepassxc](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.git-credential-keepassxc.enable).
   - [programs.git-credential-oauth](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.git-credential-oauth.enable).
-  - [programs.git-worktree-switcher @ GitHub](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.git-worktree-switcher.enable).
-  - [programs.git](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.git.enable).
+  - [programs.git-worktree-switcher @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.git-worktree-switcher.enable).
+  - [programs.git @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.git.enable).
+  - [programs.git @ NixOS reference](https://search.nixos.org/options?query=programs.git.).
   - [programs.gitui](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.gitui.enable).
   - [programs.jjui](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.jjui.enable).
   - [programs.jujutsu](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.jujutsu.enable).
@@ -93,9 +98,10 @@
   ...
 }:
 let
-  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.attrsets) mergeAttrsList;
   inherit (lib.modules) mkDefault mkIf;
-  inherit (lib.types) bool;
+  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.types) bool enum nullOr;
 
   cfg = config.biapy.dev.git;
 
@@ -110,72 +116,117 @@ in
         default = true;
         description = "Wether to install jujutsu";
       };
+
+      diffPager = mkOption {
+        type = nullOr (enum [
+          "delta"
+          "diffnav"
+          "difftastic"
+          "diff-so-fancy"
+          "riff"
+        ]);
+        default = "diffnav";
+        description = "Which diff pager to use for git diffs";
+      };
     };
   };
 
-  config = mkIf cfg.enable {
-    biapy.programs = {
-      gh.enable = mkDefault true;
-      git.enable = mkDefault true;
-      gitalias.enable = mkDefault true;
-      git-utils.enable = mkDefault true;
-      jujutsu.enable = mkDefault cfg.jujutsu;
-      lazygit.enable = mkDefault true;
-    };
+  config = mergeAttrsList [
+    (mkIf cfg.enable {
+      biapy.programs = {
+        gh.enable = mkDefault true;
+        git.enable = mkDefault true;
+        gitalias.enable = mkDefault true;
+        git-utils.enable = mkDefault true;
+        jujutsu.enable = mkDefault cfg.jujutsu;
+        lazygit.enable = mkDefault true;
+      };
 
-    home.packages = with pkgs; [
-      glab
-      onefetch
-      unstable.glab-tui
-    ];
+      home.packages = with pkgs; [
+        glab
+        onefetch
+        unstable.glab-tui
+      ];
 
-    programs = {
+      programs = {
 
-      # gitui.enable = mkDefault true;
+        # gitui.enable = mkDefault true;
 
-      #lazyworktree = {
-      #  enable = mkDefault true;
-      # settings = {
-      #   auto_fetch_prs = false;
-      #   auto_refresh = true;
-      #   fuzzy_finder_input = false;
-      #   icon_set = "nerd-font-v3";
-      #   refresh_interval = 10;
-      #   search_auto_select = false;
-      #   sort_mode = "switched";
-      #   worktree_dir = "~/.local/share/worktrees";
-      # };
-      #};
+        #lazyworktree = {
+        #  enable = mkDefault true;
+        # settings = {
+        #   auto_fetch_prs = false;
+        #   auto_refresh = true;
+        #   fuzzy_finder_input = false;
+        #   icon_set = "nerd-font-v3";
+        #   refresh_interval = 10;
+        #   search_auto_select = false;
+        #   sort_mode = "switched";
+        #   worktree_dir = "~/.local/share/worktrees";
+        # };
+        #};
 
-      delta = {
+        # diff-highlight.enable = true;
+        # patdiff.enable = true;
+
+        ec = {
+          enable = mkDefault true;
+          enableGitIntegration = mkDefault true;
+        };
+
+        mergiraf = {
+          enable = mkDefault true;
+          enableGitIntegration = mkDefault true;
+          enableJujutsuIntegration = mkDefault config.programs.jujutsu.enable;
+        };
+
+        git-worktree-switcher.enable = mkDefault true;
+        git-credential-oauth.enable = mkDefault true;
+        git-credential-keepassxc.enable = mkDefault config.programs.keepassxc.enable;
+
+        jujutsu.enable = mkDefault cfg.jujutsu;
+        jjui.enable = mkDefault config.programs.jujutsu.enable;
+      };
+    })
+
+    (mkIf (cfg.enable && cfg.diffPager == "delta") {
+      programs.delta = {
         enable = mkDefault true;
-        enableGitIntegration = false;
+        enableGitIntegration.enable = mkDefault true;
         enableJujutsuIntegration = mkDefault config.programs.jujutsu.enable;
       };
+    })
 
-      # diff-so-fancy.enable = true;
-      # diff-highlight.enable = true;
-      # patdiff.enable = true;
-      # riff.enable = true;
-
-      difftastic = {
+    (mkIf (cfg.enable && cfg.diffPager == "diffnav") {
+      biapy.programs.diffnav = {
         enable = mkDefault true;
-        git.enable = mkDefault true;
-        # jujutsu = mkDefault config.programs.jujutsu.enable;
+        enableGitIntegration.enable = mkDefault true;
       };
+    })
 
-      mergiraf = {
+    (mkIf (cfg.enable && cfg.diffPager == "difftastic") {
+      programs.difftastic = {
         enable = mkDefault true;
-        enableGitIntegration = mkDefault true;
-        enableJujutsuIntegration = mkDefault true;
+        git = {
+          enable = mkDefault true;
+          diffToolMode = mkDefault true;
+        };
+        jujutsu.enable = mkDefault config.programs.jujutsu.enable;
       };
+    })
 
-      git-worktree-switcher.enable = mkDefault true;
-      git-credential-oauth.enable = mkDefault true;
-      git-credential-keepassxc.enable = mkDefault config.programs.keepassxc.enable;
+    (mkIf (cfg.enable && cfg.diffPager == "diff-so-fancy") {
+      programs.diff-so-fancy = {
+        enable = mkDefault true;
+        enableGitIntegration.enable = mkDefault true;
+      };
+    })
 
-      jujutsu.enable = mkDefault cfg.jujutsu;
-      jjui.enable = mkDefault config.programs.jujutsu.enable;
-    };
-  };
+    (mkIf (cfg.enable && cfg.diffPager == "riff") {
+      programs.riff = {
+        enable = mkDefault true;
+        enableGitIntegration.enable = mkDefault true;
+      };
+    })
+  ];
 }

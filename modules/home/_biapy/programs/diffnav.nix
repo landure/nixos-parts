@@ -5,16 +5,14 @@
 
   ## 🛠️ Tech Stack
 
-  - [diffnav homepage](https://github.com/dlvhdr/diffnav)
-    ([diffnav @ GitHub](https://github.com/dlvhdr/diffnav)).
-  - [delta homepage](https://dandavison.github.io/delta/)
-    ([delta @ GitHub](https://github.com/dandavison/delta)).
+  - [diffnav @ GitHub](https://github.com/dlvhdr/diffnav).
 
   ## 📝 Documentation
 
   ### 🏠 Home Manager
 
-  - [programs.git](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.git.enable).
+  - [programs.git @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.git.enable).
+  - [programs.git @ NixOS reference](https://search.nixos.org/options?query=programs.git.).
 */
 {
   config,
@@ -46,7 +44,7 @@ in
     package = mkOption {
       type = package;
       default = pkgs.diffnav;
-      defaultExpression = lib.literalExpression "pkgs.diffnav";
+      defaultText = "pkgs.diffnav";
       description = "The diffnav package to use.";
     };
 
