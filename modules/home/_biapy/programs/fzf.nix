@@ -32,7 +32,7 @@
   ...
 }:
 let
-  inherit (lib.meta) getExe getExe';
+  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkDefault;
   inherit (lib.options) mkEnableOption;
 
