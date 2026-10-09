@@ -16,6 +16,8 @@
     ([jless @ GitHub](https://github.com/PaulJuliusMartinez/jless))
     is a command-line JSON viewer designed for reading, exploring,
     and searching through JSON data.
+  - [jaq @ GitHub](https://github.com/01mf02/jaq)
+    is a `jq` clone focussed on correctness, speed, and simplicity.
   - [jq homepage](https://jqlang.org/)
     ([jq @ GitHub](https://github.com/jqlang/jq))
     is a lightweight and flexible command-line JSON processor akin to `sed`.
@@ -51,6 +53,7 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       fx
+      jaq
       jsongrep
       jid
       jless
