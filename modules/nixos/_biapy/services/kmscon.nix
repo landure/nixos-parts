@@ -22,12 +22,12 @@
 
   - [services.gpm @ NixOS reference](https://search.nixos.org/options?&query=services.gpm.)
   - [services.kmscon @ NixOS reference](https://search.nixos.org/options?&query=services.kmscon.)
-  - [services.physlock @ NixOS reference](https://search.nixos.org/options?query=services.physlock.).
+  - [services.physlock @ NixOS reference](https://search.nixos.org/options?query=services.physlock.).
 
   ## 🙇 Acknowledgements
 
   - [General purpose mouse @ ArchLinux Wiki](https://wiki.archlinux.org/title/General_purpose_mouse).
-  - [KMSCON @ ArchLinux Wiki](https://wiki.archlinux.org/title/KMSCON).
+  - [KMSCON @ ArchLinux Wiki](https://wiki.archlinux.org/title/KMSCON).
 */
 {
   config,
@@ -49,12 +49,9 @@ let
   # };
 in
 {
-  options = {
-    biapy.services.kmscon.enable = mkEnableOption "kmscon";
-  };
+  options.biapy.services.kmscon.enable = mkEnableOption "kmscon";
 
   config = mkIf cfg.enable {
-
     services = {
       gpm.enable = mkDefault false;
 
@@ -64,45 +61,16 @@ in
       kmscon = {
         # Use kmscon as the virtual console instead of gettys
         enable = mkDefault true;
-
         package = mkDefault pkgs.unstable.kmscon;
 
         # Configure keymap from xserver keyboard settings (not needed)
         useXkbConfig = mkDefault true;
 
         # Extra flags to pass to kmscon.
-        extraOptions = mkDefault (
-          concatStringsSep " " [
+        extraOptions = concatStringsSep " " [
             "--mouse"
             # "--term xterm-256color"
-          ]
-        );
-
-        # Extra contents of the kmscon.conf file.
-        # extraConfig = ''
-        # font-size=14
-        # '';
-
-        # Fonts used by kmscon, in order of priority.
-        # Stylix centralize this.
-        # fonts = [
-        #   # {
-        #   #  name = "Fira Code Nerd Font";
-        #   #  package = pkgs.nerd-fonts.fira-code;
-        #   # }
-        #   {
-        #     name = "JetBrains Nerd Font Mono";
-        #     package = pkgs.nerd-fonts.jetbrains-mono;
-        #   }
-        #   {
-        #     name = "Noto Sans Nerd Font Mono";
-        #     package = pkgs.nerd-fonts.noto;
-        #   }
-        #   {
-        #     name = "DejaVu Sans Nerd Font Mono";
-        #     package = pkgs.nerd-fonts.dejavu-sans-mono;
-        #   }
-        # ];
+          ];
 
         # Whether to use 3D hardware acceleration to render the console.
         hwRender = mkDefault config.hardware.facter.detected.graphics.enable;
