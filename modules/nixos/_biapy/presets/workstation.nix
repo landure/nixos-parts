@@ -17,6 +17,8 @@ in
         zswap.enable = mkDefault true;
       };
 
+      security.polkit.enable = mkDefault true;
+
       services = {
         displayManager.enable = mkDefault true;
         flatpak.enable = mkDefault true;

@@ -6,11 +6,26 @@
   as root or another user while providing an audit trail of the commands
   and their arguments.
 
+  ## 🛠️ Tech Stack
+
   - [sudo homepage](https://www.sudo.ws/)
     ([sudo @ GitHub](https://github.com/sudo-project/sudo)).
-  - [security.sudo @ NixOS reference](https://search.nixos.org/options?query=security.sudo)
-  - [security.pam.services.*.sshAgentAuth @ NixOS reference](https://search.nixos.org/options?query=security.pam.services.%3Cname%3E.sshAgentAuth)
-  - [nix.settings.extra-trusted-users @ NixOS reference](https://search.nixos.org/options?query=nix.settings.extra-trusted-users)
+  - [sudo-rs @ Trifecta Tech Foundation](https://trifectatech.org/projects/sudo-rs/)
+    ([sudo-rs @ GitHub](https://github.com/trifectatechfoundation/sudo-rs)).
+
+  ## 📝 Documentation
+
+  ### ❄️ NixOS
+
+  - [nix.settings.extra-trusted-users @ NixOS reference](https://search.nixos.org/options?query=nix.settings.extra-trusted-users).
+  - [security.sudo @ NixOS reference](https://search.nixos.org/options?query=security.sudo.).
+  - [security.sudo-rs @ NixOS reference](https://search.nixos.org/options?query=security.sudo-rs.).
+  - [security.pam.services.*.sshAgentAuth @ NixOS reference](https://search.nixos.org/options?query=security.pam.services.%3Cname%3E.sshAgentAuth).
+  - [security.polkit.adminIdentities @ NixOS reference](https://search.nixos.org/options?query=security.polkit.adminIdentities).
+
+  ## 🙇 Acknowledgements
+
+  - [Sudo @ Official NixOS Wiki](https://wiki.nixos.org/wiki/Sudo).
 */
 {
   config,
@@ -22,60 +37,56 @@ let
   inherit (lib.attrsets) attrNames;
   inherit (lib.meta) getExe';
   inherit (lib.modules) mkDefault mkIf;
-  inherit (lib.options) mkOption;
-  inherit (lib.types) bool;
+  inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.security.sudo;
 
 in
 {
-  options = {
-    biapy.security.sudo.enable = mkOption {
-      type = bool;
-      default = true;
-      example = true;
-      description = ''
-        Whether to add default sudo configuration.
-      '';
-    };
+  options.biapy.security.sudo.enable = mkEnableOption "sudo" // {
+    default = true;
   };
 
   config = mkIf cfg.enable {
-    users.groups.wheel.members = mkDefault (attrNames config.home-manager.users);
-
-    # Enable sudo for users in wheel group, and allow sudoers reboot and poweroff
-    # @see https://nixos.wiki/wiki/Sudo
-    security.sudo-rs = {
-      enable = mkDefault true;
-      extraRules = [
-        {
-          commands = [
-            {
-              command = "${getExe' pkgs.systemd "systemctl"} suspend";
-              options = [ "NOPASSWD" ];
-            }
-            {
-              command = getExe' pkgs.systemd "reboot";
-              options = [ "NOPASSWD" ];
-            }
-            {
-              command = getExe' pkgs.systemd "poweroff";
-              options = [ "NOPASSWD" ];
-            }
-
-            # Allow passwordless use of nixos-rebuild switch --use-remote-sudo --target-host "user@host"
-            {
-              command = "${getExe' pkgs.nix "nix-env"} -p /nix/var/nix/profiles/system --set /nix/store/*nixos-system*";
-              options = [ "NOPASSWD" ];
-            }
-          ];
-        }
-      ];
-    };
-
-    security.pam.services.sudo.sshAgentAuth = mkDefault true;
+    users.groups.wheel.members = attrNames config.home-manager.users;
 
     # Allow sudoers to run nix commands without password and apply remote builds
     nix.settings.extra-trusted-users = [ "@wheel" ];
+
+    security = {
+      pam.services.sudo.sshAgentAuth = mkDefault true;
+
+      polkit.adminIdentities = [ "unix-group:wheel" ];
+
+      sudo-rs = {
+        enable = mkDefault true;
+        execWheelOnly = mkDefault true;
+        # allow sudoers reboot and poweroff
+        extraRules = [
+          {
+            commands = [
+              {
+                command = "${getExe' pkgs.systemd "systemctl"} suspend";
+                options = [ "NOPASSWD" ];
+              }
+              {
+                command = getExe' pkgs.systemd "reboot";
+                options = [ "NOPASSWD" ];
+              }
+              {
+                command = getExe' pkgs.systemd "poweroff";
+                options = [ "NOPASSWD" ];
+              }
+
+              # Allow passwordless use of nixos-rebuild switch --use-remote-sudo --target-host "user@host"
+              {
+                command = "${getExe' pkgs.nix "nix-env"} -p /nix/var/nix/profiles/system --set /nix/store/*nixos-system*";
+                options = [ "NOPASSWD" ];
+              }
+            ];
+          }
+        ];
+      };
+    };
   };
 }
