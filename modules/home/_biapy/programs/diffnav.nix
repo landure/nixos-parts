@@ -62,16 +62,18 @@ in
       ]);
       default = { };
       example = {
-        ui.hideHeader = true;
-        ui.hideFooter = true;
-        ui.showFileTree = true;
-        ui.fileTreeWidth = 26;
-        ui.icons = "nerd-fonts-status";
-        ui.colorFileNames = true;
-        ui.showDiffStats = true;
-        ui.sideBySide = true;
-        ui.startFoldersOpenDepth = -1;
-        ui.theme = "tokyo_night";
+        ui = {
+          hideHeader = true;
+          hideFooter = true;
+          showFileTree = true;
+          fileTreeWidth = 26;
+          icons = "nerd-fonts-status";
+          colorFileNames = true;
+          showDiffStats = true;
+          sideBySide = true;
+          startFoldersOpenDepth = -1;
+          theme = "tokyo_night";
+        };
       };
       description = ''
         Options to configure diffnav.
