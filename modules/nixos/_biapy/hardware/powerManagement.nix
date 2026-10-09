@@ -41,15 +41,13 @@ let
   cfg = config.biapy.hardware.powerManagement;
 in
 {
-  options = {
-    biapy.hardware.powerManagement = {
-      enable = mkEnableOption "power management" // {
-        default = config.biapy.facter.detected.laptop.enable;
-      };
-    };
+  options.biapy.hardware.powerManagement.enable = mkEnableOption "power management" // {
+    default = config.biapy.facter.detected.laptop.enable;
   };
 
   config = mkIf cfg.enable {
+    biapy.services.auto-cpufreq.enable = mkDefault true;
+
     powerManagement = {
       enable = mkDefault true;
       powertop.enable = mkDefault true;
@@ -58,20 +56,6 @@ in
     networking.networkmanager.wifi.powersave = mkDefault true;
 
     services = {
-      auto-cpufreq = {
-        enable = mkDefault (!config.services.tuned.enable);
-        settings = {
-          battery = {
-            governor = mkDefault "powersave";
-            turbo = mkDefault "never";
-          };
-          charger = {
-            governor = mkDefault "performance";
-            turbo = mkDefault "auto";
-          };
-        };
-      };
-
       logind.settings.Login = {
         HandleLidSwitch = mkDefault "suspend";
         HandleLidSwitchExternalPower = mkDefault "suspend";
