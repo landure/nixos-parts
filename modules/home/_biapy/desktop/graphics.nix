@@ -16,6 +16,6 @@ in
   options.biapy.desktop.graphics.enable = mkEnableOption "Desktop graphics tools";
 
   config = mkIf cfg.enable {
-    services.flameshot.enable = mkDefault true;
+    biapy.services.flameshot.enable = mkDefault true;
   };
 }

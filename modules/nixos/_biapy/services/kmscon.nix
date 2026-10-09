@@ -68,9 +68,9 @@ in
 
         # Extra flags to pass to kmscon.
         extraOptions = concatStringsSep " " [
-            "--mouse"
-            # "--term xterm-256color"
-          ];
+          "--mouse"
+          # "--term xterm-256color"
+        ];
 
         # Whether to use 3D hardware acceleration to render the console.
         hwRender = mkDefault config.hardware.facter.detected.graphics.enable;
