@@ -20,7 +20,7 @@ let
   inherit (lib.types) listOf enum;
   inherit (lib.meta) getExe;
 
-  cfg = config.biapy.desktop.console;
+  cfg = config.biapy.desktop.terminalEmulators;
 
   terminalEmulatorCommands = {
     ghostty = getExe config.programs.ghostty.package;
@@ -30,33 +30,31 @@ let
   terminalEmulators = attrNames terminalEmulatorCommands;
 in
 {
-  options = {
-    biapy.desktop.console = {
-      enable = mkEnableOption "Terminal Emulators";
+  options.biapy.desktop.terminalEmulators = {
+    enable = mkEnableOption "Terminal Emulators";
 
-      terminals = mkOption {
-        type = listOf (enum terminalEmulators);
-        default = [ "ghostty" ];
-        description = ''
-          What terminal emulators to enable.
-        '';
-      };
+    terminals = mkOption {
+      type = listOf (enum terminalEmulators);
+      default = [ "ghostty" ];
+      description = ''
+        What terminal emulators to enable.
+      '';
+    };
 
-      default = mkOption {
-        type = enum cfg.terminals;
-        default = "ghostty";
-        description = ''
-          Prefered terminal emulator
-        '';
-        apply = default: terminalEmulatorCommands."${default}";
-      };
+    default = mkOption {
+      type = enum cfg.terminals;
+      default = "ghostty";
+      description = ''
+        Prefered terminal emulator
+      '';
+      apply = default: terminalEmulatorCommands."${default}";
     };
   };
 
   config = mkIf cfg.enable {
     biapy.programs = {
-      foot.enable = mkDefault (elem "ghostty" cfg.terminals);
-      ghostty.enable = mkDefault (elem "foot" cfg.terminals);
+      foot.enable = mkDefault (elem "foot" cfg.terminals);
+      ghostty.enable = mkDefault (elem "ghostty" cfg.terminals);
     };
   };
 }

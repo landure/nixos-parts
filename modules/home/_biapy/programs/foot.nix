@@ -22,27 +22,24 @@
   ...
 }:
 let
-  inherit (lib.modules) mkDefault mkIf mkOptionDefault;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.foot;
 in
 {
-  options = {
-    biapy.programs.foot.enable = mkEnableOption "foot";
-  };
+  options.biapy.programs.foot.enable = mkEnableOption "foot";
 
   config = mkIf cfg.enable {
-
     programs.foot = {
       enable = mkDefault true;
       server.enable = mkDefault true;
-      settings = mkDefault {
+      settings = {
         main = {
-          dpi-aware = mkOptionDefault "yes";
+          dpi-aware = mkDefault "yes";
         };
         mouse = {
-          hide-when-typing = mkOptionDefault "yes";
+          hide-when-typing = mkDefault "yes";
         };
       };
     };
