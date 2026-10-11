@@ -36,7 +36,7 @@ in
     default = config.biapy.facter.detected.laptop.enable;
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && !config.services.tuned.enable) {
     services.auto-cpufreq = {
       enable = mkDefault true;
       settings = {
