@@ -1,7 +1,7 @@
 { config, lib, ... }:
 let
   inherit (lib.attrsets) attrNames;
-  inherit (lib.options) mkOption; 
+  inherit (lib.options) mkOption;
   inherit (lib.types) listOf str;
 in
 {
