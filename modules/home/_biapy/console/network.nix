@@ -27,6 +27,9 @@
   - [Trippy homepage](https://trippy.rs/).
     ([Trippy @ GitHub](https://github.com/fujiapple852/trippy))
     combines the capabilities of `traceroute` and `ping`.
+  - [WTF is it? (wtfis) @ GitHub](https://github.com/pirxthepilot/wtfis)
+    is a commandline tool that gathers information about a domain, FQDN,
+    or IP address using various OSINT services.
 
   ## 🙇 Acknowledgements
 
@@ -62,12 +65,14 @@ in
       netop
       snitch # ss alternative
       trippy
+      wtfis
 
       unstable.netwatch
       unstable.cloudflare-speed-cli
 
       biapy-parts.quien
       biapy-parts.pktz
+      biapy-parts.wtfi2
     ];
 
     biapy.programs.trippy.enable = mkDefault true;
