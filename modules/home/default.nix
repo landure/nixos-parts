@@ -36,6 +36,7 @@ let
         import-tree
         sops-nix
         nix-index-database
+        sofka
         spicetify-nix
         stylix
         ;
@@ -52,6 +53,7 @@ let
       localFlake.inputs.nix-index-database.homeModules.default
       localFlake.inputs.stylix.homeModules.stylix
       localFlake.inputs.spicetify-nix.homeManagerModules.spicetify
+      localFlake.inputs.sofka.homeManagerModules.default
       (localFlake.inputs.import-tree ./_biapy)
     ];
   };
@@ -72,6 +74,13 @@ in
       url = mkDefault "github:HalFrgrd/flyline";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
+      };
+    };
+    sofka = {
+      url = mkDefault "github:nklmilojevic/sofka";
+      inputs = {
+        nixpkgs.follows = mkDefault "nixpkgs";
+        home-manager.follows = "home-manager";
       };
     };
     quien = {

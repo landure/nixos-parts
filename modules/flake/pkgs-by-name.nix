@@ -52,12 +52,21 @@ in
               nixpkgs.config = config.nixpkgs.config;
             };
             biapy-parts = localFlake.packages.${system};
+            sofka = localFlake.inputs.sofka.packages.${system};
             spicetify-nix = localFlake.inputs.spicetify-nix.legacyPackages.${system};
+            quien = localFlake.inputs.quien.packages.${system};
           }
         )
       )
         {
-          inputs = { inherit (inputs) nixpkgs-unstable spicetify-nix; };
+          inputs = {
+            inherit (inputs)
+              nixpkgs-unstable
+              sofka
+              spicetify-nix
+              quien
+              ;
+          };
           inherit (self) packages;
         };
   };

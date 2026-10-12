@@ -80,6 +80,22 @@ in
     programs = {
       kubecolor.enable = mkDefault true;
       kubeswitch.enable = mkDefault true;
+      sofka.enable = mkDefault true;
+      zed-editor = {
+        extensions = [
+          "helm"
+        ];
+
+        # Use Helm language highlighting for some yaml files.
+        userSettings.file_types.Helm = mkDefault [
+          "**/templates/**/*.tpl"
+          "**/templates/**/*.yaml"
+          "**/templates/**/*.yml"
+          "**/helmfile.d/**/*.yaml"
+          "**/helmfile.d/**/*.yml"
+          "**/values*.yaml"
+        ];
+      };
     };
 
     home = {
@@ -105,22 +121,6 @@ in
             helm-git
           ];
         })
-      ];
-    };
-
-    programs.zed-editor = {
-      extensions = [
-        "helm"
-      ];
-
-      # Use Helm language highlighting for some yaml files.
-      userSettings.file_types.Helm = mkDefault [
-        "**/templates/**/*.tpl"
-        "**/templates/**/*.yaml"
-        "**/templates/**/*.yml"
-        "**/helmfile.d/**/*.yaml"
-        "**/helmfile.d/**/*.yml"
-        "**/values*.yaml"
       ];
     };
   };

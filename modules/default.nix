@@ -28,7 +28,7 @@ in
     prune-lock.enable = mkDefault true;
 
     inputs = {
-      flake-file.url = mkDefault "github:vic/flake-file";
+      flake-file.url = mkDefault "github:denful/flake-file";
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
       nixpkgs-lib.follows = "nixpkgs";
       nixpkgs-unstable.url = "nixpkgs/nixos-unstable";

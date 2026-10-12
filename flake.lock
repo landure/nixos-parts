@@ -108,13 +108,13 @@
       "locked": {
         "lastModified": 1791696462,
         "narHash": "sha256-Iu862mflVRLHE3ivJD1ah5j/pprVyxnXMMUPMR9C1Wg=",
-        "owner": "vic",
+        "owner": "denful",
         "repo": "flake-file",
         "rev": "4ccd0b92aee0943b94324ec4c39949df1769f123",
         "type": "github"
       },
       "original": {
-        "owner": "vic",
+        "owner": "denful",
         "repo": "flake-file",
         "type": "github"
       }
@@ -234,13 +234,13 @@
       "locked": {
         "lastModified": 1788467110,
         "narHash": "sha256-ljEMTXP/rH0tOvDzc9gzwww6KcHRPRnEHzd9lK48V7s=",
-        "owner": "vic",
+        "owner": "denful",
         "repo": "import-tree",
         "rev": "eb1b52eaecc57f7c136d07ae8a93e724dfecac46",
         "type": "github"
       },
       "original": {
-        "owner": "vic",
+        "owner": "denful",
         "repo": "import-tree",
         "type": "github"
       }
@@ -440,9 +440,33 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "pkgs-by-name-for-flake-parts": "pkgs-by-name-for-flake-parts",
         "quien": "quien",
+        "sofka": "sofka",
         "sops-nix": "sops-nix",
         "spicetify-nix": "spicetify-nix",
         "stylix": "stylix"
+      }
+    },
+    "sofka": {
+      "inputs": {
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791797375,
+        "narHash": "sha256-KIIc6Ls70z4mh+eUuc0YrdqU4XqtoinDRuz1uiRBHpk=",
+        "owner": "nklmilojevic",
+        "repo": "sofka",
+        "rev": "286893dfebbde7d51899416eaad64366a2a01aca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nklmilojevic",
+        "repo": "sofka",
+        "type": "github"
       }
     },
     "sops-nix": {
