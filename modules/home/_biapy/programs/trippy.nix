@@ -22,7 +22,7 @@
   ...
 }:
 let
-  inherit (lib.modules) mkDefault mkIf mkOptionDefault;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.trippy;
@@ -37,7 +37,7 @@ in
     programs.trippy = {
       enable = mkDefault true;
 
-      settings = mkDefault {
+      settings = {
         "trippy" = {
           # The Trippy mode.
           #
@@ -54,14 +54,14 @@ in
           #
           # Note: the dot and flows modes are only allowed with paris or dublin
           # multipath strategy.
-          "mode" = mkOptionDefault "tui";
+          "mode" = mkDefault "tui";
 
           # Trace without requiring elevated privileges [default: false]
           #
           # Enabling will cause IPPROTO_ICMP sockets to be used.
           #
           # Note: not supported on all platforms.
-          "unprivileged" = mkOptionDefault false;
+          "unprivileged" = mkDefault false;
 
         };
 
@@ -79,7 +79,7 @@ in
           #   ipv4-then-ipv6  - Lookup IPv4 with a fallback to IPv6 [default]
           #   system          - If the OS resolver is being used then use the first IP address returned,
           #                     otherwise lookup IPv6 with a fallback to IPv4.
-          "addr-family" = mkOptionDefault "ipv4-then-ipv6";
+          "addr-family" = mkDefault "ipv4-then-ipv6";
 
           # The tracing protocol.
           #
@@ -87,7 +87,7 @@ in
           #   icmp [default]
           #   udp
           #   tcp
-          "protocol" = mkOptionDefault "icmp";
+          "protocol" = mkDefault "icmp";
         };
 
         # Tui key bindings Configuration.
@@ -97,44 +97,44 @@ in
         #
         # See https://github.com/fujiapple852/trippy#key-bindings-reference for details.
         "bindings" = {
-          "address-mode-both" = mkOptionDefault "b";
-          "address-mode-host" = mkOptionDefault "n";
-          "address-mode-ip" = mkOptionDefault "i";
-          "chart-zoom-in" = mkOptionDefault "=";
-          "chart-zoom-out" = mkOptionDefault "-";
-          "clear-dns-cache" = mkOptionDefault "ctrl+k";
-          "clear-selection" = mkOptionDefault "esc";
-          "clear-trace-data" = mkOptionDefault "ctrl+r";
-          "contract-hosts" = mkOptionDefault "[";
-          "contract-hosts-min" = mkOptionDefault "{";
-          "contract-privacy" = mkOptionDefault "o";
-          "expand-hosts" = mkOptionDefault "]";
-          "expand-hosts-max" = mkOptionDefault "}";
-          "expand-privacy" = mkOptionDefault "p";
-          "next-hop" = mkOptionDefault "down";
-          "next-hop-address" = mkOptionDefault ".";
-          "next-trace" = mkOptionDefault "right";
-          "previous-hop" = mkOptionDefault "up";
-          "previous-hop-address" = mkOptionDefault ",";
-          "previous-trace" = mkOptionDefault "left";
-          "quit" = mkOptionDefault "q";
-          "quit-preserve-screen" = mkOptionDefault "shift+q";
-          "toggle-as-info" = mkOptionDefault "z";
-          "toggle-chart" = mkOptionDefault "c";
-          "toggle-flows" = mkOptionDefault "f";
-          "toggle-freeze" = mkOptionDefault "ctrl+f";
-          "toggle-help" = mkOptionDefault "h";
-          "toggle-help-alt" = mkOptionDefault "?";
-          "toggle-hop-details" = mkOptionDefault "d";
-          "toggle-map" = mkOptionDefault "m";
-          "toggle-settings" = mkOptionDefault "s";
-          "toggle-settings-bindings" = mkOptionDefault "5";
-          "toggle-settings-columns" = mkOptionDefault "7";
-          "toggle-settings-dns" = mkOptionDefault "3";
-          "toggle-settings-geoip" = mkOptionDefault "4";
-          "toggle-settings-theme" = mkOptionDefault "6";
-          "toggle-settings-trace" = mkOptionDefault "2";
-          "toggle-settings-tui" = mkOptionDefault "1";
+          "address-mode-both" = mkDefault "b";
+          "address-mode-host" = mkDefault "n";
+          "address-mode-ip" = mkDefault "i";
+          "chart-zoom-in" = mkDefault "=";
+          "chart-zoom-out" = mkDefault "-";
+          "clear-dns-cache" = mkDefault "ctrl+k";
+          "clear-selection" = mkDefault "esc";
+          "clear-trace-data" = mkDefault "ctrl+r";
+          "contract-hosts" = mkDefault "[";
+          "contract-hosts-min" = mkDefault "{";
+          "contract-privacy" = mkDefault "o";
+          "expand-hosts" = mkDefault "]";
+          "expand-hosts-max" = mkDefault "}";
+          "expand-privacy" = mkDefault "p";
+          "next-hop" = mkDefault "down";
+          "next-hop-address" = mkDefault ".";
+          "next-trace" = mkDefault "right";
+          "previous-hop" = mkDefault "up";
+          "previous-hop-address" = mkDefault ",";
+          "previous-trace" = mkDefault "left";
+          "quit" = mkDefault "q";
+          "quit-preserve-screen" = mkDefault "shift+q";
+          "toggle-as-info" = mkDefault "z";
+          "toggle-chart" = mkDefault "c";
+          "toggle-flows" = mkDefault "f";
+          "toggle-freeze" = mkDefault "ctrl+f";
+          "toggle-help" = mkDefault "h";
+          "toggle-help-alt" = mkDefault "?";
+          "toggle-hop-details" = mkDefault "d";
+          "toggle-map" = mkDefault "m";
+          "toggle-settings" = mkDefault "s";
+          "toggle-settings-bindings" = mkDefault "5";
+          "toggle-settings-columns" = mkDefault "7";
+          "toggle-settings-dns" = mkDefault "3";
+          "toggle-settings-geoip" = mkDefault "4";
+          "toggle-settings-theme" = mkDefault "6";
+          "toggle-settings-trace" = mkDefault "2";
+          "toggle-settings-tui" = mkDefault "1";
         };
         "dns" = {
           # How DNS queries are resolved
@@ -144,7 +144,7 @@ in
           #   resolv      - Resolve using the `/etc/resolv.conf` DNS configuration
           #   google      - Resolve using the Google `8.8.8.8` DNS service
           #   cloudflare  - Resolve using the Cloudflare `1.1.1.1` DNS service
-          "dns-resolve-method" = mkOptionDefault "system";
+          "dns-resolve-method" = mkDefault "system";
 
           # Whether to lookup AS information [default: false]
           #
@@ -158,8 +158,8 @@ in
           # When set to false a trace will be started for one arbitrarily chosen IP per given target.
           "dns-resolve-all" = false;
 
-          "dns-timeout" = mkOptionDefault "5s";
-          "dns-ttl" = mkOptionDefault "300s";
+          "dns-timeout" = mkDefault "5s";
+          "dns-ttl" = mkDefault "300s";
         };
         "report" = {
           # The number of report cycles to run [default: 10]
@@ -174,7 +174,7 @@ in
           #   ip - Show IP address only
           #   host - Show reverse-lookup DNS hostname only [default]
           #   both - Show both IP address and reverse-lookup DNS hostname
-          "tui-address-mode" = mkOptionDefault "host";
+          "tui-address-mode" = mkDefault "host";
 
           # How to render autonomous system (AS) information.
           #
@@ -185,7 +185,7 @@ in
           #   registry        - Display the registry name
           #   allocated       - Display the allocated date
           #   name            - Display the AS name
-          "tui-as-mode" = mkOptionDefault "asn";
+          "tui-as-mode" = mkDefault "asn";
 
           # Custom columns to be displayed in the TUI hops table.
           #
@@ -223,7 +223,7 @@ in
           #   M = Explicit Congestion Notification (ECN) of the Original Datagram
           #
           # The columns will be shown in the order specified.
-          "tui-custom-columns" = mkOptionDefault "holsravbwdt";
+          "tui-custom-columns" = mkDefault "holsravbwdt";
 
           # How to render GeoIp information.
           #
@@ -234,7 +234,7 @@ in
           #   location - Show latitude and Longitude format GeoIp information
           #
           # Note this value is ignored unless a valid geoip-mmdb-file value is also provided.
-          "tui-geoip-mode" = mkOptionDefault "off";
+          "tui-geoip-mode" = mkDefault "off";
 
           # Supported mmdb formats:
           #   MaxMind "GeoLite2 City"
@@ -248,18 +248,18 @@ in
           #   mpls            - Show MPLS label(s) only
           #   full            - Show full icmp extension data for all known extensions
           #   all             - Show full icmp extension data for all classes
-          "tui-icmp-extension-mode" = mkOptionDefault "off";
+          "tui-icmp-extension-mode" = mkDefault "off";
 
           # The maximum number of addresses to show per hop [default: auto]
           #
           # Use a zero value for `auto`.
-          "tui-max-addrs" = mkOptionDefault 0;
+          "tui-max-addrs" = mkDefault 0;
 
           # Whether to preserve the screen on exit [default: false]
-          "tui-preserve-screen" = mkOptionDefault false;
+          "tui-preserve-screen" = mkDefault false;
 
           # The Tui refresh rate [default: 100ms]
-          "tui-refresh-rate" = mkOptionDefault "100ms";
+          "tui-refresh-rate" = mkDefault "100ms";
         };
       };
     };

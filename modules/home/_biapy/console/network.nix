@@ -44,36 +44,40 @@
   ...
 }:
 let
-  inherit (lib.options) mkEnableOption;
+  inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.console.network;
 in
 {
-  options = {
-    biapy.console.network = {
-      enable = mkEnableOption "command-line network tools";
-    };
-  };
+  options.biapy.console.network.enable = mkEnableOption "command-line network tools";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      dogedns # dig alternative
-      doggo
-      gping # ping with data visualization
-      nbping
-      netop
-      snitch # ss alternative
-      trippy
-      wtfis
+    home = {
+      shellAliases = {
+        netop = "sudo ${getExe pkgs.netop}";
+        pktz = "sudo ${getExe pkgs.biapy-parts.pktz}";
+      };
 
-      unstable.netwatch
-      unstable.cloudflare-speed-cli
+      packages = with pkgs; [
+        dogedns # dig alternative
+        doggo
+        gping # ping with data visualization
+        nbping
+        netop
+        snitch # ss alternative
+        trippy
+        wtfis
 
-      biapy-parts.quien
-      biapy-parts.pktz
-      biapy-parts.wtfi2
-    ];
+        unstable.netwatch
+        unstable.cloudflare-speed-cli
+
+        biapy-parts.quien
+        biapy-parts.pktz
+        biapy-parts.wtfi2
+      ];
+    };
 
     biapy.programs.trippy.enable = mkDefault true;
   };
