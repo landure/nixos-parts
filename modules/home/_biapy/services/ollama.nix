@@ -8,6 +8,7 @@
 
   - [Ollama homepage](https://ollama.com/).
   - [Ollama @ GitHub](https://github.com/ollama/ollama).
+  - [llm-visuals @ GitHub](https://github.com/DingoOz/llm-visuals).
 
   ## 📝 Documentation
 
@@ -23,7 +24,12 @@
   - [Ollama @ Official NixOS Wiki](https://wiki.nixos.org/wiki/Ollama).
   - [FAQ @ Ollama's GitHub](https://github.com/ollama/ollama/blob/main/docs/faq.md).
 */
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption;
@@ -44,6 +50,10 @@ in
 
   config = mkIf cfg.enable {
     biapy.services.ollama.api-base = "http://${config.services.ollama.host}:${toString config.services.ollama.port}/v1";
+
+    home.packages = with pkgs; [
+      biapy-parts.llm-visuals
+    ];
 
     services.ollama = {
       enable = mkDefault true;
