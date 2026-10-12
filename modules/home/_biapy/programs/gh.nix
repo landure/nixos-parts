@@ -32,9 +32,9 @@
 
   ## 📝 Documentation
 
-  ### 🏠 Home Manager Configuration Options
+  ### 🏠 Home Manager
 
-  - [programs.gh](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.gh.enable).
+  - [programs.gh @ HomeManager](https://nix-community.github.io/home-manager/options/home-manager/programs/gh.html).
 */
 {
   config,
