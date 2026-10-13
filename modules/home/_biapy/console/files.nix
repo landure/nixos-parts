@@ -16,6 +16,11 @@
     is a modern replacement for `ps` written in Rust.
   - [zoxide @ GitHub](https://github.com/ajeetdsouza/zoxide)
     is a smarter `cd` command, inspired by `z` and `autojump`.
+  - [rsync homepage](https://rsync.samba.org/)
+    is an open source utility that provides fast incremental file transfer.
+  - [lazyrsync homepage](https://lazyrsync.westpoint.io/)
+    ([lazyrsync @ GitHub](https://github.com/westpoint-io/lazyrsync))
+    is a friendly terminal UI for rsync.
 
   ### `ls`
 
@@ -46,6 +51,8 @@
     is a code search and replace tool written by Rust. .
   - [sd - search & displace @ GitHub](https://github.com/chmln/sd)
     is an intuitive find & replace CLI (`sed` alternative).
+  - [Space Age seD (sad) @ GitHub](https://github.com/ms-jpq/sad)
+    is a Batch File Edit tool.
 
   ### `cut`
 
@@ -154,6 +161,9 @@ in
       ov # Feature-rich terminal-based text viewer
       sd
       tuc # cut drop-in replacement writen in Rust
+
+      rsync
+      unstable.lazyrsync
 
       biapy-parts.rgsd
     ];
