@@ -6,7 +6,6 @@
   ## 🛠️ Tech Stack
 
   - [Steam homepage](https://store.steampowered.com/about/).
-  - [GameHub @ GitHub](https://github.com/tkashkin/gamehub).
   - [Heroic Games Launcher homepage](https://heroicgameslauncher.com/)
     ([Heroic Games Launcher @ GitHub](https://github.com/Heroic-Games-Launcher/HeroicGamesLauncher)).
   - [GE-Proton @ GitHub](https://github.com/GloriousEggroll/proton-ge-custom).
@@ -28,8 +27,8 @@ let
 
   cfg = config.biapy.desktop.gaming;
 
-  hasAmdGpu = config.hardware.facter.detected.graphics.amd.enable;
-  hasNvidiaGpu = config.hardware.facter.detected.graphics.nvidia.enable;
+  hasAmdGpu = osConfig.hardware.facter.detected.graphics.amd.enable or true;
+  hasNvidiaGpu = osConfig.hardware.facter.detected.graphics.nvidia.enable or true;
 in
 {
   options.biapy.desktop.gaming.enable = mkEnableOption "gaming tools";
@@ -38,12 +37,11 @@ in
     home.packages =
       with pkgs;
       [
-        gamehub
         heroic
         protontricks
         umu-launcher
       ]
-      ++ (optional (!osConfig.programs.steam.enable) pkgs.steam)
+      ++ (optional (!(osConfig.programs.steam.enable or false)) pkgs.steam)
       ++ (optional (hasAmdGpu || hasNvidiaGpu) pkgs.lact);
   };
 }

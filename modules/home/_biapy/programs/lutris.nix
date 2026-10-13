@@ -38,7 +38,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ dolphin ];
+    home.packages = with pkgs; [ dolphin-emu ];
     programs.lutris = {
       enable = mkDefault true;
       steamPackage = mkDefault (

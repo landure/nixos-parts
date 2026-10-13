@@ -27,7 +27,7 @@ in
   options.biapy.desktop.retro-gaming.enable = mkEnableOption "retro-gaming tools";
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ dolphin ];
+    home.packages = with pkgs; [ dolphin-emu ];
     biapy.programs.lutris.enable = mkDefault true;
   };
 }
