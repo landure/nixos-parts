@@ -62,6 +62,12 @@ in
   };
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = cfg.apiKey != null;
+        message = "biapy.mcp.context7.apiKey must be set when biapy.mcp.context7.enable is true.";
+      }
+    ];
     home.packages = [ cfg.package ];
 
     programs.mcp.servers.context7 = {
