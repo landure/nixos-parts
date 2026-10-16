@@ -48,7 +48,7 @@ in
                 inherit url;
               })
               {
-                "Lofi Girl 🎶" = "https://www.youtube.com/live/jfKfPfyJRdk?si=WDl-XdfuhxBfe6XN";
+                "Lofi Girl 🎶" = "https://www.youtube.com/watch?v=rFZHOHl-L8A";
                 "Nostalgie 🎶🇫🇷" = "https://streaming.nrjaudio.fm/oug7girb92oc";
                 "France Inter 🇫🇷" = "https://icecast.radiofrance.fr/franceinter-midfi.mp3";
                 "France Info 🇫🇷" = "https://icecast.radiofrance.fr/franceinfo-midfi.mp3";
