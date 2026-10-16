@@ -67,7 +67,7 @@ in
         "french"
         "english"
       ];
-      default = "english";
+      default = config.biapy.user.country.language or "english";
       description = "Language for locale settings.";
     };
   };

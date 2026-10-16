@@ -37,7 +37,7 @@ in
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = config.biapy.user.country != null;
+        assertion = (config.biapy.user.country.codes.alpha2 or null) != null;
         message = "biapy.programs.radio-cli requires `biapy.user.country` to be set";
       }
     ];
