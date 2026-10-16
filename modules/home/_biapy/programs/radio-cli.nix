@@ -35,11 +35,18 @@ in
   };
 
   config = mkIf cfg.enable {
+    assertions = [
+      {
+        assertion = config.biapy.user.country != null;
+        message = "biapy.programs.radio-cli requires `biapy.user.country` to be set";
+      }
+    ];
+
     programs.radio-cli = {
       enable = mkDefault true;
       settings = mkDefault {
         config_version = "2.3.0";
-        country = mkOptionDefault "FR";
+        country = mkOptionDefault config.biapy.user.country.codes.alpha2 or null;
         data = mkOptionDefault (
           builtins.attrValues (
             builtins.mapAttrs
@@ -64,7 +71,7 @@ in
               }
           )
         );
-        max_lines = mkOptionDefault 7;
+        # max_lines = mkOptionDefault 7;
       };
     };
   };
