@@ -114,19 +114,19 @@ in
     homeModules = config.flake.modules.homeManager;
 
     tests = {
-      "modules.home" = {
-        "test: declares modules.home.biapy" = {
-          expr = config.flake.modules.home ? biapy;
+      modules.home = {
+        "test: declares modules.homeManager.biapy" = {
+          expr = config.flake.modules.homeManager ? biapy;
           expected = true;
         };
 
-        "test: declares modules.home.default" = {
-          expr = config.flake.modules.home ? default;
+        "test: declares modules.homeManager.default" = {
+          expr = config.flake.modules.homeManager ? default;
           expected = true;
         };
       };
 
-      "homeModules.biapy" = {
+      homeModules.biapy = {
         "test: declares flake.homeModules.biapy" = {
           expr = config.flake.homeModules ? biapy;
           expected = true;
