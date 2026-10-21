@@ -48,7 +48,7 @@ let
       };
       fullname = mkOption {
         type = str;
-        default = osIdentity.fullname or "${cfg.firstname} ${toUpper cfg.lastname}";
+        default = osIdentity.fullname or "${osIdentity.firstname} ${toUpper osIdentity.lastname}";
         description = "User fullname";
       };
       roomNumber = mkOption {
@@ -63,7 +63,7 @@ let
       };
       homePhone = mkOption {
         type = str;
-        default = mkOption.workPhone or "";
+        default = osIdentity.homePhone or "";
         description = "User home phone";
       };
     };
