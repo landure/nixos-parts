@@ -16,44 +16,40 @@ let
 in
 {
   config = {
-    sops.secrets = (
-      mergeAttrsList (
-        attrValues (
-          mapAttrs (
-            username: userConfig:
-            if null != userConfig.secretsSopsFile then
-              {
-                "${username}:hashedPassword" = {
-                  neededForUsers = true;
-                  key = "hashedPassword";
-                  sopsFile = userConfig.secretsSopsFile;
-                  format = userConfig.secretsFormat;
-                  owner = "root";
-                  group = "root";
-                  mode = "0400";
-                };
+    sops.secrets = mergeAttrsList (
+      attrValues (
+        mapAttrs (
+          username: userConfig:
+          if null != userConfig.secretsSopsFile then
+            {
+              "${username}:hashedPassword" = {
+                neededForUsers = true;
+                key = "hashedPassword";
+                sopsFile = userConfig.secretsSopsFile;
+                format = userConfig.secretsFormat;
+                owner = "root";
+                group = "root";
+                mode = "0400";
+              };
 
-                # Install users age keys indepently of Home Manager.
-                # This allows Home Manager service to decrypt secrets.
-                "${username}:sops-age-keys.txt" = {
-                  key = "config/sops/age/keys.txt";
-                  sopsFile = userConfig.secretsSopsFile;
-                  format = userConfig.secretsFormat;
-                  path = "/var/lib/sops-nix/users/${username}.txt";
-                  owner = username;
-                };
-              }
-            else
-              { }
-          ) cfg
-        )
+              # Install users age keys indepently of Home Manager.
+              # This allows Home Manager service to decrypt secrets.
+              "${username}:sops-age-keys.txt" = {
+                key = "config/sops/age/keys.txt";
+                sopsFile = userConfig.secretsSopsFile;
+                format = userConfig.secretsFormat;
+                path = "/var/lib/sops-nix/users/${username}.txt";
+                owner = username;
+              };
+            }
+          else
+            { }
+        ) cfg
       )
     );
 
-    users.users = (
-      mapAttrs (username: _: {
-        hashedPasswordFile = mkDefault config.sops.secrets."${username}:hashedPassword".path;
-      }) cfg
-    );
+    users.users = mapAttrs (username: _: {
+      hashedPasswordFile = mkDefault config.sops.secrets."${username}:hashedPassword".path;
+    }) cfg;
   };
 }
