@@ -23,8 +23,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "GitHubSecurityLab";
     repo = "gh-secure";
-    rev = "42c928f94b61caae03774d2436b897a1d04fff20";
-    hash = "sha256-oDPZ1qfw8vzOXdyarhmvhDghJmvvk7sP6HN9/k1BLQ0=";
+    tag = "v0.1.0";
+    hash = "sha256-vQll+dyaLRuRkeZ+CCzvcVXZznicnjMsWzM6neYViQo=";
   };
 
   nativeBuildInputs = [ makeWrapper ];
