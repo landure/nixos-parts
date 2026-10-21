@@ -21,6 +21,8 @@ let
   inherit (lib) mkDefault;
 in
 {
+  _module.args.root = ../.;
+
   flake-file = {
     description = "Dendritic NixOS and Home Manager modules for flake-file and flake-parts.";
 
