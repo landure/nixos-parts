@@ -73,7 +73,7 @@ in
         unstable.netwatch
         unstable.cloudflare-speed-cli
 
-        quien.quien
+        biapy-parts.quien
 
         biapy-parts.pktz
         biapy-parts.wtfi2
