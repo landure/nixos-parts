@@ -33,7 +33,7 @@ let
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
-  cfg = config.biapy.stylixfonts;
+  cfg = config.biapy.stylix.fonts;
 in
 {
   options.biapy.stylix.fonts = {
