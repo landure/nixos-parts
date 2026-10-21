@@ -22,6 +22,7 @@
 {
   inputs,
   lib,
+  root,
   ...
 }:
 let
@@ -62,6 +63,18 @@ in
       inherit (lib.meta) getExe;
     in
     {
+      checks.nixf-diagnose =
+        pkgs.runCommand "nixf-diagnose"
+          {
+            buildInputs = [ pkgs.nixf-diagnose ];
+          }
+          ''
+            shopt -s globstar
+
+            ${getExe pkgs.nixf-diagnose} "${root}"/**/*.nix
+            touch "''${out}"
+          '';
+
       devshells.default = {
         packages = with pkgs; [ nixf-diagnose ];
 

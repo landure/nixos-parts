@@ -31,8 +31,8 @@ let
 in
 {
   flake-file.inputs = {
-      devshell.url = mkDefault "github:numtide/devshell";
-    };
+    devshell.url = mkDefault "github:numtide/devshell";
+  };
 
   imports = [
     (inputs.devshell.flakeModule or { })
@@ -44,14 +44,17 @@ in
       inherit (lib) getExe;
     in
     {
-      checks.nil-diagnostics = pkgs.runCommand "nil" {
-        buildInputs = [ pkgs.nil ];
-      } ''
-        shopt -s globstar
+      checks.nil-diagnostics =
+        pkgs.runCommand "nil"
+          {
+            buildInputs = [ pkgs.nil ];
+          }
+          ''
+            shopt -s globstar
 
-        ${getExe pkgs.nil} diagnostics --deny-warnings "${root}"/**/*.nix
-        touch "''${out}"
-      '';
+            ${getExe pkgs.nil} diagnostics --deny-warnings "${root}"/**/*.nix
+            touch "''${out}"
+          '';
 
       devshells.default = {
         packages = with pkgs; [ nil ];

@@ -21,6 +21,7 @@
 {
   inputs,
   lib,
+  root,
   ...
 }:
 let
@@ -57,6 +58,17 @@ in
       inherit (lib) getExe;
     in
     {
+      checks.statix =
+        pkgs.runCommand "statix"
+          {
+            buildInputs = [ pkgs.statix ];
+          }
+          ''
+            shopt -s globstar
+
+            ${getExe pkgs.statix} check "${root}"
+            touch "''${out}"
+          '';
 
       devshells.default = {
         packages = with pkgs; [ statix ];

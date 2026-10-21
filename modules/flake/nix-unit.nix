@@ -14,7 +14,11 @@
 
   - [Dendrix](https://dendrix.oeiuwq.com/index.html).
 */
-{ inputs, lib, ... }:
+{
+  inputs,
+  lib,
+  ...
+}:
 let
   inherit (lib) mkDefault;
 in
