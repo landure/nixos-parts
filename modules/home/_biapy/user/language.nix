@@ -22,58 +22,54 @@
   ...
 }:
 let
+  inherit (lib.attrsets) attrNames;
   inherit (lib.modules) mkDefault mkIf;
-  inherit (lib.options) mkEnableOption mkOption;
-  inherit (lib.types) enum;
+  inherit (lib.options) mkOption;
+  inherit (lib.types) enum nullOr;
 
-  cfg = config.biapy.user.language;
+  cfg = config.biapy.user;
 
-  frenchLocale = {
-    base = "fr_FR.UTF-8";
-    address = "fr_FR.UTF-8";
-    collate = "fr_FR.UTF-8";
-    ctype = "fr_FR.UTF-8";
-    measurement = "fr_FR.UTF-8";
-    messages = "fr_FR.UTF-8";
-    monetary = "fr_FR.UTF-8";
-    name = "fr_FR.UTF-8";
-    numeric = "fr_FR.UTF-8";
-    paper = "fr_FR.UTF-8";
-    telephone = "fr_FR.UTF-8";
-    time = "fr_FR.UTF-8";
-  };
+  locales = {
+    "french" = {
+      base = "fr_FR.UTF-8";
+      address = "fr_FR.UTF-8";
+      collate = "fr_FR.UTF-8";
+      ctype = "fr_FR.UTF-8";
+      measurement = "fr_FR.UTF-8";
+      messages = "fr_FR.UTF-8";
+      monetary = "fr_FR.UTF-8";
+      name = "fr_FR.UTF-8";
+      numeric = "fr_FR.UTF-8";
+      paper = "fr_FR.UTF-8";
+      telephone = "fr_FR.UTF-8";
+      time = "fr_FR.UTF-8";
+    };
 
-  englishLocale = {
-    base = "en_US.UTF-8";
-    address = "en_US.UTF-8";
-    collate = "en_US.UTF-8";
-    ctype = "en_US.UTF-8";
-    measurement = "en_US.UTF-8";
-    messages = "en_US.UTF-8";
-    monetary = "en_US.UTF-8";
-    name = "en_US.UTF-8";
-    numeric = "en_US.UTF-8";
-    paper = "en_US.UTF-8";
-    telephone = "en_US.UTF-8";
-    time = "en_US.UTF-8";
+    "english" = {
+      base = "en_US.UTF-8";
+      address = "en_US.UTF-8";
+      collate = "en_US.UTF-8";
+      ctype = "en_US.UTF-8";
+      measurement = "en_US.UTF-8";
+      messages = "en_US.UTF-8";
+      monetary = "en_US.UTF-8";
+      name = "en_US.UTF-8";
+      numeric = "en_US.UTF-8";
+      paper = "en_US.UTF-8";
+      telephone = "en_US.UTF-8";
+      time = "en_US.UTF-8";
+    };
   };
 in
 {
-  options.biapy.user.language = {
-    enable = mkEnableOption "User language settings";
-
-    language = mkOption {
-      type = enum [
-        "french"
-        "english"
-      ];
-      default = config.biapy.user.country.language or "english";
-      description = "Language for locale settings.";
-    };
+  options.biapy.user.language = mkOption {
+    type = nullOr (enum (attrNames locales));
+    default = config.biapy.user.country.language or null;
+    description = "Language for locale settings.";
   };
 
-  config = mkIf cfg.enable {
-    home.language = if cfg.language == "french" then frenchLocale else englishLocale;
+  config = mkIf (builtins.isString cfg.language) {
+    home.language = locales.${cfg.language};
 
     home.sessionVariables = mkIf config.targets.genericLinux.enable {
       LOCALE_ARCHIVE = mkDefault "/usr/lib/locale/locale-archive";

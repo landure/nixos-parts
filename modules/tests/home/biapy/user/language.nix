@@ -36,15 +36,17 @@ let
   };
 
   stub = {
-    home.language = lib.mkOption {
-      type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
-      default = null;
+    options = {
+      home.language = lib.mkOption {
+        type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+        default = null;
+      };
+      home.sessionVariables = lib.mkOption {
+        type = lib.types.attrsOf lib.types.str;
+        default = { };
+      };
+      targets.genericLinux.enable = lib.mkEnableOption "generic Linux";
     };
-    home.sessionVariables = lib.mkOption {
-      type = lib.types.attrsOf lib.types.str;
-      default = { };
-    };
-    targets.genericLinux.enable = lib.mkEnableOption "generic Linux";
   };
 
   evalLanguage =
@@ -54,110 +56,72 @@ let
         stub
         countryModule
         languageModule
-      ] ++ modules;
+      ]
+      ++ modules;
     }).config;
 in
 {
   flake.tests."home.biapy.user.language" = {
-    "test: disabled by default" = {
-      expr = evalLanguage [ ].biapy.user.language.enable;
-      expected = false;
-    };
-
-    "test: language defaults to english when country is unset" = {
-      expr = evalLanguage [ ].biapy.user.language.language;
-      expected = "english";
+    "test: language defaults to null when country is unset" = {
+      expr = (evalLanguage [ ]).biapy.user.language;
+      expected = null;
     };
 
     "test: language follows country language" = {
-      expr = evalLanguage [ { biapy.user.country = "FR"; } ].biapy.user.language.language;
+      expr = (evalLanguage [ { biapy.user.country = "FR"; } ]).biapy.user.language;
       expected = "french";
     };
 
     "test: explicit language overrides country" = {
       expr =
-        evalLanguage
-          [
-            {
-              biapy.user.country = "FR";
-              biapy.user.language.language = "english";
-            }
-          ]
-          .biapy.user.language.language;
+        (evalLanguage [
+          {
+            biapy.user.country = "FR";
+            biapy.user.language = "english";
+          }
+        ]).biapy.user.language;
       expected = "english";
     };
 
-    "test: home.language is unset when disabled" = {
-      expr = evalLanguage [ ].home.language;
+    "test: home.language is unset when language is null" = {
+      expr = (evalLanguage [ ]).home.language;
       expected = null;
     };
 
-    "test: french locale is applied when enabled" = {
-      expr =
-        evalLanguage
-          [
-            {
-              biapy.user.language = {
-                enable = true;
-                language = "french";
-              };
-            }
-          ]
-          .home.language;
+    "test: french locale is applied" = {
+      expr = (evalLanguage [ { biapy.user.language = "french"; } ]).home.language;
       expected = frenchLocale;
     };
 
-    "test: english locale is applied when enabled" = {
-      expr =
-        evalLanguage
-          [
-            {
-              biapy.user.language = {
-                enable = true;
-                language = "english";
-              };
-            }
-          ]
-          .home.language;
+    "test: english locale is applied" = {
+      expr = (evalLanguage [ { biapy.user.language = "english"; } ]).home.language;
       expected = englishLocale;
     };
 
-    "test: locale follows country when enabled" = {
-      expr =
-        evalLanguage
-          [
-            {
-              biapy.user.country = "FR";
-              biapy.user.language.enable = true;
-            }
-          ]
-          .home.language;
+    "test: locale follows country" = {
+      expr = (evalLanguage [ { biapy.user.country = "FR"; } ]).home.language;
       expected = frenchLocale;
     };
 
     "test: LOCALE_ARCHIVE session variable is set on generic Linux" = {
       expr =
-        evalLanguage
-          [
-            {
-              biapy.user.language.enable = true;
-              targets.genericLinux.enable = true;
-            }
-          ]
-          .home.sessionVariables.LOCALE_ARCHIVE;
+        (evalLanguage [
+          {
+            biapy.user.language = "french";
+            targets.genericLinux.enable = true;
+          }
+        ]).home.sessionVariables.LOCALE_ARCHIVE;
       expected = "/usr/lib/locale/locale-archive";
     };
 
     "test: LOCALE_ARCHIVE session variable is unset without generic Linux" = {
       expr =
-        evalLanguage
-          [
-            {
-              biapy.user.language.enable = true;
-              targets.genericLinux.enable = false;
-            }
-          ]
-          .home.sessionVariables.LOCALE_ARCHIVE or null;
+        (evalLanguage [
+          {
+            biapy.user.language = "french";
+            targets.genericLinux.enable = false;
+          }
+        ]).home.sessionVariables.LOCALE_ARCHIVE or null;
       expected = null;
     };
   };
