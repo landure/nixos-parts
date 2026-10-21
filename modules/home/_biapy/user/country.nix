@@ -62,13 +62,12 @@ let
 
   lookup =
     code:
-    if countries ? ${code} then
-      countries.${code}
-    else
+    countries.${code} or (
       let
         byAlpha3 = findFirst (c: c.codes.alpha3 == code) null countryList;
       in
-      if byAlpha3 != null then byAlpha3 else findFirst (c: c.name == code) null countryList;
+      if byAlpha3 != null then byAlpha3 else findFirst (c: c.name == code) null countryList
+    );
 in
 {
   options.biapy.user.country = mkOption {
