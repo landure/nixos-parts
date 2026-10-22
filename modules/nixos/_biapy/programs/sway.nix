@@ -1,11 +1,22 @@
 /**
   # Sway
 
+  Sway is a tiling Wayland compositor
+  and a drop-in replacement for the i3 window manager for X11.
+  It works with your existing i3 configuration
+  and supports most of i3's features, plus a few extras.
+
+  ## 🛠️ Tech Stack
+
+  - [Sway homepage](https://swaywm.org/).
+
   ## 📝 Documentation
 
-  - [environment.sessionVariables @ NixOS reference](https://search.nixos.org/options?query=environment.sessionVariables).
-  - [services.libinput @ NixOS reference](https://search.nixos.org/options?query=services.libinput.).
-  - [programs.sway @ NixOS reference](https://search.nixos.org/options?query=programs.sway.).
+  ### ❄ NixOS
+
+  - [environment.sessionVariables @ NixOS reference](https://search.nixos.org/options?query=environment.sessionVariables).
+  - [services.libinput @ NixOS reference](https://search.nixos.org/options?query=services.libinput.).
+  - [programs.sway @ NixOS reference](https://search.nixos.org/options?query=programs.sway.).
 */
 {
   config,
@@ -25,11 +36,7 @@ in
   config = mkIf cfg.enable {
     biapy = {
       xdg.portal.enable = mkDefault true;
-      programs = {
-        foot.enable = mkDefault true;
-        grim.enable = mkDefault true;
-        sway.enable = mkDefault true;
-      };
+      programs.foot.enable = mkDefault true;
     };
 
     programs.sway = {
@@ -47,8 +54,7 @@ in
       ];
     };
 
-    # Enable XDG Portal wayland-root integration
+    # Enable XDG Portal wayland-root integration
     xdg.portal.wlr.enable = mkDefault true;
-
   };
 }
