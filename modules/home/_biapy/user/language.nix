@@ -3,6 +3,10 @@
 
   Configure locale and language settings for the user session.
 
+  The setting accepts a language name (e.g. `french`) and returns a language
+  attribute set via `apply`, containing the display `name`, the `locales` to
+  use for the session, the ISO 639-1 code, the `locale` and its `charset`.
+
   ## 📝 Documentation
 
   ### 🏠 Home Manager
@@ -29,47 +33,66 @@ let
 
   cfg = config.biapy.user;
 
-  locales = {
+  languages = {
     "french" = {
-      base = "fr_FR.UTF-8";
-      address = "fr_FR.UTF-8";
-      collate = "fr_FR.UTF-8";
-      ctype = "fr_FR.UTF-8";
-      measurement = "fr_FR.UTF-8";
-      messages = "fr_FR.UTF-8";
-      monetary = "fr_FR.UTF-8";
-      name = "fr_FR.UTF-8";
-      numeric = "fr_FR.UTF-8";
-      paper = "fr_FR.UTF-8";
-      telephone = "fr_FR.UTF-8";
-      time = "fr_FR.UTF-8";
+      name = "French";
+      iso-639-1 = "fr";
+      locale = "fr_FR";
+      charset = "UTF-8";
+      locales = {
+        base = "fr_FR.UTF-8";
+        address = "fr_FR.UTF-8";
+        collate = "fr_FR.UTF-8";
+        ctype = "fr_FR.UTF-8";
+        measurement = "fr_FR.UTF-8";
+        messages = "fr_FR.UTF-8";
+        monetary = "fr_FR.UTF-8";
+        name = "fr_FR.UTF-8";
+        numeric = "fr_FR.UTF-8";
+        paper = "fr_FR.UTF-8";
+        telephone = "fr_FR.UTF-8";
+        time = "fr_FR.UTF-8";
+      };
     };
 
     "english" = {
-      base = "en_US.UTF-8";
-      address = "en_US.UTF-8";
-      collate = "en_US.UTF-8";
-      ctype = "en_US.UTF-8";
-      measurement = "en_US.UTF-8";
-      messages = "en_US.UTF-8";
-      monetary = "en_US.UTF-8";
-      name = "en_US.UTF-8";
-      numeric = "en_US.UTF-8";
-      paper = "en_US.UTF-8";
-      telephone = "en_US.UTF-8";
-      time = "en_US.UTF-8";
+      name = "English";
+      iso-639-1 = "en";
+      locale = "en_US";
+      charset = "UTF-8";
+      locales = {
+        base = "en_US.UTF-8";
+        address = "en_US.UTF-8";
+        collate = "en_US.UTF-8";
+        ctype = "en_US.UTF-8";
+        measurement = "en_US.UTF-8";
+        messages = "en_US.UTF-8";
+        monetary = "en_US.UTF-8";
+        name = "en_US.UTF-8";
+        numeric = "en_US.UTF-8";
+        paper = "en_US.UTF-8";
+        telephone = "en_US.UTF-8";
+        time = "en_US.UTF-8";
+      };
     };
   };
 in
 {
   options.biapy.user.language = mkOption {
-    type = nullOr (enum (attrNames locales));
+    type = nullOr (enum (attrNames languages));
     default = config.biapy.user.country.language or null;
-    description = "Language for locale settings.";
+    apply = language: if language == null then null else languages.${language};
+    description = ''
+      User language. Accepts a language name (e.g. `french`) and returns the
+      language attribute set containing `name`, `locales`, `iso-639-1`, `locale`
+      and `charset`.
+      Defaults to the language of the configured `biapy.user.country`, or `null`
+      when the country is unset.
+    '';
   };
 
-  config = mkIf (builtins.isString cfg.language) {
-    home.language = locales.${cfg.language};
+  config = mkIf (cfg.language != null) {
+    home.language = cfg.language.locales;
 
     home.sessionVariables = mkIf config.targets.genericLinux.enable {
       LOCALE_ARCHIVE = mkDefault "/usr/lib/locale/locale-archive";

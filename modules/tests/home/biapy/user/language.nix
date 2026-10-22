@@ -35,6 +35,22 @@ let
     time = "en_US.UTF-8";
   };
 
+  frenchLanguage = {
+    name = "French";
+    iso-639-1 = "fr";
+    locale = "fr_FR";
+    charset = "UTF-8";
+    locales = frenchLocale;
+  };
+
+  englishLanguage = {
+    name = "English";
+    iso-639-1 = "en";
+    locale = "en_US";
+    charset = "UTF-8";
+    locales = englishLocale;
+  };
+
   stub = {
     options = {
       home.language = lib.mkOption {
@@ -69,7 +85,7 @@ in
 
     "test: language follows country language" = {
       expr = (evalLanguage [ { biapy.user.country = "FR"; } ]).biapy.user.language;
-      expected = "french";
+      expected = frenchLanguage;
     };
 
     "test: explicit language overrides country" = {
@@ -80,7 +96,32 @@ in
             biapy.user.language = "english";
           }
         ]).biapy.user.language;
-      expected = "english";
+      expected = englishLanguage;
+    };
+
+    "test: language exposes its name" = {
+      expr = (evalLanguage [ { biapy.user.language = "french"; } ]).biapy.user.language.name;
+      expected = "French";
+    };
+
+    "test: language exposes its ISO 639-1 code" = {
+      expr = (evalLanguage [ { biapy.user.language = "french"; } ]).biapy.user.language."iso-639-1";
+      expected = "fr";
+    };
+
+    "test: language exposes its locale" = {
+      expr = (evalLanguage [ { biapy.user.language = "french"; } ]).biapy.user.language.locale;
+      expected = "fr_FR";
+    };
+
+    "test: language exposes its charset" = {
+      expr = (evalLanguage [ { biapy.user.language = "french"; } ]).biapy.user.language.charset;
+      expected = "UTF-8";
+    };
+
+    "test: language exposes its locales" = {
+      expr = (evalLanguage [ { biapy.user.language = "french"; } ]).biapy.user.language.locales;
+      expected = frenchLocale;
     };
 
     "test: home.language is unset when language is null" = {
