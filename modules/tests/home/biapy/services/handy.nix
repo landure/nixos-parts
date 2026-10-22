@@ -75,9 +75,13 @@ in
       expected = {
         Unit = {
           Description = "Handy speech-to-text service";
-          After = [ "graphical-session.target" "tray.target" ];
+          Documentation = [ "https://handy.computer/docs" ];
+          After = [
+            "graphical-session.target"
+            "tray.target"
+          ];
           PartOf = [ "graphical-session.target" ];
-          Requires = ["tray.target"];
+          Requires = [ "tray.target" ];
         };
         Install = {
           WantedBy = [ "graphical-session.target" ];

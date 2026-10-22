@@ -45,6 +45,7 @@ in
     systemd.user.services.handy = {
       Unit = {
         Description = mkDefault "Handy speech-to-text service";
+        Documentation = mkDefault [ "https://handy.computer/docs" ];
         Requires = [ "tray.target" ];
         After = mkDefault [
           "graphical-session.target"
@@ -65,31 +66,31 @@ in
 
     wayland.windowManager = {
       hyprland.settings = {
-      bind = [
-        {
-          _args = [
-            "SUPER + SHIFT + period"
-            # Using signals (recommended)
-            (mkLuaInline "hl.dsp.exec_cmd(\"pkill -USR2 -x handy\")")
-            # Using CLI flags
-            # (mkLuaInline "hl.dsp.exec_cmd(\"handy --toggle-transcription\")")
-          ];
-        }
-      ];
-    };
-
-    sway.config =
-      let
-        modifier = config.wayland.windowManager.sway.config.modifier;
-      in
-      {
-        keybindings = {
-          # Using signals (recommended)
-          "${modifier}+Shift+period" = mkDefault "pkill -USR2 -x handy";
-          # Using CLI flags
-          # "${modifier}+Shift+period" = mkDefault "exec handy --toggle-transcription";
-        };
+        bind = [
+          {
+            _args = [
+              "CTRL + space"
+              # Using signals (recommended)
+              (mkLuaInline "hl.dsp.exec_cmd(\"pkill -USR2 -x .handy-wrapped\")")
+              # Using CLI flags
+              # (mkLuaInline "hl.dsp.exec_cmd(\"handy --toggle-transcription\")")
+            ];
+          }
+        ];
       };
+
+      sway.config =
+        # let
+        #   modifier = config.wayland.windowManager.sway.config.modifier;
+        # in
+        {
+          keybindings = {
+            # Using signals (recommended)
+            "Ctrl+space" = mkDefault "exec pkill -USR2 -x .handy-wrapped";
+            # Using CLI flags
+            # "Ctrl+space" = mkDefault "exec handy --toggle-transcription";
+          };
+        };
     };
   };
 }
