@@ -3,6 +3,8 @@
 
   ## 🛠️ Tech Stack
 
+  - [nix-init @ GitHub](https://github.com/nix-community/nix-init)
+    generates Nix packages from URLs.
   - [nix-graph @ GitHub](https://github.com/AlexAntonik/nix-graph)
     is an interactive TUI viewer for Nix dependency graphs.
   - [nix-output-monitor @ GitHub](https://github.com/maralorn/nix-output-monitor)
@@ -17,6 +19,7 @@
     ([nixfmt-rs @ GitHub](https://github.com/Mic92/nixfmt-rs))
     is a from-scratch Rust reimplementation of `nixfmt` that produces
     byte-identical output to the Haskell original.
+  - [nixos-rebuild-ng @ GitHub](https://github.com/NixOS/nixpkgs/tree/master/pkgs/by-name/ni/nixos-rebuild-ng).
   - [nurl @ GitHub](https://github.com/nix-community/nurl)
     generates Nix fetcher calls from URLs
   - [statix @ GitHub](https://github.com/oppiliappan/statix)
@@ -26,6 +29,11 @@
 
   - [nil LSP Configuration @ GitHub](https://github.com/oxalica/nil/blob/main/docs/configuration.md).
   - [nixd LSP Configuration @ GitHub](https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md).
+
+  ### 🏠 Home Manager
+
+  - [programs.nix-init @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/nix-init.html).
+  - [programs.nix-init @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.nix-init.).
 */
 {
   config,
@@ -52,11 +60,16 @@ in
       nixf
       nixf-diagnose
       nixfmt-rs
+      nixos-rebuild-ng
       nurl
       statix
     ];
 
     programs = {
+      nix-init = {
+        enable = mkDefault true;
+      };
+
       opencode.settings.lsp.nil = mkDefault {
         command = [ (getExe pkgs.nil) ];
         extensions = [ ".nix" ];
