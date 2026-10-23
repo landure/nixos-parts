@@ -46,6 +46,8 @@ in
   };
 
   config = mkIf cfg.enable {
+    biapy.programs.abtop.enable = mkDefault true;
+
     programs.opencode = {
       enable = mkDefault true;
       web = {
