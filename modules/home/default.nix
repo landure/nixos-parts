@@ -72,22 +72,27 @@ in
     flake-utils.url = mkDefault "github:numtide/flake-utils";
     flyline = {
       url = mkDefault "github:HalFrgrd/flyline";
+      inputs.nixpkgs.follows = mkDefault "nixpkgs";
+    };
+    helix-notes = {
+      url = mkDefault "git+https://gitlab.com/ArkHost/HelixNotes";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
+        flake-utils.follows = mkDefault "flake-utils";
       };
     };
     sofka = {
       url = mkDefault "github:nklmilojevic/sofka";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
-        home-manager.follows = "home-manager";
+        home-manager.follows = mkDefault "home-manager";
       };
     };
     quien = {
       url = mkDefault "github:retlehs/quien";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
-        flake-utils.follows = "flake-utils";
+        flake-utils.follows = mkDefault "flake-utils";
       };
     };
     spicetify-nix = {

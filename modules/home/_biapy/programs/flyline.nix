@@ -22,7 +22,6 @@ let
 
   cfg = config.biapy.programs.flyline;
 
-  defaultPackage = pkgs.biapy-parts.flyline;
   libraryName = "libflyline${pkgs.stdenv.hostPlatform.extensions.sharedLibrary}";
 in
 {
@@ -31,7 +30,7 @@ in
 
     package = mkOption {
       type = package;
-      default = defaultPackage;
+      default = pkgs.flyline.flyline;
       description = "The flyline package to load into Bash.";
     };
   };

@@ -53,6 +53,8 @@ in
               nixpkgs.config = config.nixpkgs.config;
             };
             biapy-parts = localFlake.packages.${system};
+            flyline = localFlake.inputs.flyline.packages.${system};
+            helix-notes = localFlake.inputs.helix-notes.packages.${system};
             sofka = localFlake.inputs.sofka.packages.${system};
             spicetify-nix = localFlake.inputs.spicetify-nix.legacyPackages.${system};
             quien = localFlake.inputs.quien.packages.${system};
@@ -63,6 +65,8 @@ in
           inputs = {
             inherit (inputs)
               nixpkgs-unstable
+              flyline
+              helix-notes
               sofka
               spicetify-nix
               quien

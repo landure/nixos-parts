@@ -20,6 +20,13 @@
       url = "github:HalFrgrd/flyline";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    helix-notes = {
+      url = "git+https://gitlab.com/ArkHost/HelixNotes";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";

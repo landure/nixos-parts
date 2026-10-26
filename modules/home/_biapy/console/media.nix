@@ -22,6 +22,11 @@
     is a Curses based internet radio player.
   - [radio-active @ GitHub](https://github.com/deep5050/radio-active)
     plays any radios around the globe right from the terminal ⚡.
+  - [spotatui homepage](https://spotatui.com/)
+    ([spotatui @ GitHub](https://github.com/LargeModGames/spotatui))
+    is a fast, standalone terminal music player in Rust:
+    native Spotify streaming plus local, Subsonic, radio, Qobuz,
+    and Youtube sources.
   - [wiremix @ GitHub](https://github.com/tsowell/wiremix)
     is a simple TUI audio mixer for PipeWire.
 
@@ -67,6 +72,7 @@ in
       mufetch
       pulsemixer
       pyradio
+      spotatui
       wiremix # Pipewire mixer
     ];
 
