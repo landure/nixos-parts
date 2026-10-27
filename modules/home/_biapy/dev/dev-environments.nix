@@ -37,11 +37,7 @@ let
   cfg = config.biapy.dev.dev-environments;
 in
 {
-  options = {
-    biapy.dev.dev-environments = {
-      enable = mkEnableOption "development environments";
-    };
-  };
+  options.biapy.dev.dev-environments.enable = mkEnableOption "development environments";
 
   config = mkIf cfg.enable {
     biapy.programs.mise.enable = mkDefault true;

@@ -20,11 +20,7 @@ let
   cfg = config.biapy.dev.tui-db-clients;
 in
 {
-  options = {
-    biapy.dev.tui-db-clients = {
-      enable = mkEnableOption "command-line database clients";
-    };
-  };
+  options.biapy.dev.tui-db-clients.enable = mkEnableOption "command-line database clients";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

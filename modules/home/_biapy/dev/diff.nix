@@ -27,9 +27,7 @@ let
 
 in
 {
-  options = {
-    biapy.dev.diff.enable = mkEnableOption "diff tools";
-  };
+  options.biapy.dev.diff.enable = mkEnableOption "diff tools";
 
   config = mkIf cfg.enable {
     programs = {

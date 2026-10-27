@@ -22,11 +22,7 @@ let
   cfg = config.biapy.dev.console;
 in
 {
-  options = {
-    biapy.dev.console = {
-      enable = mkEnableOption "command-line software development tools";
-    };
-  };
+  options.biapy.dev.console.enable = mkEnableOption "command-line software development tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

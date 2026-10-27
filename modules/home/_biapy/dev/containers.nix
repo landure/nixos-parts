@@ -38,9 +38,7 @@ let
 
 in
 {
-  options = {
-    biapy.dev.containers.enable = mkEnableOption "container command-line tools";
-  };
+  options.biapy.dev.containers.enable = mkEnableOption "container command-line tools";
 
   config = mkIf cfg.enable {
     programs.lazydocker.enable = mkDefault true;

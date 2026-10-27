@@ -106,27 +106,25 @@ let
 
 in
 {
-  options = {
-    biapy.dev.git = {
-      enable = mkEnableOption "Git";
+  options.biapy.dev.git = {
+    enable = mkEnableOption "Git";
 
-      jujutsu = mkOption {
-        type = bool;
-        default = true;
-        description = "Wether to install jujutsu";
-      };
+    jujutsu = mkOption {
+      type = bool;
+      default = true;
+      description = "Wether to install jujutsu";
+    };
 
-      diffPager = mkOption {
-        type = nullOr (enum [
-          "delta"
-          "diffnav"
-          "difftastic"
-          "diff-so-fancy"
-          "riff"
-        ]);
-        default = "diffnav";
-        description = "Which diff pager to use for git diffs";
-      };
+    diffPager = mkOption {
+      type = nullOr (enum [
+        "delta"
+        "diffnav"
+        "difftastic"
+        "diff-so-fancy"
+        "riff"
+      ]);
+      default = "diffnav";
+      description = "Which diff pager to use for git diffs";
     };
   };
 

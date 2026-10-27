@@ -70,9 +70,7 @@ let
 
 in
 {
-  options = {
-    biapy.dev.k8s.enable = mkEnableOption "kubernetes command-line tools";
-  };
+  options.biapy.dev.k8s.enable = mkEnableOption "kubernetes command-line tools";
 
   config = mkIf cfg.enable {
     biapy.programs.k9s.enable = mkDefault true;

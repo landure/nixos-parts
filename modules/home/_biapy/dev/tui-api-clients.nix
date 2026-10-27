@@ -24,11 +24,7 @@ let
   cfg = config.biapy.dev.tui-api-clients;
 in
 {
-  options = {
-    biapy.dev.tui-api-clients = {
-      enable = mkEnableOption "command-line API clients";
-    };
-  };
+  options.biapy.dev.tui-api-clients.enable = mkEnableOption "command-line API clients";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
