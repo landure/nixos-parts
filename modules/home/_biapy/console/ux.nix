@@ -30,11 +30,7 @@ let
   cfg = config.biapy.console.ux;
 in
 {
-  options = {
-    biapy.console.ux = {
-      enable = mkEnableOption "command-line UX enhancements";
-    };
-  };
+  options.biapy.console.ux.enable = mkEnableOption "command-line UX enhancements";
 
   config = mkIf cfg.enable {
 

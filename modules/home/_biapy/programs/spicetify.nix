@@ -57,7 +57,7 @@ in
       ];
       enabledExtensions = with spicePkgs.extensions; [
         adblockify
-        aiBandBlocker # Automatically skip any known-AI artists
+        # aiBandBlocker # Automatically skip any known-AI artists
         allOfArtist # Create a playlist with all songs of an artist
         autoSkipVideo # Skip Video playback (ads and stuff)
         autoVolume # Automatically adjust volume over long periods of time, to reduce ear strain.

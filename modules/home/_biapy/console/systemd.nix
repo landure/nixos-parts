@@ -28,11 +28,7 @@ let
   cfg = config.biapy.console.systemd;
 in
 {
-  options = {
-    biapy.console.systemd = {
-      enable = mkEnableOption "systemd tools";
-    };
-  };
+  options.biapy.console.systemd.enable = mkEnableOption "systemd tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

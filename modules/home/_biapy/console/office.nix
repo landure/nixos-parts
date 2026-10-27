@@ -57,11 +57,7 @@ let
   cfg = config.biapy.console.office;
 in
 {
-  options = {
-    biapy.console.office = {
-      enable = mkEnableOption "command-line office tools";
-    };
-  };
+  options.biapy.console.office.enable = mkEnableOption "command-line office tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

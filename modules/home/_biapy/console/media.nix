@@ -57,9 +57,7 @@ let
 
 in
 {
-  options = {
-    biapy.console.media.enable = mkEnableOption "command-line media tools";
-  };
+  options.biapy.console.media.enable = mkEnableOption "command-line media tools";
 
   config = mkIf cfg.enable {
 

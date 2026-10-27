@@ -32,43 +32,41 @@ let
   ];
 in
 {
-  options = {
-    biapy.console.text-editors = {
-      enable = mkEnableOption "command-line text editors";
+  options.biapy.console.text-editors = {
+    enable = mkEnableOption "command-line text editors";
 
-      editors = mkOption {
-        type = listOf (enum editors);
-        default = [
-          "fresh-editor"
-          "helix"
-          "micro"
-          "msedit"
-          "ne"
-          "neovim"
-        ];
-        description = ''
-          What editors to enable.
-        '';
-        apply = value: value ++ (optional (cfg.default != null) cfg.default);
-      };
+    editors = mkOption {
+      type = listOf (enum editors);
+      default = [
+        "fresh-editor"
+        "helix"
+        "micro"
+        "msedit"
+        "ne"
+        "neovim"
+      ];
+      description = ''
+        What editors to enable.
+      '';
+      apply = value: value ++ (optional (cfg.default != null) cfg.default);
+    };
 
-      default = mkOption {
-        type = nullOr (enum [
-          "emacs"
-          "fresh-editor"
-          "helix"
-          "kakoune"
-          "msedit"
-          "micro"
-          "ne"
-          "neovim"
-          "emacs"
-        ]);
-        default = "helix";
-        description = ''
-          What editor to use as default EDITOR.
-        '';
-      };
+    default = mkOption {
+      type = nullOr (enum [
+        "emacs"
+        "fresh-editor"
+        "helix"
+        "kakoune"
+        "msedit"
+        "micro"
+        "ne"
+        "neovim"
+        "emacs"
+      ]);
+      default = "helix";
+      description = ''
+        What editor to use as default EDITOR.
+      '';
     };
   };
 

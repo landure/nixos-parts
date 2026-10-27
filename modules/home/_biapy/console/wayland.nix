@@ -25,11 +25,7 @@ let
   cfg = config.biapy.console.wayland;
 in
 {
-  options = {
-    biapy.console.wayland = {
-      enable = mkEnableOption "Wayland command-line tools";
-    };
-  };
+  options.biapy.console.wayland.enable = mkEnableOption "Wayland command-line tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

@@ -142,11 +142,7 @@ let
   cfg = config.biapy.console.files;
 in
 {
-  options = {
-    biapy.console.files = {
-      enable = mkEnableOption "command-line files TUI tools";
-    };
-  };
+  options.biapy.console.files.enable = mkEnableOption "command-line files TUI tools";
 
   config = mkIf cfg.enable {
 

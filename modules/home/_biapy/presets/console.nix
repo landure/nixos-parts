@@ -23,6 +23,7 @@ in
         systemd.enable = mkDefault true;
         text-editors.enable = mkDefault true;
         ux.enable = mkDefault true;
+        web.enable = mkDefault true;
       };
 
       dev = {

@@ -20,11 +20,7 @@ let
   cfg = config.biapy.console.logs;
 in
 {
-  options = {
-    biapy.console.logs = {
-      enable = mkEnableOption "logs tools";
-    };
-  };
+  options.biapy.console.logs.enable = mkEnableOption "logs tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

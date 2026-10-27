@@ -46,11 +46,7 @@ let
   cfg = config.biapy.console.monitoring;
 in
 {
-  options = {
-    biapy.console.monitoring = {
-      enable = mkEnableOption "monitoring TUI tools";
-    };
-  };
+  options.biapy.console.monitoring.enable = mkEnableOption "monitoring TUI tools";
 
   config = mkIf cfg.enable {
 

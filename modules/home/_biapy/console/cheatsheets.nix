@@ -48,9 +48,7 @@ let
 
 in
 {
-  options = {
-    biapy.console.cheatsheets.enable = mkEnableOption "cheatsheets";
-  };
+  options.biapy.console.cheatsheets.enable = mkEnableOption "cheatsheets";
 
   config = mkIf cfg.enable {
     home.shellAliases = {
