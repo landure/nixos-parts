@@ -31,16 +31,7 @@ let
   inherit (lib.modules) mkDefault;
 
   localFlake = {
-    inputs = {
-      inherit (inputs)
-        import-tree
-        sops-nix
-        nix-index-database
-        sofka
-        spicetify-nix
-        stylix
-        ;
-    };
+    inherit inputs;
     self = { inherit (self) homeModules overlays; };
   };
 
@@ -51,6 +42,7 @@ let
     imports = [
       localFlake.inputs.sops-nix.homeManagerModules.sops
       localFlake.inputs.nix-index-database.homeModules.default
+      localFlake.inputs.lan-mouse.homeManagerModules.default
       localFlake.inputs.stylix.homeModules.stylix
       localFlake.inputs.spicetify-nix.homeManagerModules.spicetify
       localFlake.inputs.sofka.homeManagerModules.default
@@ -81,11 +73,10 @@ in
         flake-utils.follows = mkDefault "flake-utils";
       };
     };
-    sofka = {
-      url = mkDefault "github:nklmilojevic/sofka";
+    lan-mouse = {
+      url = mkDefault "github:feschber/lan-mouse";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
-        home-manager.follows = mkDefault "home-manager";
       };
     };
     quien = {
@@ -93,6 +84,13 @@ in
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
         flake-utils.follows = mkDefault "flake-utils";
+      };
+    };
+    sofka = {
+      url = mkDefault "github:nklmilojevic/sofka";
+      inputs = {
+        nixpkgs.follows = mkDefault "nixpkgs";
+        home-manager.follows = mkDefault "home-manager";
       };
     };
     spicetify-nix = {

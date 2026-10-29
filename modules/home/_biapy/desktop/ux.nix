@@ -16,6 +16,9 @@ in
   options.biapy.desktop.ux.enable = mkEnableOption "UX tools";
 
   config = mkIf cfg.enable {
-    biapy.services.handy.enable = mkDefault true;
+    biapy = {
+      programs.lan-mouse.enable = mkDefault true;
+      services.handy.enable = mkDefault true;
+    };
   };
 }
