@@ -32,9 +32,7 @@ let
 
 in
 {
-  options = {
-    biapy.programs.bat.enable = mkEnableOption "bat";
-  };
+  options.biapy.programs.bat.enable = mkEnableOption "bat";
 
   config = mkIf cfg.enable {
     home.shellAliases = {

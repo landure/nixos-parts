@@ -26,9 +26,7 @@ let
   cfg = config.biapy.programs.fastfetch;
 in
 {
-  options = {
-    biapy.programs.fastfetch.enable = mkEnableOption "fastfetch";
-  };
+  options.biapy.programs.fastfetch.enable = mkEnableOption "fastfetch";
 
   config = mkIf cfg.enable {
     programs.fastfetch = {

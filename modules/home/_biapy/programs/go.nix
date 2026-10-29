@@ -20,16 +20,12 @@ let
   cfg = config.biapy.programs.go;
 in
 {
-  options = {
-    biapy.programs.go.enable = mkEnableOption "Go";
-  };
+  options.biapy.programs.go.enable = mkEnableOption "Go";
 
   config = mkIf cfg.enable {
-    programs = {
-      go = {
-        enable = mkDefault true;
-        telemetry.mode = mkDefault "off";
-      };
+    programs.go = {
+      enable = mkDefault true;
+      telemetry.mode = mkDefault "off";
     };
   };
 }

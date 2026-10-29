@@ -34,11 +34,7 @@ let
   eza_exe = getExe config.programs.eza.package;
 in
 {
-  options = {
-    biapy.programs.eza = {
-      enable = mkEnableOption "eza";
-    };
-  };
+  options.biapy.programs.eza.enable = mkEnableOption "eza";
 
   config = mkIf cfg.enable {
     programs.eza = {

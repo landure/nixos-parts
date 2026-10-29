@@ -30,9 +30,7 @@ let
 
 in
 {
-  options = {
-    biapy.programs.cava.enable = mkEnableOption "cava";
-  };
+  options.biapy.programs.cava.enable = mkEnableOption "cava";
 
   config = mkIf cfg.enable {
     programs.cava.enable = mkDefault true;

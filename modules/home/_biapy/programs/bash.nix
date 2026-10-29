@@ -23,9 +23,7 @@ let
   homeManagerSessionVars = "${config.home.profileDirectory}/etc/profile.d/hm-session-vars.sh";
 in
 {
-  options = {
-    biapy.programs.bash.enable = mkEnableOption "bash";
-  };
+  options.biapy.programs.bash.enable = mkEnableOption "bash";
 
   config = mkIf cfg.enable {
     programs = {

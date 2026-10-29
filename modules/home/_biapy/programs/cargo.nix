@@ -26,9 +26,7 @@ let
   cfg = config.biapy.programs.cargo;
 in
 {
-  options = {
-    biapy.programs.cargo.enable = mkEnableOption "Rust's cargo";
-  };
+  options.biapy.programs.cargo.enable = mkEnableOption "Rust's cargo";
 
   config = mkIf cfg.enable {
     programs = {

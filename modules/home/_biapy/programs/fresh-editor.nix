@@ -10,7 +10,8 @@
 
   ### 🏠 Home Manager
 
-  - [programs.fresh-editor @ Home Manager Configuration Options](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.fresh-editor.enable).
+  - [programs.fresh-editor @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/fresh-editor.html).
+  - [programs.fresh-editor @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.fresh-editor.).
 */
 {
   config,
@@ -24,9 +25,7 @@ let
   cfg = config.biapy.programs.fresh-editor;
 in
 {
-  options = {
-    biapy.programs.fresh-editor.enable = mkEnableOption "fresh-editor";
-  };
+  options.biapy.programs.fresh-editor.enable = mkEnableOption "Fresh";
 
   config = mkIf cfg.enable {
     programs.fresh-editor = {
