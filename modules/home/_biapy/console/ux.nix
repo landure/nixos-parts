@@ -7,8 +7,9 @@
     handles simple data-reformatting jobs with just a few lines of code.
   - [gum @ GitHub](https://github.com/charmbracelet/gum)
     is a tool for glamorous shell scripts.
-  - [sd - search & displace @ GitHub](https://github.com/chmln/sd)
-    is an intuitive find & replace CLI (`sed` alternative).
+  - [duct tape for your unix pipes](https://dt.plumbing/)
+    ([dt @ GitHub](https://github.com/so-dang-cool/dt))
+    is a programming language for doing small stuff fast, easy, and readable.
 
   ## 📝 Documentation
 
