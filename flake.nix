@@ -33,7 +33,7 @@
     };
     import-tree.url = "github:denful/import-tree";
     lan-mouse = {
-      url = "github:feschber/lan-mouse";
+      url = "github:feschber/lan-mouse/v0.11.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-auto-follow = {

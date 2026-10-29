@@ -74,7 +74,7 @@ in
       };
     };
     lan-mouse = {
-      url = mkDefault "github:feschber/lan-mouse";
+      url = mkDefault "github:feschber/lan-mouse/v0.11.0";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
       };
