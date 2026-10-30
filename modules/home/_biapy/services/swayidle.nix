@@ -2,22 +2,6 @@
   # SwayLock & SwayIdle
 
   swayidle is Sway's idle management daemon.
-  swaylock is a screen locking utility for Wayland compositors.
-
-  `swaylock` use `pam`.
-  Debian-based system patch `pam` to support `@include` configuration
-  directive.
-  Nix's `pam` package doesn't support `@include`.
-  This results in errors preventing the unlocking of `swaylock`.
-
-  ❗ On Debian system, install the Operating System `swaylock` package:
-
-  ```bash
-  sudo apt install 'swaylock'
-  ```
-
-  and configure `services.swayidle` to use `/usr/bin/swaylock` binary
-  to run `swaylock`.
 
   ## 🛠️ Tech Stack
 
