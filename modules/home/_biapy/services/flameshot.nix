@@ -55,8 +55,6 @@ in
           showHelp = mkDefault true;
           # Whether to show the left side button in GUI mode
           showSidePanelButton = mkDefault true;
-          # Whether to enable legacy (pre-xdg-desktop-portal) screenshotting on X11
-          useX11LegacyScreenshot = mkDefault false;
         };
       };
     };
