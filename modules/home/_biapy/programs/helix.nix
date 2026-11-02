@@ -10,7 +10,8 @@
 
     ### 🏠 Home Manager
 
-  - [programs.helix @ Home Manager Configuration Options](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.helix.enable).
+  - [programs.helix @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/helix.html).
+  - [programs.helix @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.helix.).
 
   ### 🎨 Stylix
 
@@ -36,6 +37,35 @@ in
     programs.helix = {
       enable = mkDefault true;
       defaultEditor = mkDefault (config.biapy.console.text-editors.default == "helix");
+      settings = {
+        editor = {
+          middle-click-paste = mkDefault true;
+          # yank to system clipboard by default (with wl-copy)
+          default-yank-register = mkDefault "+";
+          line-number = mkDefault "relative";
+          lsp = {
+            display-messages = mkDefault true;
+          };
+          cursor-shape = {
+            insert = mkDefault "bar";
+            normal = mkDefault "block";
+            select = mkDefault "underline";
+          };
+        };
+        keys = {
+          normal = {
+            esc = mkDefault [
+              "collapse_selection"
+              "keep_primary_selection"
+            ];
+            space = {
+              q = mkDefault ":q";
+              space = mkDefault "file_picker";
+              w = mkDefault ":w";
+            };
+          };
+        };
+      };
     };
   };
 }
