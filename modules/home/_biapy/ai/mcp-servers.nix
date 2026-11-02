@@ -33,7 +33,7 @@ in
         context7.enable = mkDefault true;
       };
 
-      programs.rtk.enable = mkDefault true;
+      programs.rtk.enable = mkDefault false;
     };
 
     programs.mcp.enable = mkDefault true;
