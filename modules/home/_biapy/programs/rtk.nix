@@ -127,8 +127,8 @@ in
     # The plugin requires `rtk` in PATH (provided by home.packages above).
     // (mkIf config.programs.opencode.enable {
       "opencode/plugins/rtk.ts".source = mkDefault (fetchurl {
-        url = "https://raw.githubusercontent.com/rtk-ai/rtk/2bf3eb7697b70c88314378e2b8d13f7303b8545b/hooks/opencode/rtk.ts";
-        hash = "sha256-ZTDBMZRshIkvlSKr1o1OUT4eZY2N260fWTiMhuu8trs=";
+        url = "https://raw.githubusercontent.com/rtk-ai/rtk/refs/tags/v${cfg.package.version}/hooks/opencode/rtk.ts";
+        hash = "sha256-mJ6SMbCii1OKiMr3xtETJ+vgfL7m1ByElH+7AdSJiqQ=";
       });
     });
   };
