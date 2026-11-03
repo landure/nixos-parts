@@ -34,6 +34,9 @@ in
   };
 
   config = mkIf cfg.enable {
+    # provide wl-clipboard or wl-clipboard-rs
+    biapy.desktop.clipboard.enable = mkDefault true;
+
     programs.helix = {
       enable = mkDefault true;
       defaultEditor = mkDefault (config.biapy.console.text-editors.default == "helix");
