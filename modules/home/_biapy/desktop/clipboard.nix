@@ -17,6 +17,7 @@
   - [CopyQ homepage](https://hluk.github.io/CopyQ)
     ([CopyQ @ GitHub](https://github.com/hluk/CopyQ))
     is an advanced clipboard manager with editing and scripting features.
+  - [Ringboard @ GitHub](https://github.com/SUPERCILEX/clipboard-history).
   - [wl-clip-persist @ GitHub](https://github.com/Linus789/wl-clip-persist).
     keeps Wayland clipboard even after programs close
   - [wl-clipboard-rs @ GitHub](https://github.com/YaLTeR/wl-clipboard-rs)
@@ -40,6 +41,10 @@
   - [services.copyq @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=services.copyq.).
   - [services.wl-clip-persist @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-services.wl-clip-persist.enable).
   - [services.wl-clip-persist @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=services.wl-clip-persist.).
+
+  ## 🙇 Acknowledgements
+
+  - [Ringboard: the infinitely scalable clipboard manager for Linux @ Alex Saveau](https://alexsaveau.dev/blog/projects/performance/clipboard/ringboard/ringboard).
 */
 {
   config,
