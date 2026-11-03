@@ -22,8 +22,8 @@
   ...
 }:
 let
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
-  inherit (lib.modules) mkIf;
 
   cfg = config.biapy.console.systemd;
 in
@@ -36,5 +36,7 @@ in
       lazyjournal
       systeroid
     ];
+
+    biapy.shellAliases.systemd-inhibit.enable = mkDefault true;
   };
 }

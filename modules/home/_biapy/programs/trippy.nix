@@ -13,7 +13,7 @@
 
   ### 🏠 Home Manager
 
-  - [programs.trippy @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.trippy.enable).
+  - [programs.trippy @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/trippy.html).
   - [programs.trippy @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.trippy.).
 */
 {
@@ -26,12 +26,9 @@ let
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.trippy;
-
 in
 {
-  options = {
-    biapy.programs.trippy.enable = mkEnableOption "trippy";
-  };
+  options.biapy.programs.trippy.enable = mkEnableOption "trippy";
 
   config = mkIf cfg.enable {
     programs.trippy = {

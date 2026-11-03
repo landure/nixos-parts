@@ -33,6 +33,9 @@ in
       wl-screenrec
     ];
 
-    biapy.programs.grim.enable = mkDefault true;
+    biapy.programs = {
+      grim.enable = mkDefault true;
+      tray-tui.enable = mkDefault true;
+    };
   };
 }
