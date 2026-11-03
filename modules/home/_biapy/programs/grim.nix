@@ -32,16 +32,20 @@ in
   options.biapy.programs.grim.enable = mkEnableOption "Grim and Slurp screenshot tools";
 
   config = mkIf cfg.enable {
-    home.shellAliases = {
-      fullshot = mkDefault ''grim - | tee "$(xdg-user-dir 'PICTURES')/Screenshots/screenchot-$(date +%Y-%m-%d_%H-%M-%S).png" | wl-copy'';
-      shot = mkDefault ''slurp | grim -g- - | tee "$(xdg-user-dir 'PICTURES')/Screenshots/screenchot-$(date +%Y-%m-%d_%H-%M-%S).png" | wl-copy'';
-    };
+    # provide wl-clipboard or wl-clipboard-rs
+    biapy.desktop.clipboard.enable = mkDefault true;
 
-    home.packages = with pkgs; [
-      grim
-      slurp
-      wl-clipboard-rs
-    ];
+    home = {
+      packages = with pkgs; [
+        grim
+        slurp
+      ];
+
+      shellAliases = {
+        fullshot = mkDefault ''grim - | tee "$(xdg-user-dir 'PICTURES')/Screenshots/screenchot-$(date +%Y-%m-%d_%H-%M-%S).png" | wl-copy'';
+        shot = mkDefault ''slurp | grim -g- - | tee "$(xdg-user-dir 'PICTURES')/Screenshots/screenchot-$(date +%Y-%m-%d_%H-%M-%S).png" | wl-copy'';
+      };
+    };
 
     wayland.windowManager.sway.config.keybindings = mkIf (!config.biapy.services.flameshot.enable) (
       let
