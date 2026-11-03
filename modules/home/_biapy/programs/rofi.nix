@@ -80,10 +80,6 @@ in
         # "filebrowser"
         # "recursivebrowser"
         {
-          name = "emoji";
-          path = "${pkgs.rofi-emoji}/lib/rofi";
-        }
-        {
           name = "rbw";
           path = getExe pkgs.rofi-rbw;
         }
