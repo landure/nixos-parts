@@ -82,21 +82,25 @@ in
       biapy-parts.killf
     ];
 
-    biapy.programs = {
-      bash.enable = mkDefault true;
-      bat.enable = mkDefault true;
-      eza.enable = mkDefault true;
-      fastfetch.enable = mkDefault true;
-      flyline.enable = mkDefault true;
-      fzf.enable = mkDefault true;
-      mcfly.enable = mkDefault true;
-      mise.enable = mkDefault true;
-      pay-respects.enable = mkDefault true;
-      skim.enable = mkDefault true; # `sk` Fuzzy Finder in rust!
-      starship.enable = mkDefault true;
-      # tirith.enable = mkDefault true; # disable since tirith 0.3.x doesn't support symlinks config files
-      zellij.enable = mkDefault true;
-      zsh.enable = mkDefault true;
+    biapy = {
+      programs = {
+        bash.enable = mkDefault true;
+        bat.enable = mkDefault true;
+        eza.enable = mkDefault true;
+        fastfetch.enable = mkDefault true;
+        flyline.enable = mkDefault true;
+        fzf.enable = mkDefault true;
+        mcfly.enable = mkDefault true;
+        mise.enable = mkDefault true;
+        pay-respects.enable = mkDefault true;
+        skim.enable = mkDefault true; # `sk` Fuzzy Finder in rust!
+        starship.enable = mkDefault true;
+        # tirith.enable = mkDefault true; # disable since tirith 0.3.x doesn't support symlinks config files
+        zellij.enable = mkDefault true;
+        zsh.enable = mkDefault true;
+      };
+
+      shellAliases.systemd-inhibit.enable = mkDefault true;
     };
   };
 }
