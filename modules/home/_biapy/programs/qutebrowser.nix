@@ -28,7 +28,7 @@ let
   cfg = config.biapy.programs.qutebrowser;
 in
 {
-  options.biapy.programs.qutebrowser.enable = mkEnableOption "mise";
+  options.biapy.programs.qutebrowser.enable = mkEnableOption "qutebrowser";
 
   config = mkIf cfg.enable {
     programs.qutebrowser = {

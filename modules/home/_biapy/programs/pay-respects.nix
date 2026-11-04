@@ -27,7 +27,7 @@ let
   cfg = config.biapy.programs.pay-respects;
 in
 {
-  options.biapy.programs.pay-respects.enable = mkEnableOption "mise";
+  options.biapy.programs.pay-respects.enable = mkEnableOption "Pay Respects";
 
   config = mkIf cfg.enable {
     # pay-respects ease fixing erroneous commands.
