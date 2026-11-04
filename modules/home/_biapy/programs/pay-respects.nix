@@ -12,7 +12,7 @@
 
   ### 🏠 Home Manager
 
-  - [programs.pay-respects @ Home Manager Documentation](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.pay-respects.enable).
+  - [programs.pay-respects @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/pay-respects.html).
   - [programs.pay-respects @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.pay-respects.).
 */
 {
@@ -27,15 +27,7 @@ let
   cfg = config.biapy.programs.pay-respects;
 in
 {
-  # imports = [
-  #  localFlake.inputs.nix-index-database.homeModules.default
-  # ];
-
-  options = {
-    biapy.programs.pay-respects = {
-      enable = mkEnableOption "mise";
-    };
-  };
+  options.biapy.programs.pay-respects.enable = mkEnableOption "mise";
 
   config = mkIf cfg.enable {
     # pay-respects ease fixing erroneous commands.
