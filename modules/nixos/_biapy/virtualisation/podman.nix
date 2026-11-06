@@ -57,7 +57,9 @@ in
   config = mkIf cfg.enable {
     users.groups.podman.members = attrNames config.home-manager.users;
 
-    hardware.nvidia-container-toolkit.enable = mkDefault (config.hardware.facter.detected.graphics.nvidia.enable or false);
+    hardware.nvidia-container-toolkit.enable = mkDefault (
+      config.hardware.facter.detected.graphics.nvidia.enable or false
+    );
 
     virtualisation = {
       containers.registries.search = [ "docker.io" ];
