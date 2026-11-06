@@ -16,6 +16,7 @@
   config,
   options,
   lib,
+  pkgs,
   ...
 }:
 let
@@ -26,7 +27,7 @@ let
     optionalAttrs
     ;
   inherit (lib.modules) mkDefault mkIf;
-  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.types) attrs;
 
   cfg = config.biapy.programs.joplin-desktop;
@@ -67,6 +68,8 @@ in
     biapy.programs.joplin-desktop = {
       enable = mkEnableOption "Joplin";
 
+      package = mkPackageOption pkgs.unstable "joplin-desktop" { };
+
       sync = {
         inherit (options.programs.joplin-desktop.sync) interval target;
         settings = mkOption {
@@ -87,6 +90,9 @@ in
   config = mkIf cfg.enable {
     programs.joplin-desktop = {
       enable = mkDefault true;
+
+      package = mkDefault cfg.package;
+
       sync.target = cfg.sync.target;
       sync.interval = cfg.sync.interval;
       extraConfig = mkDefault (

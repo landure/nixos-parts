@@ -29,7 +29,7 @@ let
     ;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
-  inherit (lib.options) mkEnableOption;
+  inherit (lib.options) mkEnableOption mkPackageOption;
 
   cfg = config.biapy.programs.joplin-cli;
 
@@ -69,6 +69,8 @@ in
     biapy.programs.joplin-cli = {
       enable = mkEnableOption "Joplin CLI";
 
+      package = mkPackageOption pkgs.unstable "joplin-cli" { };
+
       sync = {
         interval = options.biapy.programs.joplin-desktop.sync.interval // {
           default = config.biapy.programs.joplin-desktop.sync.interval;
@@ -88,8 +90,8 @@ in
     #   joplin = mkDefault ''joplin --profile "''${XDG_CONFIG_HOME}/joplin-desktop"'';
     # };
 
-    home.packages = with pkgs; [
-      joplin-cli
+    home.packages = [
+      cfg.package
     ];
 
     home.activation = {
