@@ -55,6 +55,8 @@ in
     programs.lazydocker.enable = mkDefault true;
 
     home = {
+      sessionVariables.DOCKER_HOST = mkDefault "unix://$([[ -e '/var/run/docker.sock' ]] && echo '/var/run/docker.sock' || podman system info --format '{{ .Host.RemoteSocket.Path }}')";
+
       shellAliases = {
         pc = mkDefault "podman compose";
         pr = mkDefault "podman run";
