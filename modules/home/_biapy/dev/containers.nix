@@ -3,14 +3,24 @@
 
   ## 🛠️ Tech Stack
 
-  - [ctop homepage](https://ctop.sh/)
-    ([ctop @ GitHub](https://github.com/bcicen/ctop)).
-  - [dtop @ GitHub](https://github.com/StakeSquid/dtop).
-  - [LazyDocker @ GitHub](https://github.com/jesseduffield/lazydocker).
-  - [podman-tui @ GitHub](https://github.com/containers/podman-tui).
   - [nerdctl @ GitHub](https://github.com/containerd/nerdctl).
   - [layerx @ GitHub](https://github.com/deveshctl/layerx).
   - [dive @ GitHub](https://github.com/wagoodman/dive).
+
+  ### 🐚 TUI
+
+  - [ctop homepage](https://ctop.sh/)
+    ([ctop @ GitHub](https://github.com/bcicen/ctop))
+    is a Docker monitoring TUI, showing running container resources usage.
+  - [DockMate 🐳 @ GitHub](https://github.com/shubh-io/dockmate)
+    is an open-source Docker TUI & Podman manager for terminal productivity.
+  - [dtop homepage](https://dtop.dev/)
+    ([dtop @ GitHub](https://github.com/amir20/dtop)).
+    is a terminal dashboard for Docker monitoring across multiple hosts
+    with Dozzle integration.
+  - [LazyDocker](https://github.com/jesseduffield/lazydocker)
+    is a Docker TUI.
+  - [Podman TUI](https://github.com/containers/podman-tui).
 
   ## 📝 Documentation
 
@@ -22,6 +32,7 @@
 
   - [CTOP, le htop pour conteneurs ! @ Tips4tech.fr :fr:](https://blog.tips4tech.fr/ctop-le-htop-pour-conteneurs/).
   - [Analysez vos images Docker avec Dive @ DevSecOps :fr:](https://blog.stephane-robert.info/docs/conteneurs/outils/dive/).
+  - [dtop @ GitHub](https://github.com/StakeSquid/dtop).
 */
 {
   config,
@@ -45,6 +56,11 @@ in
 
     home = {
       shellAliases = {
+        pc = mkDefault "podman compose";
+        pr = mkDefault "podman run";
+        podip = mkDefault "podman container inspect --format '{{range $name, $settings := .NetworkSettings.Networks}}{{print $name}}:{{println $settings.IPAddress}}{{end}}'";
+        pnls = mkDefault "podman network inspect --format '{{range $cid, $settings := .Containers}}{{print $settings.Name}} : {{println $settings.IPv4Address}}{{end}}'";
+
         dc = mkDefault "docker compose";
         dr = mkDefault "docker run";
         dockip = mkDefault "docker container inspect --format '{{range $name, $settings := .NetworkSettings.Networks}}{{print $name}}:{{println $settings.IPAddress}}{{end}}'";
@@ -53,6 +69,7 @@ in
 
       packages = with pkgs; [
         ctop # Docker TUI, showing running container resources usage
+        dockmate
         dtop
         dive
         podman-tui
