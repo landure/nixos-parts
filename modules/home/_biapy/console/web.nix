@@ -28,6 +28,8 @@
   - [russ @ GitHub](https://github.com/ckampfe/russ)
     is a TUI RSS reader with vim-like controls and a local-first,
     offline-first focus.
+  - [tiny @ GitHub](https://github.com/osa1/tiny)
+    is an IRC client written in Rust.
   - [tuifeed @ GitHub](https://github.com/veeso/tuifeed)
     is a terminal feed reader with a fancy ui.
   - [wiki-tui homepage](https://wiki-tui.net/latest/).
@@ -40,6 +42,8 @@
   - [programs.chawan @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/chawan.html).
   - [programs.irssi @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/irssi.html).
   - [programs.meli @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/meli.html).
+  - [programs.nom @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/nom.html).
+  - [programs.tiny @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/tiny.html).
 
   ## 🙇 Acknowledgements
 
@@ -65,7 +69,7 @@ in
       curl
       ddgr # DuckDuckGo search CLI client
       # gomuks # Matrix client (requires insecure olm library)
-      monolith # Archiving a web page in a single HTML file
+      monolith # Archiving a web page in a single HTML file
       # readability-cli
       russ # RSS feed reader
       tuifeed # RSS feed reader
@@ -79,6 +83,7 @@ in
       irssi.enable = mkDefault true;
       meli.enable = mkDefault true;
       nom.enable = mkDefault true;
+      tiny.enable = mkDefault true;
     };
   };
 }
