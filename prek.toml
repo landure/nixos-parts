@@ -1,0 +1,83 @@
+# Configuration file for `prek`, a git hook framework written in Rust.
+# See https://prek.j178.dev for more information.
+#:schema https://www.schemastore.org/prek.json
+
+default_install_hook_types = ["pre-commit", "pre-push", "commit-msg"]
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+args = ["--file"]
+entry = "cog verify"
+id = "cog"
+name = "cocogitto verify (conventional commits)"
+pass_filenames = true
+require_serial = false
+stages = ["commit-msg"]
+language = "system"
+
+[[repos.hooks]]
+args = ["--staged", "--redact"]
+entry = "betterleaks 'git'"
+files = ""
+id = "betterleaks"
+name = "betterleaks"
+pass_filenames = false
+require_serial = false
+stages = ["pre-commit"]
+types = ["file"]
+language = "system"
+
+[[repos.hooks]]
+entry = "rumdl check"
+id = "rumdl"
+name = "rumdl"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+types = ["markdown"]
+language = "system"
+exclude = "^\\.agents/skills/"
+
+[[repos.hooks]]
+entry = "shellcheck"
+id = "shellcheck"
+name = "shellcheck"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+types = ["shell"]
+language = "system"
+exclude = "^\\.agents/skills/"
+
+[[repos.hooks]]
+entry = "shfmt --write --simplify"
+id = "shfmt"
+name = "shfmt"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+types = ["shell"]
+language = "system"
+exclude = "^\\.agents/skills/"
+
+[[repos.hooks]]
+entry = "taplo lint"
+id = "taplo-lint"
+name = "taplo lint"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+types = ["toml"]
+language = "system"
+
+[[repos.hooks]]
+entry = "taplo fmt"
+id = "taplo-fmt"
+name = "taplo fmt"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+types = ["toml"]
+language = "system"
