@@ -20,6 +20,10 @@
     ([onefetch @ GitHub](https://github.com/o2sh/onefetch))
     displays project information and code statistics for a local Git repository.
 
+  - [ghgrab homepage](https://ghgrab.readthedocs.io/en/latest/)
+    ([ghgrab @ GitHub](https://github.com/abhixdd/ghgrab))
+    is a simple, pretty terminal tool that lets you browse and download files
+    from GitHub, GitLab, Codeberg, Gitea, and Forgejo without leaving your CLI.
   - [GitHub CLI homepage](https://cli.github.com/)
     ([GitHub CLI @ GitHub](https://github.com/cli/cli)).
   - [GLab @ GitLab](https://gitlab.com/gitlab-org/cli).
@@ -140,6 +144,7 @@ in
       };
 
       home.packages = with pkgs; [
+        ghgrab
         glab
         onefetch
         unstable.glab-tui
