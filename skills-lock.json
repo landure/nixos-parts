@@ -30,6 +30,18 @@
       "sourceType": "github",
       "skillPath": "agent/skills/tools/nix-flake/SKILL.md",
       "computedHash": "9ea3bd03add953b74f5099f7d79267baf45c3affc4154a10b77119c7d1dc1e90"
+    },
+    "nix-language": {
+      "source": "olafkfreund/nix-skills",
+      "sourceType": "github",
+      "skillPath": "skills/nix-language/SKILL.md",
+      "computedHash": "cb0723b863eabef267d5d285ec04a1a35cddfa29690d10263bf04e965808e686"
+    },
+    "nix-workflow": {
+      "source": "olafkfreund/nix-skills",
+      "sourceType": "github",
+      "skillPath": "skills/nix-workflow/SKILL.md",
+      "computedHash": "1b917e187799838f2ed45df6bb636176bb1a66ce6e84f32ca7beb632171232bc"
     }
   }
 }
