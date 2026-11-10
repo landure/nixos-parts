@@ -55,6 +55,8 @@ in
       help = "${getExe config.programs.tealdeer.package}";
     };
 
+    biapy.programs.tealdeer.enable = mkDefault true;
+
     programs = {
       intelli-shell = {
         enable = mkDefault true;
@@ -91,14 +93,6 @@ in
       };
 
       navi.enable = mkDefault true;
-
-      tealdeer = {
-        enable = mkDefault true;
-        settings = {
-          # Whether to enable auto-update.
-          updates.auto_update = mkDefault true;
-        };
-      };
     };
 
     home.packages = with pkgs; [
