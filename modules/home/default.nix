@@ -67,7 +67,7 @@ in
       inputs.nixpkgs.follows = mkDefault "nixpkgs";
     };
     helix-notes = {
-      url = mkDefault "git+https://gitlab.com/ArkHost/HelixNotes";
+      url = mkDefault "gitlab:ArkHost/HelixNotes";
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
         flake-utils.follows = mkDefault "flake-utils";

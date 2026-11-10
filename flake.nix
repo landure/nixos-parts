@@ -21,7 +21,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     helix-notes = {
-      url = "git+https://gitlab.com/ArkHost/HelixNotes";
+      url = "gitlab:ArkHost/HelixNotes";
       inputs = {
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
