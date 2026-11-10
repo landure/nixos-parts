@@ -42,15 +42,19 @@ import `nixosModules.biapy` / `nixosModules.default` /
   `defaultUser.nix` / `normalUsers.nix` files as a template.
 - For private option defaults derived from `config.users.users`,
   prefer:
+
   ```nix
   attrNames (filterAttrs (_: u: u.isNormalUser) config.users.users)
   ```
+
 - Hardware-per-user group assignment pattern:
+
   ```nix
   users.users = lib.genAttrs config.biapy.normalUsers (_: {
     extraGroups = [ "video" ];
   });
   ```
+
   See `modules/nixos/_biapy/hardware/backlight.nix:58`.
 - Public user identity is configured through `biapy.users.users`,
   not through `users.users` directly.
