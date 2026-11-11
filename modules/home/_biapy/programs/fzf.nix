@@ -34,13 +34,19 @@
 let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf mkDefault;
-  inherit (lib.options) mkEnableOption;
+  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.types) bool;
 
   cfg = config.biapy.programs.fzf;
 in
 {
-  options = {
-    biapy.programs.fzf.enable = mkEnableOption "fzf fuzzy finder";
+  options.biapy.programs.fzf = {
+    enable = mkEnableOption "fzf fuzzy finder";
+    withSkill = mkOption {
+      type = bool;
+      default = true;
+      description = "Install the fzf agent skill.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -62,6 +68,10 @@ in
           "--preview-window=right:60%:wrap"
         ];
       };
+    };
+
+    biapy.ai.skills.skills = mkIf cfg.withSkill {
+      fzf = mkDefault ../../../../skills/fzf;
     };
 
     home.packages = [
