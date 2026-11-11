@@ -19,7 +19,7 @@
   - [gh-f @ GitHub](https://github.com/gennaro-tedesco/gh-f).
     is the ultimate, compact and snappy `fzf` extension for `gh` cli.
     It addresses most of your daily GitHub workflow, if not all of it:
-    `f` stands for filter, `fzf,y or fomething felse.
+    `f` stands for filter, `fzf`, or fomething felse.
   - [gh-notify @ GitHub](https://github.com/meiji163/gh-notify)
     allows to view your GitHub notifications from the command line.
   - [gh-poi @ GitHub](https://github.com/seachicken/gh-poi)
@@ -35,6 +35,11 @@
   ### 🏠 Home Manager
 
   - [programs.gh @ HomeManager](https://nix-community.github.io/home-manager/options/home-manager/programs/gh.html).
+
+  ## 🙇 Acknowledgements
+
+  - [gh-attach @ GitHub](https://github.com/sudosubin/gh-attach)
+    is a GitHub CLI extension that uploads files to GitHub attachments.
 */
 {
   config,
