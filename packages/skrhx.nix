@@ -9,30 +9,21 @@
 */
 {
   writeShellApplication,
-  lib,
   biapy-parts,
+  gum,
   helix,
   uutils-findutils,
 }:
 let
-  inherit (lib.meta) getExe getExe';
   inherit (biapy-parts) skrg;
-
-  skrgCmd = getExe skrg;
-  hxCmd = getExe helix;
-  xargsCmd = getExe' uutils-findutils "xargs";
 in
 writeShellApplication {
   name = "skrhx";
   runtimeInputs = [
     skrg
+    gum
     helix
     uutils-findutils
   ];
-  text = ''
-    # Open with Helix.
-    # see https://ivergara.github.io/Supercharging-shell.html
-    ${skrgCmd} --no-multi --output-format='{1..2}' "''${@}" |
-    	exec ${xargsCmd} --no-run-if-empty ${hxCmd}
-  '';
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/executable_skrhx;
 }

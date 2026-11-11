@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+# shellcheck shell=bash
+# Name: batline
+# Version: 1.0.0
+# License: GPL-3.0-or-later
+# Author: Pierre-Yves (biapy)
+# Description: Highlight a line with bat.
+
+set -euo pipefail
+
+version='1.0.0'
+
+script_version="batline v${version}"
+script_name="${0##*/}"
+
+usage() {
+	cat <<EOF
+${script_version}
+
+batline highlight a line with bat.
+
+Usage:
+${script_name} [options] [--] path:line-number
+
+EOF
+}
+
+error() {
+	if command -v gum >/dev/null 2>&1; then
+		gum log --level=error "${*}"
+	else
+		printf 'Error: %s\n' "${*}" >&2
+	fi
+}
+
+require-commands() {
+	for cmd in "${@}"; do
+		command -v "${cmd}" >/dev/null 2>&1 || {
+			error "missing command: ${cmd}"
+			exit 1
+		}
+	done
+}
+
+require-commands bat less tput
+
+case "${1:-}" in
+-h | --help | -\\?)
+	usage && exit 0
+	;;
+'-V' | '--version')
+	echo "${script_version}" && exit 0
+	;;
+esac
+
+# Argument and file checks
+if [[ $# -ne 1 ]]; then
+	error "expected one argument: path:line-number"
+	exit 2
+fi
+
+file="${1%:*}"
+line="${1##*:}"
+
+if [[ ! -e $file ]]; then
+	error "file not found: $file"
+	exit 1
+fi
+
+exec bat --highlight-line="$line" "$file"
