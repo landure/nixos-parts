@@ -42,6 +42,18 @@
       "sourceType": "github",
       "skillPath": "skills/nix-workflow/SKILL.md",
       "computedHash": "1b917e187799838f2ed45df6bb636176bb1a66ce6e84f32ca7beb632171232bc"
+    },
+    "skill-improver": {
+      "source": "trailofbits/skills",
+      "sourceType": "github",
+      "skillPath": "plugins/code-improver/skills/skill-improver/SKILL.md",
+      "computedHash": "afeb3688445c2cef6c429d508e7010aff572b6250a148db7e2667e66c78eba9b"
+    },
+    "skill-writer": {
+      "source": "getsentry/skills",
+      "sourceType": "github",
+      "skillPath": "skills/skill-writer/SKILL.md",
+      "computedHash": "a716c1791f543c0b83bf6671b63b39c3b9d4cfcfa9fa6332d4bedbde32b148fb"
     }
   }
 }
