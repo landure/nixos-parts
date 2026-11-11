@@ -33,14 +33,15 @@
   ...
 }:
 let
-  inherit (lib.attrsets) genAttrs;
+  inherit (lib.attrsets) genAttrs mapAttrs' nameValuePair;
+  inherit (lib.filesystem) pathIsDirectory;
+  inherit (lib.hm.strings) isPathLike;
   inherit (lib.lists) filter;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types)
     attrsOf
     bool
-    either
     lines
     oneOf
     path
@@ -56,19 +57,17 @@ let
     "antigravity-cli"
     "github-copilot-cli"
   ];
-
-  skillsOption = either (attrsOf (oneOf [
-    lines
-    path
-    str
-  ])) path;
 in
 {
   options = {
     biapy.ai.skills = {
       enable = mkEnableOption "Biapy agent skills";
       skills = mkOption {
-        type = skillsOption;
+        type = attrsOf (oneOf [
+          lines
+          path
+          str
+        ]);
         default = { };
         description = ''
           Custom skills for AI agents.
@@ -90,22 +89,16 @@ in
 
   config = mkIf (cfg.skills != { }) {
     home.file = mkIf cfg.enable (
-      {
-        ".agents/skills" = mkIf (lib.hm.strings.isPathLike cfg.skills) {
-          source = cfg.skills;
-          recursive = true;
-        };
-      }
-      // lib.mapAttrs' (
+      mapAttrs' (
         name: content:
-        if lib.hm.strings.isPathLike content && lib.pathIsDirectory content then
-          lib.nameValuePair ".agents/skills/${name}" {
-            source = content;
-            recursive = true;
+        if isPathLike content && pathIsDirectory content then
+          nameValuePair ".agents/skills/${name}" {
+            source = mkDefault content;
+            recursive = mkDefault true;
           }
         else
-          lib.nameValuePair ".agents/skills/${name}/SKILL.md" (
-            if lib.hm.strings.isPathLike content then { source = content; } else { text = content; }
+          nameValuePair ".agents/skills/${name}/SKILL.md" (
+            if isPathLike content then { source = content; } else { text = content; }
           )
       ) (if builtins.isAttrs cfg.skills then cfg.skills else { })
     );
