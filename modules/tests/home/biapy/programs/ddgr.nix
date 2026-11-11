@@ -3,7 +3,9 @@ let
   ddgrModule = ../../../../home/_biapy/programs/ddgr.nix;
 
   evalDdgr =
-    { modules ? [ ] }:
+    {
+      modules ? [ ],
+    }:
     (lib.modules.evalModules {
       modules = [
         {
@@ -39,9 +41,10 @@ in
     };
 
     "test: enabling ddgr installs the package" = {
-      expr = (evalDdgr {
-        modules = [ { config.biapy.programs.ddgr.enable = lib.mkForce true; } ];
-      }).home.packages != [ ];
+      expr =
+        (evalDdgr {
+          modules = [ { config.biapy.programs.ddgr.enable = lib.mkForce true; } ];
+        }).home.packages != [ ];
       expected = true;
     };
   };
