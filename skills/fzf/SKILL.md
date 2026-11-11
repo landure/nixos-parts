@@ -8,9 +8,12 @@ metadata:
   author: landure
   version: "1.0.0"
   homepage: https://github.com/landure/nixos-parts/tree/main/skills/fzf
-  openclaw:
-    requires:
-      bins: ["fzf"]
+  openclaw: |
+    {
+      "requires": {
+        "bins": ["fzf"]
+      }
+    }
 ---
 
 # fzf

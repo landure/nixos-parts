@@ -7,10 +7,12 @@ allowed-tools: Bash(tldr:*)
 metadata:
   author: gumadeiras
   version: "1.0.1"
-  openclaw:
-    emoji: "📚"
-    requires: 
-      bins: ["tldr"]
+  openclaw: |
+    {
+      "requires": {
+        "bins": ["tldr"]
+      }
+    }
   homepage: https://github.com/sundial-org/awesome-openclaw-skills/tree/main/skills/tldr-2
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: ddgr
-description: Search the web via DuckDuckGo. USE PROACTIVELY for current/real-time info, versions/releases, external docs, or anything not verifiable from repo/training data. Supports DuckDuckGo Bangs (!w,!so,!gh,!yt). Prefer over guessing/hedging.
+description: Search the web via DuckDuckGo. Use PROACTIVELY when the user asks to search or needs current/real-time info, versions/releases, external docs, or anything not verifiable from repo/training data. Prefer over guessing/hedging.
 compatibility: Requires ddgr, jq, and access to the internet
 license: MIT
 allowed-tools: Bash(ddgr:*) Bash(jq:*) WebFetch
@@ -8,10 +8,12 @@ metadata:
   author: ysm-dev
   version: "1.0.2"
   homepage: https://github.com/ysm-dev/ddgr-skill
-  openclaw:
-    emoji: "🦆"
-    requires:
-      bins: ["ddgr", "jq"]
+  openclaw: |
+    {
+      "requires": {
+        "bins": ["ddgr", "jq"]
+      }
+    }
 ---
 
 # ddgr Web Search
