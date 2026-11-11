@@ -30,7 +30,17 @@ types = ["file"]
 language = "system"
 
 [[repos.hooks]]
-entry = "rumdl check"
+entry = "nixfmt"
+id = "nixfmt"
+name = "nixfmt"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+types = ["nix"]
+language = "system"
+
+[[repos.hooks]]
+entry = "rumdl fmt"
 id = "rumdl"
 name = "rumdl"
 pass_filenames = true
