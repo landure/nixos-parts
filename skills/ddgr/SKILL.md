@@ -1,10 +1,13 @@
 ---
 name: ddgr
-description: Search the web using DuckDuckGo via the ddgr CLI tool. Use when the user asks to search the web, look something up online, find information on the internet, get instant answers, or needs current/real-time data. Also use for DuckDuckGo Bang searches (e.g., "!w" for Wikipedia, "!so" for StackOverflow).
+description: Search the web using DuckDuckGo via the ddgr CLI tool. Use to search the Internet or specific websites using DuckDuckGo Bang searches.
+compatibility: Requires ddgr, and access to the internet
 license: MIT
+allowed-tools: Bash(ddgr:*) Bash(jq:*) Read
 metadata:
   author: ysm-dev
   version: "1.0.1"
+  homepage: https://github.com/ysm-dev/ddgr-skill
 ---
 
 # ddgr Web Search
@@ -21,28 +24,43 @@ Search DuckDuckGo from the terminal using [ddgr](https://github.com/jarun/ddgr).
 ## Basic Usage
 
 ```bash
-ddgr --noua --np --json "search query"
+ddgr --noua --json --reg=wt-wt "search query"
 ```
 
-**Required flags:**
-- `--noua`: Disable user agent (always use this)
-- `--np` (noprompt): Exit after showing results, no interactive prompt
-- `--json`: Output in JSON format for parsing (implies --np)
+### Required flags
 
-## Options
+- `--noua`: Disable user agent (always use this)
+- `--json`: Output in JSON format for parsing (implies `--np`)
+
+## JSON Output Structure
+
+Each result contains:
+
+- `title`: Page title
+- `url`: Full URL
+- `abstract`: Description/snippet
+
+Parse with `jq`:
+
+```bash
+ddgr --noua --json --reg=wt-wt "query" | jq '.[].title'
+ddgr --noua --json --reg=wt-wt "query" | jq -r '.[0].url'  # First result URL
+```
+
+### Other flags
 
 | Flag | Description |
 |------|-------------|
-| `-n N` | Number of results (0-25, default 10) |
-| `-t SPAN` | Time filter: `d` (day), `w` (week), `m` (month), `y` (year) |
-| `-w SITE` | Search within a specific site |
-| `-r REG` | Region-specific search (e.g., `us-en`, `uk-en`, `in-en`) |
-| `-x` | Show full URLs instead of domain only |
-| `-j` | "I'm Feeling Ducky" - open first result in browser |
-| `-i` | Retrieve instant answer only |
+| `--np` | (noprompt): Exit after showing results, no interactive prompt |
+| `--num=<N>`, `-n <N>` | Number of results (0-25, default 10) |
+| `--time=<SPAN>`, `-t <SPAN>` | Restrict results by age: `d` (1 day), `w` (1 week), `m` (1 month), `y` (1 year) |
+| `--site=<SITE>`, `-w <SITE>` | Search within a specific site |
+| `--reg=<REG>`, `-r <REG>` | Region-specific search (`us-en`, `uk-en`, `fr-fr`, `wt-wt` for No region, …) |
 | `--unsafe` | Disable safe search |
-| `--rev` | List results in reversed order |
-| `-p URI` | HTTPS proxy (also reads `https_proxy` env var) |
+| `--reverse` | List results in reversed order |
+| `--proxy=<URI>`, `-p <URI>` | HTTPS proxy (otherwise, use `HTTPS_PROXY` environment variable) |
+
+Full regions list: <https://duckduckgo.com/duckduckgo-help-pages/settings/params>
 
 ## DuckDuckGo Bangs
 
@@ -56,56 +74,49 @@ ddgr --noua --np \!yt "video topic"     # YouTube
 ddgr --noua --np \!a "product"          # Amazon
 ```
 
-Full bang list: https://duckduckgo.com/bang
+Full bang list: <https://duckduckgo.com/bang_lite.html>
 
 ## Search Keywords
 
 ```bash
-ddgr --noua --np --json "filetype:pdf annual report"
-ddgr --noua --np --json "site:reddit.com python tips"
+ddgr --noua --json "filetype:pdf annual report"
+ddgr --noua --json "site:reddit.com python tips"
 ```
 
 ## Examples
 
-**Basic search:**
+Basic search:
+
 ```bash
-ddgr --noua --np --json "python asyncio tutorial"
+ddgr --noua --json "python asyncio tutorial"
 ```
 
-**Recent results (last week):**
+Recent results (last week):
+
 ```bash
-ddgr --noua --np --json -t w "latest news topic"
+ddgr --noua --json --time=w "latest news topic"
 ```
 
-**Site-specific search:**
+Site-specific search:
+
 ```bash
-ddgr --noua --np --json -w stackoverflow.com "parse JSON"
+ddgr --noua --json --site=stackoverflow.com "parse JSON"
 ```
 
-**Region-specific (India, English):**
+Region-specific (India, English):
+
 ```bash
-ddgr --noua --np --json -r in-en "IPL cricket"
+ddgr --noua --json --reg=in-en "IPL cricket"
 ```
 
-**Instant answer:**
+Instant answer:
+
 ```bash
-ddgr --noua --np -i "weather new york"
+ddgr --noua --json --instant "weather new york"
 ```
 
-**Limit to 5 results:**
+Limit to 5 results:
+
 ```bash
-ddgr --noua --np --json -n 5 "quick query"
-```
-
-## JSON Output Structure
-
-Each result contains:
-- `title`: Page title
-- `url`: Full URL
-- `abstract`: Description/snippet
-
-Parse with `jq`:
-```bash
-ddgr --noua --np --json "query" | jq '.[].title'
-ddgr --noua --np --json "query" | jq -r '.[0].url'  # First result URL
+ddgr --noua --json --num=5 "quick query"
 ```
