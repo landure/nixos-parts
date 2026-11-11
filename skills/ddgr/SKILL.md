@@ -1,9 +1,9 @@
 ---
 name: ddgr
-description: Search the web using DuckDuckGo via the ddgr CLI tool. Use to search the Internet or specific websites using DuckDuckGo Bang searches.
+description: Search the web via DuckDuckGo. USE PROACTIVELY for current/real-time info, versions/releases, external docs, or anything not verifiable from repo/training data. Supports DuckDuckGo Bangs (!w,!so,!gh,!yt). Prefer over guessing/hedging.
 compatibility: Requires ddgr, and access to the internet
 license: MIT
-allowed-tools: Bash(ddgr:*) Bash(jq:*) Read
+allowed-tools: Bash(ddgr:*) Bash(jq:*) WebFetch
 metadata:
   author: ysm-dev
   version: "1.0.1"
@@ -20,6 +20,26 @@ Search DuckDuckGo from the terminal using [ddgr](https://github.com/jarun/ddgr).
 - Need current/real-time information not in training data
 - User wants to find documentation, tutorials, or resources
 - DuckDuckGo Bang searches (Wikipedia, StackOverflow, GitHub, etc.)
+
+## Proactive Use
+
+Search first (not last resort) when any hold:
+
+- About to hedge ("not sure", "as of", "may have changed").
+- Version/release/changelog/deprecation/"latest" involved.
+- External lib/service/API docs not in context.
+- Unknown cmd/tool/pkg, or unfamiliar build/test error.
+- "How do I…" for unverified tool.
+- Fact needs confirmation before stating.
+
+Rule: if answer requires guessing current state, run `ddgr` first,
+then answer with citations. Never fabricate versions/flags/URLs.
+
+## After Search
+
+1. `jq` parse; pick top 1–3.
+2. `webfetch` top URL for full content before answering.
+3. Cite source URL(s).
 
 ## Basic Usage
 
