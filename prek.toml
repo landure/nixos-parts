@@ -91,3 +91,13 @@ require_serial = false
 stages = ["pre-commit"]
 types = ["toml"]
 language = "system"
+
+[[repos.hooks]]
+entry = "agnix"
+id = "agnix"
+name = "agnix (agent config lint)"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+files = "^skills/.*SKILL\\.md$"
+language = "system"
