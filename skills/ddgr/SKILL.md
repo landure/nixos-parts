@@ -1,13 +1,17 @@
 ---
 name: ddgr
 description: Search the web via DuckDuckGo. USE PROACTIVELY for current/real-time info, versions/releases, external docs, or anything not verifiable from repo/training data. Supports DuckDuckGo Bangs (!w,!so,!gh,!yt). Prefer over guessing/hedging.
-compatibility: Requires ddgr, and access to the internet
+compatibility: Requires ddgr, jq, and access to the internet
 license: MIT
 allowed-tools: Bash(ddgr:*) Bash(jq:*) WebFetch
 metadata:
   author: ysm-dev
-  version: "1.0.1"
+  version: "1.0.2"
   homepage: https://github.com/ysm-dev/ddgr-skill
+  openclaw:
+    emoji: "🦆"
+    requires:
+      bins: ["ddgr", "jq"]
 ---
 
 # ddgr Web Search
@@ -52,6 +56,12 @@ ddgr --noua --json --reg=wt-wt "search query"
 - `--noua`: Disable user agent (always use this)
 - `--json`: Output in JSON format for parsing (implies `--np`)
 
+Use `--reg=wt-wt` to turn off region bias (useful for technical queries).
+Region codes: [regions.md](./references/regions.md).
+
+For the full flag reference (including interactive/human-only flags),
+see [REFERENCE.md](./references/REFERENCE.md).
+
 ## JSON Output Structure
 
 Each result contains:
@@ -65,36 +75,9 @@ Parse with `jq`:
 ```bash
 ddgr --noua --json --reg=wt-wt "query" | jq '.[].title'
 ddgr --noua --json --reg=wt-wt "query" | jq -r '.[0].url'  # First result URL
+ddgr --noua --json --reg=wt-wt "query" |
+    jq -r '.[] | "\(.title)\t\(.url)\n\(.abstract)\n"'  # Combined
 ```
-
-### Other flags
-
-| Flag | Description |
-|------|-------------|
-| `--np` | (noprompt): Exit after showing results, no interactive prompt |
-| `--num=<N>`, `-n <N>` | Number of results (0-25, default 10) |
-| `--time=<SPAN>`, `-t <SPAN>` | Restrict results by age: `d` (1 day), `w` (1 week), `m` (1 month), `y` (1 year) |
-| `--site=<SITE>`, `-w <SITE>` | Search within a specific site |
-| `--reg=<REG>`, `-r <REG>` | Region-specific search (`us-en`, `uk-en`, `fr-fr`, `wt-wt` for No region, …) |
-| `--unsafe` | Disable safe search |
-| `--reverse` | List results in reversed order |
-| `--proxy=<URI>`, `-p <URI>` | HTTPS proxy (otherwise, use `HTTPS_PROXY` environment variable) |
-
-Full regions list: <https://duckduckgo.com/duckduckgo-help-pages/settings/params>
-
-## DuckDuckGo Bangs
-
-Bangs redirect searches to other sites. Escape `!` in bash/zsh:
-
-```bash
-ddgr --noua --np \!w "search term"      # Wikipedia
-ddgr --noua --np \!so "python error"    # StackOverflow
-ddgr --noua --np \!gh "repo name"       # GitHub
-ddgr --noua --np \!yt "video topic"     # YouTube
-ddgr --noua --np \!a "product"          # Amazon
-```
-
-Full bang list: <https://duckduckgo.com/bang_lite.html>
 
 ## Search Keywords
 
@@ -102,6 +85,12 @@ Full bang list: <https://duckduckgo.com/bang_lite.html>
 ddgr --noua --json "filetype:pdf annual report"
 ddgr --noua --json "site:reddit.com python tips"
 ```
+
+## Troubleshooting
+
+- Empty results: broaden the query, change `--reg`, or drop `--time`.
+- Blocked/rate-limited: use `--proxy=<URI>` or set `HTTPS_PROXY`.
+- Hangs: wrap invocation with `timeout` (e.g. `timeout 30s ddgr ...`).
 
 ## Examples
 
@@ -129,7 +118,7 @@ Region-specific (India, English):
 ddgr --noua --json --reg=in-en "IPL cricket"
 ```
 
-Instant answer:
+Instant answer (requires unreleased ddgr):
 
 ```bash
 ddgr --noua --json --instant "weather new york"
