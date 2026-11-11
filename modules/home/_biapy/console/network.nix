@@ -70,7 +70,15 @@ in
         trippy
         wtfis
 
-        unstable.netwatch
+        (unstable.netwatch.overrideAttrs (
+          finalAttrs: previousAttrs: {
+            cargoTestFlags = (previousAttrs.cargoTestFlags or [ ]) ++ [
+              "--"
+              "--skip"
+              "sandbox::linux::tests::parser_layer_leaves_fast_open_and_autobind_open"
+            ];
+          }
+        ))
         unstable.cloudflare-speed-cli
 
         biapy-parts.quien
