@@ -1,13 +1,13 @@
 ---
 name: tldr
 description: Simplified usage examples for CLI tools from tldr pages. Use this to quickly understand CLI tools.
-compatibility: Requires tldr or tealdeer, and access to the internet
+compatibility: Requires tldr, and access to the internet
 license: CC0 1.0 Universal
 allowed-tools: Bash(tldr:*)
 metadata:
   author: gumadeiras
   version: "1.0.1"
-  clawdbot:
+  openclaw:
     emoji: "📚"
     requires: 
       bins: ["tldr"]
@@ -37,14 +37,12 @@ tldr <command>
 
 Example: `tldr tar`
 
-If `tldr` doesn't know a command is missing, update the local cache before retrying:
-
-```bash
-tldr --update
-```
-
 List all available pages for the current platform:
 
 ```bash
 tldr --list
 ```
+
+## Troubleshooting
+
+- Stale/missing pages: run `tldr --update`, then retry.
