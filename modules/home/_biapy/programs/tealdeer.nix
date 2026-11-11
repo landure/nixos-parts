@@ -56,7 +56,7 @@ in
     };
 
     biapy.ai.skills.skills = mkIf cfg.withSkill {
-      tldr = mkDefault ../../../../skills/tealdeer;
+      tldr = mkDefault ../../../../skills/tldr;
     };
   };
 }

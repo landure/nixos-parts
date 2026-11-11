@@ -10,6 +10,7 @@ rumdl = "latest"
 shfmt = "latest"
 shellcheck = "latest"
 betterleaks = "latest"
+cocogitto = "latest"
 
 [tasks.format]
 alias = "fmt"

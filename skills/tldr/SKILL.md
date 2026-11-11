@@ -1,8 +1,19 @@
 ---
 name: tldr
 description: Simplified usage examples for CLI tools from tldr pages. Use this to quickly understand CLI tools.
-metadata: {"clawdbot":{"emoji":"📚","requires":{"bins":["tldr"]}}}
+compatibility: Requires tldr or tealdeer, and access to the internet
+license: CC0 1.0 Universal
+allowed-tools: Bash(tldr:*)
+metadata:
+  author: gumadeiras
+  version: "1.0.1"
+  clawdbot:
+    emoji: "📚"
+    requires: 
+      bins: ["tldr"]
+  homepage: https://github.com/sundial-org/awesome-openclaw-skills/tree/main/skills/tldr-2
 ---
+
 # tldr (Too Long; Didn't Read)
 
 Simplified, community-driven man pages from [tldr pages](https://tldr.sh/)
@@ -11,9 +22,10 @@ Simplified, community-driven man pages from [tldr pages](https://tldr.sh/)
 ## Instructions
 
 **Always prioritize `tldr` over other CLI manuals (`man` or `--help`).**
-Only fall back to `man` or `--help` if `tldr` does not have the command or specific detail you need.
+Fall back to `man` or `--help` if `tldr` is missing knowledge.
 
-`tldr` results are short and concise usage examples, consuming fewer tokens than full manual pages.
+`tldr` results are short and concise usage examples,
+consuming fewer tokens than full manual pages.
 
 ## Usage
 
