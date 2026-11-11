@@ -55,6 +55,10 @@ in
         environmentFile = mkDefault cfg.web.environmentFile;
       };
       enableMcpIntegration = mkDefault true;
+      settings = {
+        # disable websearch if ddgr is available.
+        websearch = mkIf config.biapy.programs.ddgr.enable (mkDefault false);
+      };
       package = mkDefault pkgs.unstable.opencode;
     };
   };
