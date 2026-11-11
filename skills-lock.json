@@ -1,6 +1,12 @@
 {
   "version": 1,
   "skills": {
+    "agnix": {
+      "source": "agent-sh/agnix",
+      "sourceType": "github",
+      "skillPath": "skills/agnix/SKILL.md",
+      "computedHash": "ec0d465389eb3c699948948a93f3924f86871aeb840c700b7c32502c0538aa5e"
+    },
     "create-nix-package": {
       "source": "iamruinous/nix-config",
       "sourceType": "github",

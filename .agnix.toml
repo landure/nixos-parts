@@ -1,0 +1,26 @@
+severity = "Info"
+exclude = [".agents/skills"]
+
+[rules]
+# Category toggles - all default to true
+skills = true             # AS-*, CC-SK-* rules
+hooks = true              # CC-HK-* rules
+agents = true             # CC-AG-* rules
+copilot = true            # COP-* rules
+cursor = true             # CUR-* rules
+memory = true             # CC-MEM-* rules
+plugins = true            # CC-PL-* rules
+mcp = true                # MCP-* rules
+prompt_engineering = true # PE-* rules
+xml = true                # XML-* rules
+imports = true            # REF-* rules
+cross_platform = true     # XP-* rules
+agents_md = true          # AGM-* rules
+
+[tool_versions]
+claude_code = "2.1.0"
+opencode = "2.2.0"
+# cursor = "0.45.0"
+
+[spec_revisions]
+mcp_protocol = "2026-07-28"
