@@ -67,7 +67,6 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       curl
-      ddgr # DuckDuckGo search CLI client
       # gomuks # Matrix client (requires insecure olm library)
       monolith # Archiving a web page in a single HTML file
       # readability-cli
@@ -76,6 +75,8 @@ in
       wget
       wiki-tui # TUI for browsing Wikipedia
     ];
+
+    biapy.programs.ddgr.enable = mkDefault true;
 
     programs = {
       aerc.enable = mkDefault true;
