@@ -82,7 +82,7 @@ in
       taskwarrior-tui
       tdf
 
-      unstable.leaf-markdown-viewer
+      # unstable.leaf-markdown-viewer
       unstable.markless
       unstable.tuxedo
     ];
