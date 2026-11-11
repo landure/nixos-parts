@@ -77,7 +77,6 @@ in
 
     home.packages = with pkgs; [
       gawk
-      gum
       sd
       biapy-parts.killf
     ];
@@ -90,6 +89,7 @@ in
         fastfetch.enable = mkDefault true;
         flyline.enable = mkDefault true;
         fzf.enable = mkDefault true;
+        gum.enable = mkDefault true;
         mcfly.enable = mkDefault true;
         mise.enable = mkDefault true;
         pay-respects.enable = mkDefault true;

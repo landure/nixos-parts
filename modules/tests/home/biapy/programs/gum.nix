@@ -3,7 +3,9 @@ let
   gumModule = ../../../../home/_biapy/programs/gum.nix;
 
   evalGum =
-    { modules ? [ ] }:
+    {
+      modules ? [ ],
+    }:
     (lib.modules.evalModules {
       modules = [
         {
@@ -39,9 +41,10 @@ in
     };
 
     "test: enabling gum installs the package" = {
-      expr = (evalGum {
-        modules = [ { config.biapy.programs.gum.enable = lib.mkForce true; } ];
-      }).home.packages != [ ];
+      expr =
+        (evalGum {
+          modules = [ { config.biapy.programs.gum.enable = lib.mkForce true; } ];
+        }).home.packages != [ ];
       expected = true;
     };
   };
