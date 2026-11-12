@@ -89,3 +89,10 @@ changes also `change(operation:"verify")`. After editing, run
 
 `mise.toml` pins `prek`; keep its hook list up to date when adding
 new linters or formatters.
+
+## Recent changes
+
+- Shell helper scripts live under `chezmoi-dot-files/private_dot_local/bin/executable_*`
+  and are consumed by packages via `builtins.readFile`.
+- Agent skills live under `skills/<name>/SKILL.md` with `references/` support.
+- Skill metadata `openclaw` must be a string (multiline JSON) for agnix.
