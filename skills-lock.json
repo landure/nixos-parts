@@ -49,6 +49,12 @@
       "skillPath": "skills/nix-workflow/SKILL.md",
       "computedHash": "1b917e187799838f2ed45df6bb636176bb1a66ce6e84f32ca7beb632171232bc"
     },
+    "prek": {
+      "source": "j178/prek",
+      "sourceType": "github",
+      "skillPath": "skills/prek/SKILL.md",
+      "computedHash": "312a2960d1fc24ccbf6dfdb28c109526becf460a6e832f2e51ee2362eb7b8a05"
+    },
     "skill-improver": {
       "source": "trailofbits/skills",
       "sourceType": "github",
