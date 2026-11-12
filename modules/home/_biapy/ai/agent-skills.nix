@@ -14,7 +14,7 @@
 }:
 let
   inherit (lib.modules) mkIf;
-  inherit (lib.options) mkEnableOption;
+  inherit (lib.options) mkDefault mkEnableOption;
 
   cfg = config.biapy.ai.agent-skills;
 
@@ -26,8 +26,9 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      skills
       ctx7
     ];
+
+    biapy.programs.skills.enable = mkDefault true;
   };
 }
