@@ -57,7 +57,7 @@ require-commands() {
 require-commands skrg hx xargs
 
 case "${1:-}" in
--h | --help | -\\?)
+'-h' | '--help' | '-?')
 	usage && exit 0
 	;;
 '-V' | '--version')

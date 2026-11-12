@@ -55,7 +55,7 @@ require-commands() {
 require-commands rg sk batline
 
 case "${1:-}" in
--h | --help | -\\?)
+'-h' | '--help' | '-?')
 	usage && exit 0
 	;;
 '-V' | '--version')

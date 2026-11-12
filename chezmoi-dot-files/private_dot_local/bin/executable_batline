@@ -45,8 +45,12 @@ require-commands() {
 
 require-commands bat less tput
 
+# Parse arguments: everything before -- is for bat, everything after is for us
+args=()
+auto_range=0
+
 case "${1:-}" in
--h | --help | -\\?)
+'-h' | '--help' | '-?')
 	usage && exit 0
 	;;
 '-V' | '--version')
@@ -54,18 +58,63 @@ case "${1:-}" in
 	;;
 esac
 
+# Parse arguments using while and shift
+while [[ ${#} -gt 0 && ${1} =~ ^- && ${1} != '--' ]]; do
+	option="${1}"
+	shift
+
+	if [[ ${option} == '--auto-range' ]]; then
+		auto_range=1
+		continue
+	fi
+
+	args+=("${option}")
+done
+
+if [[ ${1:-} == '--' ]]; then
+	shift
+fi
+
 # Argument and file checks
 if [[ $# -ne 1 ]]; then
-	error "expected one argument: path:line-number"
+	error "${0##*/} requires one and only one argument in the format 'path:line-number' after options, ${#} given."
 	exit 2
 fi
 
+# bat file as is if no line given
+[[ ${1} =~ .*:[0-9]+$ ]] || exec bat "${args[@]}" "${1}"
+
 file="${1%:*}"
 line="${1##*:}"
+
+if [[ -z ${file} ]]; then
+	error "path is required"
+	exit 1
+fi
+
+if [[ ! ${line} =~ [0-9]+ ]]; then
+	error "line number \"${line}\" isn't numeric"
+	exit 1
+fi
 
 if [[ ! -e $file ]]; then
 	error "file not found: $file"
 	exit 1
 fi
 
-exec bat --highlight-line="$line" "$file"
+if [[ ${auto_range} -ne 0 ]]; then
+	height="$(tput 'lines')"
+
+	start=$((line > height / 2 ? line - (height / 2) : 0))
+
+	args+=("--line-range=${start}:+$((height * 2))")
+
+	exec bat "${args[@]}" --highlight-line="${line}" "${file}"
+fi
+
+pager=(
+	less --RAW-CONTROL-CHARS --quit-if-one-screen
+	--jump-target='.5' "+${line}g"
+)
+
+exec bat "${args[@]}" --pager="${pager[*]}" --highlight-line="${line}" "${file}"
