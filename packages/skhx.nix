@@ -1,7 +1,7 @@
 /**
-  # Skim
+  # skhx
 
-  Skim fuzzy finder, with custom setup & aliases
+  Select file with skf, and open it with Helix editor (hx)
 
   ## 🙇 Acknowledgements
 
@@ -9,30 +9,21 @@
 */
 {
   writeShellApplication,
-  lib,
   biapy-parts,
+  gum,
   helix,
   uutils-findutils,
 }:
 let
-  inherit (lib.meta) getExe getExe';
   inherit (biapy-parts) skf;
-
-  skfCmd = getExe skf;
-  hxCmd = getExe helix;
-  xargsCmd = getExe' uutils-findutils "xargs";
 in
 writeShellApplication {
   name = "skhx";
   runtimeInputs = [
     skf
+    gum
     helix
     uutils-findutils
   ];
-  text = ''
-    # Open with Helix.
-    # see https://ivergara.github.io/Supercharging-shell.html
-    ${skfCmd} --no-multi "''${@}" |
-    	exec ${xargsCmd} --no-run-if-empty ${hxCmd}
-  '';
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/skhx.sh;
 }

@@ -1,7 +1,7 @@
 /**
-  # Skim
+  # skodium
 
-  Skim fuzzy finder, with custom setup & aliases
+  Select file with skf, and open it with Visual Studio Codium (codium)
 
   ## 🙇 Acknowledgements
 
@@ -9,30 +9,21 @@
 */
 {
   writeShellApplication,
-  lib,
   biapy-parts,
+  gum,
   vscodium,
   uutils-findutils,
 }:
 let
-  inherit (lib.meta) getExe getExe';
   inherit (biapy-parts) skf;
-
-  skfCmd = getExe skf;
-  codeCmd = getExe vscodium;
-  xargsCmd = getExe' uutils-findutils "xargs";
 in
 writeShellApplication {
   name = "skodium";
   runtimeInputs = [
+    gum
     skf
     vscodium
     uutils-findutils
   ];
-  text = ''
-    # Open with Visual Studio Code
-    # see https://ivergara.github.io/Supercharging-shell.html
-    ${skfCmd} --no-multi "''${@}" |
-    	exec ${xargsCmd} --no-run-if-empty ${codeCmd}
-  '';
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/skodium.sh;
 }

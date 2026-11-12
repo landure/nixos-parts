@@ -9,30 +9,21 @@
 */
 {
   writeShellApplication,
-  lib,
   biapy-parts,
+  gum,
   neovim,
   uutils-findutils,
 }:
 let
-  inherit (lib.meta) getExe getExe';
   inherit (biapy-parts) skrg;
-
-  skrgCmd = getExe skrg;
-  vimCmd = getExe neovim;
-  xargsCmd = getExe' uutils-findutils "xargs";
 in
 writeShellApplication {
   name = "skrvim";
   runtimeInputs = [
+    gum
     skrg
     neovim
     uutils-findutils
   ];
-  text = ''
-    # Open with Neovim.
-    # see https://ivergara.github.io/Supercharging-shell.html
-    ${skrgCmd} --no-multi --output-format='{1..2}' "''${@}" |
-    	exec ${xargsCmd} --no-run-if-empty ${vimCmd}
-  '';
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/skrvim.sh;
 }

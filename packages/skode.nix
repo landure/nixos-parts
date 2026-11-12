@@ -1,7 +1,7 @@
 /**
-  # Skim
+  # skode
 
-  Skim fuzzy finder, with custom setup & aliases
+  Select file with skf, and open it with Visual Studio Code (code)
 
   ## 🙇 Acknowledgements
 
@@ -11,31 +11,23 @@
   writeShellApplication,
   lib,
   biapy-parts,
+  gum,
   vscode,
   uutils-findutils,
 }:
 let
-  inherit (lib.meta) getExe getExe';
   inherit (biapy-parts) skf;
-
-  skfCmd = getExe skf;
-  codeCmd = getExe vscode;
-  xargsCmd = getExe' uutils-findutils "xargs";
 in
 writeShellApplication {
   name = "skode";
   meta = {
-    license = lib.licenses.unfree;
+    license = lib.licenses.cc-by-nc-sa-40;
   };
   runtimeInputs = [
+    gum
     skf
     vscode
     uutils-findutils
   ];
-  text = ''
-    # Open with Visual Studio Code
-    # see https://ivergara.github.io/Supercharging-shell.html
-    ${skfCmd} --no-multi "''${@}" |
-    	exec ${xargsCmd} --no-run-if-empty ${codeCmd}
-  '';
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/skode.sh;
 }

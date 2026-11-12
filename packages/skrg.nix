@@ -18,5 +18,5 @@ writeShellApplication {
     skim
     uutils-coreutils-noprefix
   ];
-  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/executable_skrg;
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/skrg.sh;
 }

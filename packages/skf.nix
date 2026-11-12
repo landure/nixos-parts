@@ -11,5 +11,5 @@ writeShellApplication {
     gum
     skim
   ];
-  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/executable_skf;
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/skf.sh;
 }

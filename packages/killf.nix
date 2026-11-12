@@ -10,8 +10,9 @@
 {
   writeShellApplication,
   fzf,
+  gum,
   ps,
-  uutils-coreutils,
+  uutils-coreutils-noprefix,
   uutils-findutils,
   witr,
 }:
@@ -20,7 +21,8 @@ writeShellApplication {
   runtimeInputs = [
     ps
     fzf
-    uutils-coreutils
+    gum
+    uutils-coreutils-noprefix
     uutils-findutils
     witr
   ];
@@ -29,16 +31,5 @@ writeShellApplication {
     "nounset"
     "pipefail"
   ];
-  text = ''
-    # killf: Fuzzy Kill Process.
-    # see https://www.tsukie.com/en/technologies/use-cli-like-a-modern-tech-bro/
-    ps -ef |
-    tail --lines +2 |
-    fzf --with-nth=2,8.. --accept-nth=2 \
-      --no-multi --header='Select process to kill' \
-      --height=100% --layout=default --border --info=inline \
-      --preview-window=right:40%:wrap \
-      --preview='witr --pid {2}' |
-    xargs kill -9
-  '';
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/killf.sh;
 }

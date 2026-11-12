@@ -71,9 +71,7 @@ while [[ ${#} -gt 0 && ${1} =~ ^- && ${1} != '--' ]]; do
 	args+=("${option}")
 done
 
-if [[ ${1:-} == '--' ]]; then
-	shift
-fi
+[[ ${1:-} == '--' ]] && shift
 
 # Argument and file checks
 if [[ $# -ne 1 ]]; then

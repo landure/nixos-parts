@@ -4,8 +4,8 @@
 # Name: skf
 # Version: 1.0.0
 # License: GPL-3.0-or-later
-# Author: Pierre-Yves (biapy)
-# Description: Interactive live grep with skim preview.
+# Author: Pierre-Yves Landuré (@landure)
+# Description: Interactive live grep with file content preview using bat.
 # A comfortable UI + preview
 # Parse arguments: everything before -- is for skim, everything after is the query
 
@@ -44,13 +44,15 @@ error() {
 	fi
 }
 
+die() {
+	error "${@}"
+	exit 1
+}
+
 require-commands() {
 	for cmd in "${@}"; do
 		command -v "${cmd}" >/dev/null 2>&1 ||
-			{
-				error "missing command: ${cmd}"
-				exit 1
-			}
+			die "missing command: ${cmd}"
 	done
 }
 
@@ -76,6 +78,8 @@ while [[ ${#} -gt 0 && ${1} =~ ^- && ${1} != '--' ]]; do
 		sk_args+=("${option}")
 	fi
 done
+
+[[ ${1:-} == '--' ]] && shift
 
 exec sk --ansi --prompt='Files❯ ' --no-height \
 	--bind='ctrl-p:toggle-preview' \

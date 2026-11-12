@@ -4,7 +4,7 @@
 # Name: skrg
 # Version: 1.0.0
 # License: GPL-3.0-or-later
-# Author: Pierre-Yves (biapy)
+# Author: Pierre-Yves Landuré (@landure)
 # Description: Interactive live grep with skim preview.
 
 set -euo pipefail
@@ -42,13 +42,15 @@ error() {
 	fi
 }
 
+die() {
+	error "${@}"
+	exit 1
+}
+
 require-commands() {
 	for cmd in "${@}"; do
 		command -v "${cmd}" >/dev/null 2>&1 ||
-			{
-				error "missing command: ${cmd}"
-				exit 1
-			}
+			die "missing command: ${cmd}"
 	done
 }
 
@@ -78,6 +80,8 @@ while [[ ${#} -gt 0 && ${1} =~ ^- && ${1} != '--' ]]; do
 		sk_args+=("${option}")
 	fi
 done
+
+[[ ${1:-} == '--' ]] && shift
 
 exec sk --ansi --delimiter=':' --interactive --no-height \
 	--skip-to-pattern='[^/]*:' \

@@ -1,12 +1,3 @@
-/**
-  # Skim
-
-  Skim fuzzy finder, with custom setup & aliases
-
-  ## 🙇 Acknowledgements
-
-  - [Supercharging the shell @ On data, programming, and technology](https://ivergara.github.io/Supercharging-shell.html).
-*/
 {
   writeShellApplication,
   biapy-parts,
@@ -25,5 +16,5 @@ writeShellApplication {
     helix
     uutils-findutils
   ];
-  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/executable_skrhx;
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/skrhx.sh;
 }

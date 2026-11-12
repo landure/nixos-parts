@@ -13,5 +13,5 @@ writeShellApplication {
     less
     ncurses
   ];
-  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/executable_batline;
+  text = builtins.readFile ../chezmoi-dot-files/private_dot_local/bin/batline.sh;
 }

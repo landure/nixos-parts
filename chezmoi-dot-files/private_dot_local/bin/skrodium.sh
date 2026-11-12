@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # SPDX-License-Identifier: CC-BY-NC-SA-4.0
 # shellcheck shell=bash
-# Name: skrhx
+# Name: skrodium
 # Version: 1.0.0
 # License: CC-BY-NC-SA-4.0
-# Author: Pierre-Yves (biapy)
-# Description: Open selected ripgrep match in Helix.
+# Author: Pierre-Yves Landuré (@landure)
+# Description: Open selected ripgrep match with Visual Studio Codium (codium).
 #
 # based on Ignacio Vergara Kausel work
 # https://ivergara.github.io/Supercharging-shell.html
@@ -14,14 +14,14 @@ set -euo pipefail
 
 version='1.0.0'
 
-script_version="skrhx v${version}"
+script_version="skrodium v${version}"
 script_name="${0-##*/}"
 
 function usage() {
 	cat <<EOF
 ${script_version}
 
-skrhx open selected ripgrep (rg) match in Helix.
+skrodium open selected ripgrep (rg) match with Visual Studio Codium (codium).
 
 Usage:
 
@@ -44,17 +44,19 @@ error() {
 	fi
 }
 
+die() {
+	error "${@}"
+	exit 1
+}
+
 require-commands() {
 	for cmd in "${@}"; do
 		command -v "${cmd}" >/dev/null 2>&1 ||
-			{
-				error "missing command: ${cmd}"
-				exit 1
-			}
+			die "missing command: ${cmd}"
 	done
 }
 
-require-commands skrg hx xargs
+require-commands skrg xargs codium
 
 case "${1:-}" in
 '-h' | '--help' | '-?')
@@ -66,4 +68,4 @@ case "${1:-}" in
 esac
 
 skrg --no-multi --output-format='{1..2}' "${@}" |
-	xargs --no-run-if-empty hx
+	xargs --no-run-if-empty codium
