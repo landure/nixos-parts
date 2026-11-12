@@ -5,8 +5,6 @@
   sd,
   uutils-findutils,
 }:
-let
-in
 writeShellApplication {
   name = "rgsd";
   runtimeInputs = [
