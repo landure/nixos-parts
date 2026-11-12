@@ -14,10 +14,10 @@
 
   ### 🏠 Home Manager
 
-  - [programs.skim](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.skim.enable).
-  - [programs.fd](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.fd.enable).
-  - [programs.bat](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bat.enable).
-  - [programs.ripgrep](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.ripgrep.enable).
+  - [programs.skim @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/skim.html).
+  - [programs.fd @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/fd.html).
+  - [programs.bat @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/bat.html).
+  - [programs.ripgrep @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/ripgrep.html).
 
   ## 🙇 Acknowledgements
 
@@ -41,11 +41,7 @@ let
 
 in
 {
-  options = {
-    biapy.programs.skim = {
-      enable = mkEnableOption "skim";
-    };
-  };
+  options.biapy.programs.skim.enable = mkEnableOption "skim";
 
   config = mkIf cfg.enable {
     biapy.programs.bat.enable = mkDefault true;
@@ -114,7 +110,10 @@ in
       [
         skf
         skrg
+        skat
         skrat
+        sked
+        skred
       ]
       ++ (optionals config.programs.neovim.enable (
         with pkgs.biapy-parts;
