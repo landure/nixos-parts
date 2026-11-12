@@ -16,15 +16,15 @@
 }:
 rustPlatform.buildRustPackage (final: {
   pname = "wtfi2";
-  version = "0.7.0";
+  version = "0.9.0";
   src = fetchFromGitHub {
     owner = "kanywst";
     repo = "wtfi2";
     tag = "v${final.version}";
-    hash = "sha256-vkshSHAOKwKs1CVCyiXI4VbQ8Q6DYmmGPaqE9PU7ofo=";
+    hash = "sha256-E3SGLSjcI8CuhjmgdiA6CZJtcpSaqciihwHYf74iTmI=";
   };
 
-  cargoHash = "sha256-7uXeKkJZpj8GdMQfl9nePmW59wjti9YytaUoaeKjN0s=";
+  cargoHash = "sha256-NQyULEGxKwWcEwqL7nkvLJ3NSeYyqfYtxcUyfMthI24=";
 
   checkFlags = [
     # In the sandbox probes fail instantly (no network), so a 1ms sweep still
