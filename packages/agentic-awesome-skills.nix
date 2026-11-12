@@ -21,9 +21,6 @@ stdenv.mkDerivation {
     cp -r "skills/" "''${out}"
     # remove symbolic links.
     rm "''${out}/skills/pdf" "''${out}/skills/xlsx"
-    for file in README.md LICENSE LICENSE-CONTENT; do
-      cp "''${file}" "''${out}/''${file}"
-    done
   '';
 
   meta = {

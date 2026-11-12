@@ -13,8 +13,8 @@
   ...
 }:
 let
-  inherit (lib.modules) mkIf;
-  inherit (lib.options) mkDefault mkEnableOption;
+  inherit (lib.modules) mkDefault mkIf;
+  inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.ai.agent-skills;
 
