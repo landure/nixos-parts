@@ -13,6 +13,7 @@ betterleaks = "latest"
 cocogitto = "latest"
 "aqua:Mic92/nixfmt-rs" = "latest"
 "github:agent-sh/agnix" = "latest"
+lychee = "latest"
 
 [tasks.format]
 alias = "fmt"

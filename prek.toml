@@ -101,3 +101,13 @@ require_serial = false
 stages = ["pre-commit"]
 files = "^skills/.*SKILL\\.md$"
 language = "system"
+
+[[repos.hooks]]
+entry = "lychee"
+id = "lychee"
+name = "lychee (link checker)"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+language = "system"
+exclude = "^\\.agents/skills/"
