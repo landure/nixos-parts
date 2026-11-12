@@ -28,7 +28,7 @@ Options:
 
 * -h | -? | --help : Display this message.
 * -V | --version   : Display version.
-* sk args          : skim (sk) flag (starting by -) arguments.
+* sk args          : skim (sk) flag arguments (starting with -).
 * rg args          : rg arguments
 
 EOF
