@@ -5,10 +5,11 @@
   ...
 }:
 let
+  inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) bool package;
-  inherit (pkgs) fetchFromGitHub;
+  inherit (pkgs) fetchFromGitHub writeShellApplication;
 
   cfg = config.biapy.programs.skills;
 
@@ -29,19 +30,13 @@ let
     if cfg.telemetry.enable then
       cfg.package
     else
-      pkgs.symlinkJoin {
-        name = "skills-no-telemetry";
-        paths = [ cfg.package ];
-        postBuild = ''
-          mkdir -p "$out/bin"
-          for bin in ${cfg.package}/bin/*; do
-            name=$(basename "$bin")
-            cat > "$out/bin/$name" <<EOF
-          #!/usr/bin/env bash
-          DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 exec ${cfg.package}/bin/$name "\$@"
-          EOF
-            chmod +x "$out/bin/$name"
-          done
+      writeShellApplication {
+        name = "skills";
+        runtimeInputs = [
+          cfg.package
+        ];
+        text = ''
+          DISABLE_TELEMETRY=1 DO_NOT_TRACK=1 exec ${getExe cfg.package} "''${@}"
         '';
       };
 in
