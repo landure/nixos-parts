@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# SPDX-License-Identifier: GPL-3.0-or-later
+# shellcheck shell=bash
+# Name: skf
+# Version: 1.0.0
+# License: GPL-3.0-or-later
+# Author: Pierre-Yves (biapy)
+# Description: Interactive live grep with skim preview.
+# A comfortable UI + preview
+# Parse arguments: everything before -- is for skim, everything after is the query
+
+set -euo pipefail
+
+version='1.0.0'
+
+script_version="skf v${version}"
+script_name="${0##*/}"
+
+function usage() {
+	cat <<EOF
+${script_version}
+
+skf is a comfortable UI for selecting a file with a content preview using bat
+
+Usage:
+
+${script_name} [ -h | -? | --help ] [ -V | --version ] [sk args] [--] [sk query]
+
+Options:
+
+* -h | -? | --help : Display this message.
+* -V | --version   : Display version.
+* sk args          : skim (sk) flag arguments (starting with -).
+* sk query         : initial skim (sk) filter
+
+EOF
+}
+
+error() {
+	if command -v gum >/dev/null 2>&1; then
+		gum log --level=error "${*}"
+	else
+		printf 'Error: %s\n' "${*}" >&2
+	fi
+}
+
+require-commands() {
+	for cmd in "${@}"; do
+		command -v "${cmd}" >/dev/null 2>&1 ||
+			{
+				error "missing command: ${cmd}"
+				exit 1
+			}
+	done
+}
+
+require-commands fd sk bat
+
+case "${1:-}" in
+'-h' | '--help' | '-?')
+	usage && exit 0
+	;;
+'-V' | '--version')
+	echo "${script_version}" && exit 0
+	;;
+esac
+
+sk_args=()
+
+# Parse arguments using while and shift
+while [[ ${#} -gt 0 && ${1} =~ ^- && ${1} != '--' ]]; do
+	option="${1}"
+	shift
+
+	if [[ ${option} != '--' ]]; then
+		sk_args+=("${option}")
+	fi
+done
+
+exec sk --ansi --prompt='Files❯ ' --no-height \
+	--bind='ctrl-p:toggle-preview' \
+	--preview='bat --style=numbers --color=always --line-range :500 {}' \
+	--preview-window='right:60%:nowrap' \
+	--cmd="fd --type 'f' --hidden --follow --exclude '.git'" \
+	"${sk_args[@]}" --query="${*}"
