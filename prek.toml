@@ -40,6 +40,37 @@ types = ["nix"]
 language = "system"
 
 [[repos.hooks]]
+entry = "nix develop --quiet --command -- statix check"
+id = "statix"
+name = "statix check"
+pass_filenames = false
+require_serial = false
+stages = ["pre-commit"]
+types = ["nix"]
+language = "system"
+always_run = true
+
+[[repos.hooks]]
+entry = "nix develop --quiet --command -- nixf-diagnose"
+id = "nixf-diagnose"
+name = "nixf-diagnose"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+types = ["nix"]
+language = "system"
+
+[[repos.hooks]]
+entry = "nix develop --quiet --command -- nil diagnostics --deny-warnings"
+id = "nil-diagnostics"
+name = "nil diagnostics"
+pass_filenames = true
+require_serial = false
+stages = ["pre-commit"]
+types = ["nix"]
+language = "system"
+
+[[repos.hooks]]
 entry = "rumdl fmt"
 id = "rumdl"
 name = "rumdl"

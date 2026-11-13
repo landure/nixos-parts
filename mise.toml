@@ -24,6 +24,12 @@ wf = "nix run .#write-flake"
 flup = "nix flake update"
 flin = "nix flake metadata"
 fmt = "mise run format"
+call-nix = 'call-nix() { local cli="${1}"; shift; [[ -z "${cli}" ]] && return 1;  if command -v "${cli}" >/dev/null 2>&1; then "${cli}" "${@}"; return $?; fi; nix develop --quiet --command  -- "${cli}" "${@}"; return $? }; call-nix'
+statix = 'call-nix statix'
+statix-check = 'call-nix statix check'
+nixf-diagnose = 'call-nix nixf-diagnose'
+nil = 'call-nix nil'
+nil-diagnostics = 'call-nix nil diagnostics --deny-warnings'
 
 # nix hash convert --hash-algo sha256 $(nix-prefetch-url https://raw.githubusercontent.com/rtk-ai/rtk/refs/tags/v1.1.0/hooks/opencode/rtk.ts)
 # nix hash convert --hash-algo sha256 $(nix-prefetch-url --unpack https://raw.githubusercontent.com/rtk-ai/rtk/refs/tags/v1.1.0/hooks/opencode/rtk.ts)
