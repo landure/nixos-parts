@@ -1,0 +1,52 @@
+[global]
+exclude = [
+  ".git",
+  ".agents/skills", # Exclude third-party code
+]
+
+[code-block-style]
+style = "fenced"
+
+[code-fence-style]
+style = "backtick"
+
+[emphasis-style]
+style = "asterisk"
+
+# [MD040]
+[fenced-code-language]
+unknown-language-action = "error"
+
+[heading-style]
+style = "atx"
+
+[hr-style]
+style = "---"
+
+# [MD013]
+[line-length]
+strict = false
+reflow = true
+reflow-mode = "semantic-line-breaks"
+code-blocks = false
+
+[MD052]
+# reference-links-images
+shortcut-syntax = true # Enable checking of shortcut references
+
+[link-image-style]
+collapsed = false
+shortcut = false
+url-inline = false
+
+[no-duplicate-heading]
+siblings-only = false
+
+[ol-prefix]
+style = "ordered"
+
+[strong-style]
+style = "asterisk"
+
+[ul-style]
+style = "dash"
