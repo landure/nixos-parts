@@ -52,7 +52,8 @@ nix run .#write-flake
 
 ## Development notes
 
-- `flake.nix` is generated. Do not edit it manually.
+- `flake.nix` is generated.
+  Do not edit it manually.
 - Formatting is provided by `nixfmt` and `nixfmt-tree`.
 - Tests are defined through `nix-unit`.
 
