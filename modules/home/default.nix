@@ -52,16 +52,6 @@ let
 in
 {
   flake-file.inputs = {
-    nixpkgs-lib.follows = mkDefault "nixpkgs";
-    home-manager = {
-      url = mkDefault "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = mkDefault "nixpkgs";
-    };
-    sops-nix = {
-      url = mkDefault "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = mkDefault "nixpkgs";
-    };
-    flake-utils.url = mkDefault "github:numtide/flake-utils";
     flyline = {
       url = mkDefault "github:HalFrgrd/flyline";
       inputs.nixpkgs.follows = mkDefault "nixpkgs";
@@ -91,19 +81,6 @@ in
       inputs = {
         nixpkgs.follows = mkDefault "nixpkgs";
         home-manager.follows = mkDefault "home-manager";
-      };
-    };
-    spicetify-nix = {
-      url = mkDefault "github:Gerg-L/spicetify-nix";
-      inputs = {
-        nixpkgs.follows = mkDefault "nixpkgs";
-      };
-    };
-    stylix = {
-      url = mkDefault "github:nix-community/stylix/release-26.05";
-      inputs = {
-        nixpkgs.follows = mkDefault "nixpkgs";
-        flake-parts.follows = mkDefault "flake-parts";
       };
     };
   };

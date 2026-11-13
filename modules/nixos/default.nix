@@ -19,13 +19,10 @@
 {
   config,
   inputs,
-  lib,
   self,
   ...
 }:
 let
-  inherit (lib.modules) mkDefault;
-
   localFlake = {
     inputs = {
       inherit (inputs)
@@ -63,27 +60,6 @@ let
 in
 {
   flake-file.inputs = {
-    home-manager = {
-      url = mkDefault "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = mkDefault "nixpkgs";
-    };
-    sops-nix = {
-      url = mkDefault "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = mkDefault "nixpkgs";
-    };
-    spicetify-nix = {
-      url = mkDefault "github:Gerg-L/spicetify-nix";
-      inputs = {
-        nixpkgs.follows = mkDefault "nixpkgs";
-      };
-    };
-    stylix = {
-      url = mkDefault "github:nix-community/stylix/release-26.05";
-      inputs = {
-        nixpkgs.follows = mkDefault "nixpkgs";
-        flake-parts.follows = mkDefault "flake-parts";
-      };
-    };
   };
 
   flake = {

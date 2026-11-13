@@ -31,9 +31,31 @@ in
 
     inputs = {
       flake-file.url = mkDefault "github:denful/flake-file";
+      flake-utils.url = mkDefault "github:numtide/flake-utils";
+      nixpkgs-unstable.url = mkDefault "nixpkgs/nixos-unstable";
       nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
-      nixpkgs-lib.follows = "nixpkgs";
-      nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+      nixpkgs-lib.follows = mkDefault "nixpkgs";
+      home-manager = {
+        url = mkDefault "github:nix-community/home-manager/release-26.05";
+        inputs.nixpkgs.follows = mkDefault "nixpkgs";
+      };
+      stylix = {
+        url = mkDefault "github:nix-community/stylix/release-26.05";
+        inputs = {
+          nixpkgs.follows = mkDefault "nixpkgs";
+          flake-parts.follows = mkDefault "flake-parts";
+        };
+      };
+      sops-nix = {
+        url = mkDefault "github:Mic92/sops-nix";
+        inputs.nixpkgs.follows = mkDefault "nixpkgs";
+      };
+      spicetify-nix = {
+        url = mkDefault "github:Gerg-L/spicetify-nix";
+        inputs = {
+          nixpkgs.follows = mkDefault "nixpkgs";
+        };
+      };
     };
   };
 
