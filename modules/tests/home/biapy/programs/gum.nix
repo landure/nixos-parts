@@ -10,21 +10,23 @@ let
       modules = [
         {
           options = {
-            home.username = lib.mkOption {
-              type = lib.types.str;
-              default = "testuser";
-            };
-            home.homeDirectory = lib.mkOption {
-              type = lib.types.str;
-              default = "/home/testuser";
+            home = {
+              username = lib.mkOption {
+                type = lib.types.str;
+                default = "testuser";
+              };
+              homeDirectory = lib.mkOption {
+                type = lib.types.str;
+                default = "/home/testuser";
+              };
+              packages = lib.mkOption {
+                type = lib.types.listOf lib.types.package;
+                default = [ ];
+              };
             };
             biapy.ai.skills.skills = lib.mkOption {
               type = lib.types.attrs;
               default = { };
-            };
-            home.packages = lib.mkOption {
-              type = lib.types.listOf lib.types.package;
-              default = [ ];
             };
           };
         }
