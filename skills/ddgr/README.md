@@ -1,9 +1,11 @@
 # ddgr skill
 
-DuckDuckGo web search skill for AI coding agents using
-[ddgr](https://github.com/jarun/ddgr) command-line tool.
+DuckDuckGo web search skill
+for AI coding agents using [ddgr](https://github.com/jarun/ddgr) command-line
+tool.
 
-Forked from [Chris Yang (ysm-dev)'s ddgr-skill @ GitHub](https://github.com/ysm-dev/ddgr-skill).
+Forked from
+[Chris Yang (ysm-dev)'s ddgr-skill @ GitHub](https://github.com/ysm-dev/ddgr-skill).
 
 ## Installation
 
@@ -27,7 +29,8 @@ pip install ddgr
 
 ```
 
-For other installation methods, see [Installation @ ddgr's GitHub](https://github.com/jarun/ddgr#installation).
+For other installation methods,
+see [Installation @ ddgr's GitHub](https://github.com/jarun/ddgr#installation).
 
 ## Usage
 

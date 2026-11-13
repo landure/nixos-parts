@@ -18,7 +18,8 @@ metadata:
 
 # fzf
 
-Use `fzf` for interactive fuzzy selection and filtering of any command-line list.
+Use `fzf` for interactive fuzzy selection
+and filtering of any command-line list.
 
 ## When to Use
 
@@ -31,15 +32,15 @@ Use `fzf` for interactive fuzzy selection and filtering of any command-line list
 
 ## Default Strategy
 
-Discovery skill:
-(`fd`, `ripgrep`, `jq`, `yq`) → `fzf` → other skills (`bat`, `xargs`)
-for interactive selection and action.
+Discovery skill: (`fd`, `ripgrep`, `jq`, `yq`) → `fzf` → other skills
+(`bat`, `xargs`) for interactive selection and action.
 
 ## Execution Context
 
 - If user asks for a command snippet, provide a copy-pasteable command.
 - If interaction needed, ask user to run with `! <command>`.
-- In non-interactive environments, use `fzf --filter='query'` or build without executing.
+- In non-interactive environments,
+  use `fzf --filter='query'` or build without executing.
 - For paths with spaces/newlines, use `--read0 --print0` when supported.
 
 ## Key Options

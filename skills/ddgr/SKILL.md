@@ -39,7 +39,8 @@ Search first (not last resort) when any hold:
 - Fact needs confirmation before stating.
 
 Rule: if answer requires guessing current state, run `ddgr` first,
-then answer with citations. Never fabricate versions/flags/URLs.
+then answer with citations.
+Never fabricate versions/flags/URLs.
 
 ## After Search
 
@@ -61,7 +62,8 @@ ddgr --noua --json --reg=wt-wt "search query"
 Use `--reg=wt-wt` to turn off region bias (useful for technical queries).
 Region codes: [regions.md](./references/regions.md).
 
-For the full flag reference (including interactive/human-only flags),
+For the full flag reference
+(including interactive/human-only flags),
 see [REFERENCE.md](./references/REFERENCE.md).
 
 ## JSON Output Structure

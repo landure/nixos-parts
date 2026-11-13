@@ -1,8 +1,8 @@
 # ddgr Reference
 
-Full flag reference for [ddgr](https://github.com/jarun/ddgr). Flags marked
-*(human)* affect interactive/human-readable output and are not relevant
-when using `--json`.
+Full flag reference for [ddgr](https://github.com/jarun/ddgr).
+Flags marked *(human)* affect interactive/human-readable output
+and are not relevant when using `--json`.
 
 ## Core flags
 
@@ -36,18 +36,19 @@ when using `--json`.
 
 ## Unreleased features
 
-- `--instant`: instant answers. Available only in unreleased ddgr; not in 2.2.
+- `--instant`: instant answers.
+  Available only in unreleased ddgr; not in 2.2.
   Example: `ddgr --noua --json --instant "weather new york"`
 
 ## Regions
 
-See [regions.md](./regions.md). Full list: <https://duckduckgo.com/duckduckgo-help-pages/settings/params>
+See [regions.md](./regions.md).
+Full list: <https://duckduckgo.com/duckduckgo-help-pages/settings/params>
 
 ## DuckDuckGo Bangs
 
 Bangs redirect to other sites.
-`ddgr` open bangs queries in the user browser
-and doesn't output JSON results.
+`ddgr` open bangs queries in the user browser and doesn't output JSON results.
 Use `--site` instead to search in a specific website.
 
 Full bang list: <https://duckduckgo.com/bang_lite.html>.

@@ -2,10 +2,10 @@
 
 Source: <https://duckduckgo.com/duckduckgo-help-pages/settings/params>
 
-Pass a code to `ddgr --reg=<CODE>` (or `-r <CODE>`) to bias results to a
-region/language.
-Format is `<country>-<language>` (lowercase): `fr-fr`, `us-en`, `in-en`, …
-Use `wt-wt` for no region (default in this skill's recommended invocation).
+Pass a code to `ddgr --reg=<CODE>`
+(or `-r <CODE>`) to bias results to a region/language.
+Format is `<country>-<language>` (lowercase): `fr-fr`, `us-en`, `in-en`,
+… Use `wt-wt` for no region (default in this skill's recommended invocation).
 
 ## Common choices
 
