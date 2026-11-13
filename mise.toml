@@ -15,21 +15,40 @@ cocogitto = "latest"
 "github:agent-sh/agnix" = "latest"
 lychee = "latest"
 
-[tasks.format]
-alias = "fmt"
-run = "nixfmt ."
-
 [shell_alias]
 wf = "nix run .#write-flake"
 flup = "nix flake update"
 flin = "nix flake metadata"
 fmt = "mise run format"
-call-nix = 'call-nix() { local cli="${1}"; shift; [[ -z "${cli}" ]] && return 1;  if command -v "${cli}" >/dev/null 2>&1; then "${cli}" "${@}"; return $?; fi; nix develop --quiet --command  -- "${cli}" "${@}"; return $? }; call-nix'
-statix = 'call-nix statix'
-statix-check = 'call-nix statix check'
-nixf-diagnose = 'call-nix nixf-diagnose'
-nil = 'call-nix nil'
-nil-diagnostics = 'call-nix nil diagnostics --deny-warnings'
+run-nix = 'run-nix() { local cli="${1}"; shift; [[ -z "${cli}" ]] && return 1;  if type -p "${cli}" >/dev/null 2>&1; then "${cli}" "${@}"; return $?; fi; nix develop {{config_root | quote}}# --quiet --command -- "${cli}" "${@}"; return $? }; run-nix'
+statix = 'run-nix statix'
+statix-check = 'run-nix statix check'
+nixf-diagnose = 'run-nix nixf-diagnose'
+nil = 'run-nix nil'
+nil-diagnostics = 'run-nix nil diagnostics --deny-warnings'
+nix-unit = 'run-nix nix-unit'
+
+[tasks.lint]
+description = "Lint nix, MarkDown, and TOML files"
+run = [
+  "taplo lint",
+  "rumdl check",
+  "nixf-diagnose **/*.nix",
+  "statix check",
+  "nil diagnostics --deny-warnings **/*.nix",
+]
+
+[tasks.format]
+alias = "fmt"
+description = "Format nix, MarkDown, and TOML files"
+run = ["taplo fmt", "rumdl fmt", "nixfmt ."]
+
+[tasks.tests]
+alias = "test"
+description = "Run nix-unit tests"
+run = [
+  "nix develop {{config_root | quote}}# --quiet --command --  nix-unit --flake {{config_root | quote}}#tests",
+]
 
 # nix hash convert --hash-algo sha256 $(nix-prefetch-url https://raw.githubusercontent.com/rtk-ai/rtk/refs/tags/v1.1.0/hooks/opencode/rtk.ts)
 # nix hash convert --hash-algo sha256 $(nix-prefetch-url --unpack https://raw.githubusercontent.com/rtk-ai/rtk/refs/tags/v1.1.0/hooks/opencode/rtk.ts)
