@@ -95,22 +95,21 @@ glob_ignore_case = false
 
 # Exclude URLs and mail addresses from checking. The values are treated as regular expressions
 exclude = [
-  '^https://example\.com/home$',    # specific URL
-  '^https?://example\.com',         # match both HTTP and HTTPS
-  '^https://(www\.)?linkedin\.com', # optional subdomains
+  '^https://example\.com/home$', # specific URL
+  '^https?://example\.com',      # match both HTTP and HTTPS
 ]
 
 # Exclude paths from getting checked. The values are treated as regular expressions
 exclude_path = [
-  "(^|/)\\.git/",    # skip directories named "test"
-  "(^|/)\\.agents/", # skip directories named "test"
+  "(^|/)\\.git/",    # skip directories named ".git"
+  "(^|/)\\.agents/", # skip directories named ".agents"
 ]
 
 # Check the specified file extensions
 # extensions = ["md","txt","html"]
 
 # Only check local files
-offline = true
+# offline = true
 
 # Accept timed out requests
 accept_timeouts = true
