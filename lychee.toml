@@ -1,0 +1,139 @@
+#############################  Display  #############################
+# Verbose program output
+# Accepts log level: "error", "warn", "info", "debug", "trace"
+verbose = "info"
+# Output format
+format = "detailed"
+# Output display mode
+mode = "emoji"
+# Don't show interactive progress bar while checking links.
+no_progress = false
+
+#############################  Cache  ###############################
+
+# Enable link caching. This can be helpful to avoid checking the same links on
+# multiple runs.
+cache = true
+
+# Discard all cached requests older than this duration.
+max_cache_age = "2d"
+
+# A list of status codes that will be ignored from the cache
+cache_exclude_status = "500.."
+
+#############################  Runtime  #############################
+
+# File to read and write cookies
+# cookie_jar = "cookie-jar"
+
+# Number of threads to utilize.
+# Defaults to number of cores available to the system if omitted.
+threads = 2
+max_redirects = 3 # Maximum number of allowed redirects.
+# max_retries = 2 # Maximum number of allowed retries before a link is declared dead.
+# max_concurrency = 14 # Maximum number of concurrent link checks.
+
+#############################  Requests  ############################
+
+# User agent to send with each request.
+user_agent = "curl/7.83. 1"
+
+# Website timeout from connect to response finished.
+timeout = 5
+
+# Minimum wait time in seconds between retries of failed requests.
+retry_wait_time = 2
+
+# Comma-separated list of accepted status codes for valid links.
+# Supported values are:
+#
+# accept = ["200..=204", "429"]
+# accept = "200..=204, 429"
+# accept = ["200", "429"]
+# accept = "200, 429"
+accept = ["200", "429"]
+
+# Proceed for server connections considered insecure (invalid TLS).
+insecure = false
+
+# Only test links with the given schemes (e.g. https).
+# Omit to check links with any other scheme.
+# At the moment, we support http, https, file, and mailto.
+scheme = ["https", "http"]
+
+# When links are available using HTTPS, treat HTTP links as errors.
+require_https = true
+
+# Request method
+method = "get"
+
+# Custom request headers
+header = { "accept" = "text/html", "x-custom-header" = "value" }
+
+# Remap URI matching pattern to different URI.
+# remap = ["https://example.com http://example.invalid"]
+
+# Fallback extensions to apply when a URL does not specify one.
+# This is common in documentation tools that cross-reference files without extensions.
+fallback_extensions = ["md", "html"]
+
+# Enable the checking of fragments in links, both anchor fragments and text fragments.
+# See <https://developer.mozilla.org/en-US/docs/Web/URI/Reference/Fragment/Text_fragments>
+include_fragments = "full"
+
+# Minimum accepted TLS Version
+min_tls = "TLSv1_3"
+
+#############################  Exclusions  ##########################
+
+# Check links inside `<code>` and `<pre>` blocks as well as Markdown code
+# blocks.
+include_verbatim = true
+
+# Ignore case of paths when matching glob patterns.
+glob_ignore_case = false
+
+# Exclude URLs and mail addresses from checking. The values are treated as regular expressions
+exclude = [
+  '^https://example\.com/home$',    # specific URL
+  '^https?://example\.com',         # match both HTTP and HTTPS
+  '^https://(www\.)?linkedin\.com', # optional subdomains
+]
+
+# Exclude paths from getting checked. The values are treated as regular expressions
+exclude_path = [
+  "(^|/)\\.git/",    # skip directories named "test"
+  "(^|/)\\.agents/", # skip directories named "test"
+]
+
+# Check the specified file extensions
+# extensions = ["md","txt","html"]
+
+# Only check local files
+offline = true
+
+# Accept timed out requests
+accept_timeouts = true
+
+# Use the Wayback Machine as web archive
+archive = "wayback"
+
+# Search and suggest link replacements for all broken links
+suggest = true
+
+#############################  Hosts  #############################
+
+# Maximum simultaneous requests to the same host
+host_concurrency = 5
+
+# Minimum interval between requests to the same host
+host_request_interval = "50ms"
+
+# Customize hosts
+# [hosts."blog.example.com"]
+# Overwrite `host_concurrency` for this host
+# concurrency = 5
+# Overwrite `host_request_interval` for this host
+# request_interval = "0" # zero disables rate limiting
+# Merge global `header` values with the following `headers` for this host
+# headers = { "A" = "B" }
