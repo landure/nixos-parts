@@ -1,6 +1,10 @@
 /**
   # Zellij
 
+  Zellij is a workspace aimed at developers, ops-oriented people,
+  and anyone who loves the terminal.
+  Similar programs are sometimes called "Terminal Multiplexers".
+
   ## 🛠️ Tech Stack
 
   - [Zellij homepage](https://zellij.dev/).
@@ -10,7 +14,12 @@
 
   ### 🏠 Home Manager
 
+  - [programs.zellij @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/zellij.html).
   - [programs.zellij @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.zellij.).
+
+  ### 🎨 Stylix
+
+  - [Zellij @ Stylix](https://nix-community.github.io/stylix/options/modules/zellij.html).
 
   ## 🙇 Acknowledgements
 
@@ -29,9 +38,7 @@ let
   cfg = config.biapy.programs.zellij;
 in
 {
-  options = {
-    biapy.programs.zellij.enable = mkEnableOption "Zellij terminal multiplexer";
-  };
+  options.biapy.programs.zellij.enable = mkEnableOption "Zellij terminal multiplexer";
 
   config = mkIf cfg.enable {
     # Zellij is a terminal multiplexer
