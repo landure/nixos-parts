@@ -1,53 +1,52 @@
-{ lib, ... }:
-let
-  gumModule = ../../../../home/_biapy/programs/gum.nix;
+/**
+  # biapy.programs.gum tests
 
-  evalGum =
-    {
-      modules ? [ ],
-    }:
-    (lib.modules.evalModules {
-      modules = [
-        {
-          options = {
-            home = {
-              username = lib.mkOption {
-                type = lib.types.str;
-                default = "testuser";
-              };
-              homeDirectory = lib.mkOption {
-                type = lib.types.str;
-                default = "/home/testuser";
-              };
-              packages = lib.mkOption {
-                type = lib.types.listOf lib.types.package;
-                default = [ ];
-              };
-            };
-            biapy.ai.skills.skills = lib.mkOption {
-              type = lib.types.attrs;
-              default = { };
-            };
-          };
-        }
-        gumModule
-      ]
-      ++ modules;
-    }).config;
-in
+  - [Testing Modules @ Nix-Book](https://ekala-project.github.io/nix-book/ch09-08-testing-modules.html).
+  - [Integration testing with NixOS virtual machines @ nix.dev](https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html).
+*/
+{ inputs, ... }:
 {
-  flake.tests."home.biapy.programs.gum" = {
-    "test: gum is disabled by default" = {
-      expr = (evalGum { }).biapy.programs.gum.enable;
-      expected = false;
-    };
+  perSystem =
+    { pkgs, ... }:
+    {
+      checks."biapy.programs.gum" = pkgs.testers.nixosTest {
+        name = "biapy.programs.gum";
 
-    "test: enabling gum installs the package" = {
-      expr =
-        (evalGum {
-          modules = [ { config.biapy.programs.gum.enable = lib.mkForce true; } ];
-        }).home.packages != [ ];
-      expected = true;
+        nodes.machine = _: {
+          imports = [
+            inputs.home-manager.nixosModules.home-manager
+            {
+              users.users.testbed = {
+                isNormalUser = true;
+              };
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = {
+                  inherit inputs;
+                };
+                users.testbed = {
+                  home.stateVersion = "26.05";
+                };
+              };
+            }
+            {
+              home-manager.users.testbed = {
+                imports = [
+                  ../../../../home/_biapy/ai/skills.nix
+                  ../../../../home/_biapy/programs/gum.nix
+                ];
+                biapy.programs.gum.enable = true;
+              };
+            }
+          ];
+        };
+
+        testScript = ''
+          machine.wait_for_unit("default.target")
+          machine.succeed("su -- testbed -c 'which gum'")
+          machine.succeed("test -e /home/testbed/.agents/skills/gum-cli/SKILL.md")
+        '';
+      };
     };
-  };
 }
