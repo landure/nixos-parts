@@ -19,10 +19,13 @@
 {
   config,
   inputs,
+  lib,
   self,
   ...
 }:
 let
+  inherit (lib.modules) mkDefault;
+
   localFlake = {
     inputs = {
       inherit (inputs)
@@ -32,6 +35,7 @@ let
         sops-nix
         spicetify-nix
         stylix
+        bootvine
         ;
     };
     self = { inherit (self) nixosModules overlays; };
@@ -54,12 +58,17 @@ let
       localFlake.inputs.sops-nix.nixosModules.sops
       localFlake.inputs.spicetify-nix.nixosModules.spicetify
       localFlake.inputs.stylix.nixosModules.stylix
+      localFlake.bootvine.nixosModules.default
       (localFlake.inputs.import-tree ./_biapy)
     ];
   };
 in
 {
   flake-file.inputs = {
+    bootvine = {
+      url = mkDefault "git+https://codeberg.org/wvhulle/bootvine";
+      inputs.nixpkgs.follows = mkDefault "nixpkgs";
+    };
   };
 
   flake = {

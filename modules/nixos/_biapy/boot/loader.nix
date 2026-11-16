@@ -22,6 +22,7 @@
 
   ### Splash screen
 
+  - [Bootvine @ Codeberg](https://codeberg.org/wvhulle/bootvine).
   - [Plymouth @ freedesktop.org](https://www.freedesktop.org/wiki/Software/Plymouth/).
 
   ### Utilities
@@ -33,12 +34,12 @@
 
   ### ❄️ NixOS
 
-  - [boot.loader.grub @ NixOS reference](https://search.nixos.org/options?query=boot.loader.grub.).
-  - [boot.loader.grub.memtest86 @ NixOS reference](https://search.nixos.org/options?query=boot.loader.grub.memtest86.).
-  - [boot.loader.limine @ NixOS reference](https://search.nixos.org/options?query=boot.loader.limine.).
-  - [boot.loader.refind @ NixOS reference](https://search.nixos.org/options?query=boot.loader.refind.).
-  - [boot.loader.systemd-boot @ NixOS reference](https://search.nixos.org/options?query=boot.loader.systemd-boot.).
-  - [boot.plymouth @ NixOS reference](https://search.nixos.org/options?query=boot.plymouth.).
+  - [boot.loader.grub @ NixOS reference](https://search.nixos.org/options?query=boot.loader.grub.).
+  - [boot.loader.grub.memtest86 @ NixOS reference](https://search.nixos.org/options?query=boot.loader.grub.memtest86.).
+  - [boot.loader.limine @ NixOS reference](https://search.nixos.org/options?query=boot.loader.limine.).
+  - [boot.loader.refind @ NixOS reference](https://search.nixos.org/options?query=boot.loader.refind.).
+  - [boot.loader.systemd-boot @ NixOS reference](https://search.nixos.org/options?query=boot.loader.systemd-boot.).
+  - [boot.plymouth @ NixOS reference](https://search.nixos.org/options?query=boot.plymouth.).
 
   ### 🎨 Stylix
 
@@ -64,10 +65,8 @@ let
   cfg = config.biapy.boot.loader;
 in
 {
-  options = {
-    biapy.boot.loader = {
-      enable = mkEnableOption "Nice Boot";
-    };
+  options.biapy.boot.loader = {
+    enable = mkEnableOption "Nice Boot";
   };
 
   config = mkIf cfg.enable {
@@ -108,5 +107,7 @@ in
 
       kernelParams = [ "quiet" ];
     };
+
+    services.bootvine.enable = mkDefault true;
   };
 }
