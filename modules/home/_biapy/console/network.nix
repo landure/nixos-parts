@@ -27,6 +27,9 @@
   - [Trippy homepage](https://trippy.rs/).
     ([Trippy @ GitHub](https://github.com/fujiapple852/trippy))
     combines the capabilities of `traceroute` and `ping`.
+  - [ttl @ GitHub](https://github.com/lance0/ttl)
+    is a fast, modern traceroute with real-time TUI, per-hop stats,
+    ASN/geo lookup, ECMP detection, and MPLS label parsing. A better `mtr`.
   - [WTF is it? (wtfis) @ GitHub](https://github.com/pirxthepilot/wtfis)
     is a commandline tool that gathers information about a domain, FQDN,
     or IP address using various OSINT services.
@@ -34,7 +37,7 @@
   ## 🙇 Acknowledgements
 
   - [dog @ GitHub](https://github.com/ogham/dog).
-  - [iproute2 @ GitHub](https://wiki.linuxfoundation.org/networking/iproute2)
+  - [iproute2 @ kernel.org's git](https://git.kernel.org/pub/scm/network/iproute2/iproute2.git/about/)
     provides `ss`.
 */
 {
@@ -68,6 +71,7 @@ in
         netop
         snitch # ss alternative
         trippy
+        ttl
         wtfis
 
         (unstable.netwatch.overrideAttrs (
