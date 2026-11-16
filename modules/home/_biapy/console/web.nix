@@ -30,6 +30,10 @@
     offline-first focus.
   - [tiny @ GitHub](https://github.com/osa1/tiny)
     is an IRC client written in Rust.
+  - [terminal-browser homepage](https://terminal-browser.com/)
+    ([terminal-browser @ GitHub](https://github.com/zenbu-labs/terminal-browser))
+    is a real browser that runs inside your terminal.
+    It's Chromium rendered with the Kitty graphics protocol.
   - [tuifeed @ GitHub](https://github.com/veeso/tuifeed)
     is a terminal feed reader with a fancy ui.
   - [wiki-tui homepage](https://wiki-tui.net/latest/).
@@ -74,6 +78,8 @@ in
       tuifeed # RSS feed reader
       wget
       wiki-tui # TUI for browsing Wikipedia
+
+      llm-agents.terminal-browser
     ];
 
     biapy.programs.ddgr.enable = mkDefault true;

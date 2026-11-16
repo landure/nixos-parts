@@ -69,6 +69,9 @@ in
         nixpkgs.follows = mkDefault "nixpkgs";
       };
     };
+    llm-agents = {
+      url = mkDefault "github:numtide/llm-agents.nix";
+    };
     quien = {
       url = mkDefault "github:retlehs/quien";
       inputs = {
@@ -92,6 +95,12 @@ in
     };
 
     homeModules = config.flake.modules.homeManager;
+
+    nixConfig = {
+      # llm-agents binary cache
+      extra-substituters = [ "https://cache.numtide.com" ];
+      extra-trusted-public-keys = [ "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=" ];
+    };
 
     tests = {
       modules.home = {

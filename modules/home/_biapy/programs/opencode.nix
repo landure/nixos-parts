@@ -59,7 +59,7 @@ in
         # disable websearch if ddgr is available.
         websearch = mkIf config.biapy.programs.ddgr.enable (mkDefault false);
       };
-      package = mkDefault pkgs.unstable.opencode;
+      package = mkDefault pkgs.llm-agents.opencode2;
     };
   };
 }

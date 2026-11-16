@@ -29,6 +29,10 @@
     is a Terminal Markdown previewer with GUI-like experience.
   - [Markless @ GitHub](https://github.com/jvanderberg/markless)
     is a terminal markdown viewer with image support.
+  - [Mercat homepage](https://tawago.github.io/mercat/)
+    ([Mercat @ GitHub](https://github.com/tawago/mercat))
+    is `cat` for markdown, with mermaids.
+    It draws Flowcharts as text that fits the terminal width.
 
   ### 🗹 Task managers
 
@@ -85,6 +89,8 @@ in
       # unstable.leaf-markdown-viewer
       unstable.markless
       unstable.tuxedo
+
+      llm-agents.mercat
     ];
 
     biapy.programs = {

@@ -56,6 +56,7 @@ in
             flyline = localFlake.inputs.flyline.packages.${system};
             helix-notes = localFlake.inputs.helix-notes.packages.${system};
             lan-mouse = localFlake.inputs.lan-mouse.packages.${system};
+            llm-agents = localFlake.inputs.llm-agents.packages.${system};
             quien = localFlake.inputs.quien.packages.${system};
             sofka = localFlake.inputs.sofka.packages.${system};
             spicetify-nix = localFlake.inputs.spicetify-nix.legacyPackages.${system};
@@ -69,6 +70,7 @@ in
               flyline
               helix-notes
               lan-mouse
+              llm-agents
               quien
               sofka
               spicetify-nix

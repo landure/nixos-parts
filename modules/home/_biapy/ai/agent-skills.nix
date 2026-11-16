@@ -5,6 +5,9 @@
 
   - [skills.sh homepage](https://www.skills.sh/).
     ([skills @ GitHub](https://github.com/vercel-labs/skills)).
+  - [Agent Package Manager (APM) homepage](https://microsoft.github.io/apm/)
+    ([Agent Package Manager (APM) @ GitHub](https://github.com/microsoft/apm)).
+    is an open-source, community-driven dependency manager for AI agents.
 */
 {
   config,
@@ -25,6 +28,7 @@ in
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
       ctx7
+      llm-agents.apm
     ];
 
     biapy.programs.skills.enable = mkDefault true;
