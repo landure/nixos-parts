@@ -23,6 +23,7 @@ in
       skills = {
         jeffallan-claude-skills.enable = mkDefault true;
         mattpocock-skills.enable = mkDefault true;
+        ponytail.enable = mkDefault true;
       };
     };
   };
