@@ -21,6 +21,8 @@
   - [lazyrsync homepage](https://lazyrsync.westpoint.io/)
     ([lazyrsync @ GitHub](https://github.com/westpoint-io/lazyrsync))
     is a friendly terminal UI for rsync.
+  - [unp homepage](https://tracker.debian.org/pkg/unp)
+    unpack (almost) everything with one command.
 
   ### `ls`
 
@@ -149,7 +151,6 @@ in
     home.packages = with pkgs; [
       ast-grep
       dust # du alternative
-      duf # df alternalive
       dysk # df alternative
       f2 # Batch file renamer
       hck # cut alternative
@@ -157,6 +158,7 @@ in
       ov # Feature-rich terminal-based text viewer
       sd
       tuc # cut drop-in replacement writen in Rust
+      unp
 
       rsync
       unstable.lazyrsync
@@ -166,6 +168,7 @@ in
 
     biapy.programs = {
       bat.enable = mkDefault true;
+      duf.enable = mkDefault true;
       eza.enable = mkDefault true;
     };
 

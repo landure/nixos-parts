@@ -20,6 +20,7 @@
   ...
 }:
 let
+  inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.types) nullOr path;
@@ -47,6 +48,11 @@ in
 
   config = mkIf cfg.enable {
     biapy.programs.abtop.enable = mkDefault true;
+
+    home.shellAliases = {
+      opencode = mkDefault (getExe config.programs.opencode.package);
+      oc = mkDefault (getExe config.programs.opencode.package);
+    };
 
     programs.opencode = {
       enable = mkDefault true;
