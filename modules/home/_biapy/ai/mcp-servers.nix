@@ -22,9 +22,7 @@ let
 
 in
 {
-  options = {
-    biapy.ai.mcp-servers.enable = mkEnableOption "MCP servers";
-  };
+  options.biapy.ai.mcp-servers.enable = mkEnableOption "MCP servers";
 
   config = mkIf cfg.enable {
     biapy = {

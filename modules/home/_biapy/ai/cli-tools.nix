@@ -30,9 +30,7 @@ let
 
 in
 {
-  options = {
-    biapy.ai.cli-tools.enable = mkEnableOption "command-line AI tools";
-  };
+  options.biapy.ai.cli-tools.enable = mkEnableOption "command-line AI tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [

@@ -20,9 +20,7 @@ let
 
 in
 {
-  options = {
-    biapy.ai.agent-skills.enable = mkEnableOption "AI agents skills tools";
-  };
+  options.biapy.ai.agent-skills.enable = mkEnableOption "AI agents skills tools";
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
