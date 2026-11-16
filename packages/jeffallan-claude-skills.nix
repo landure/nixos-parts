@@ -16,9 +16,12 @@ stdenv.mkDerivation {
   pname = "jeffallan-claude-skills";
   inherit version src;
 
+  dontConfigure = true;
+  dontBuild = true;
   installPhase = ''
     mkdir -p "''${out}"
-    cp -r "{commands,skills}/" "''${out}"
+    cp -r "commands/" "''${out}"
+    cp -r "skills/" "''${out}"
   '';
 
   meta = {
