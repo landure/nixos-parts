@@ -19,7 +19,7 @@
 }:
 let
   inherit (lib.modules) mkDefault mkIf;
-  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.types) bool;
 
   cfg = config.biapy.programs.ddgr;
@@ -27,6 +27,8 @@ in
 {
   options.biapy.programs.ddgr = {
     enable = mkEnableOption "ddgr";
+
+    package = mkPackageOption pkgs "ddgr" { };
 
     withSkill = mkOption {
       type = bool;
@@ -36,8 +38,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      ddgr # DuckDuckGo search CLI client
+    home.packages = [
+      cfg.package
     ];
 
     biapy.ai.skills.skills = mkIf cfg.withSkill {
