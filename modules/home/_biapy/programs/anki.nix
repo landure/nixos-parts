@@ -61,7 +61,7 @@ in
       keyFile = mkOption {
         type = nullOr path;
         default =
-          if (null != config.sops.defaultSopsFile) then
+          if (builtins.tryEval config.sops.defaultSopsFile).success then
             config.sops.secrets."biapy/programs/anki/profile/key".path
           else
             null;
