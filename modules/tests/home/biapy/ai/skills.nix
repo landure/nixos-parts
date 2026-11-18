@@ -12,66 +12,68 @@
       checks."biapy.ai.skills" = pkgs.testers.runNixOSTest {
         name = "biapy.ai.skills";
 
-        nodes.machine = { pkgs, ... }: {
-          imports = [
-            inputs.home-manager.nixosModules.home-manager
-            {
-              users.users.testbed = {
-                isNormalUser = true;
-              };
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = {
-                  inherit inputs;
+        nodes.machine =
+          { pkgs, ... }:
+          {
+            imports = [
+              inputs.home-manager.nixosModules.home-manager
+              {
+                users.users.testbed = {
+                  isNormalUser = true;
                 };
-                users.testbed = {
-                  home.stateVersion = "26.05";
-                };
-              };
-            }
-            {
-              home-manager.users.testbed = {
-                imports = [
-                  ../../../../home/_biapy/ai/skills.nix
-                ];
-                biapy.ai.skills = {
-                  enable = true;
-                  skills = {
-                    inline = ''
-                      ---
-                      name: inline
-                      ---
-
-                      Inline skill body.
-                    '';
-                    dir = pkgs.writeTextDir "SKILL.md" ''
-                      ---
-                      name: dir
-                      ---
-
-                      Directory skill body.
-                    '';
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = {
+                    inherit inputs;
+                  };
+                  users.testbed = {
+                    home.stateVersion = "26.05";
                   };
                 };
+              }
+              {
+                home-manager.users.testbed = {
+                  imports = [
+                    ../../../../home/_biapy/ai/skills.nix
+                  ];
+                  biapy.ai.skills = {
+                    enable = true;
+                    skills = {
+                      inline = ''
+                        ---
+                        name: inline
+                        ---
 
-                # The agents only write their skills folder when enabled.
-                # Stub/empty packages keep the test VM free of the agent binaries.
-                programs = {
-                  opencode.enable = true;
-                  opencode.package = pkgs.writeShellApplication {
-                    name = "opencode";
-                    text = "exit 0";
+                        Inline skill body.
+                      '';
+                      dir = pkgs.writeTextDir "SKILL.md" ''
+                        ---
+                        name: dir
+                        ---
+
+                        Directory skill body.
+                      '';
+                    };
                   };
-                  claude-code.enable = true;
-                  claude-code.package = null;
-                  codex.enable = true;
-                  codex.package = null;
+
+                  # The agents only write their skills folder when enabled.
+                  # Stub/empty packages keep the test VM free of the agent binaries.
+                  programs = {
+                    opencode.enable = true;
+                    opencode.package = pkgs.writeShellApplication {
+                      name = "opencode";
+                      text = "exit 0";
+                    };
+                    claude-code.enable = true;
+                    claude-code.package = null;
+                    codex.enable = true;
+                    codex.package = null;
+                  };
                 };
-              };
-            }
-          ];
-        };
+              }
+            ];
+          };
 
         testScript = ''
           machine.wait_for_unit("default.target")
