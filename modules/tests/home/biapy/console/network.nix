@@ -1,99 +1,84 @@
+/**
+  # biapy.console.network tests
+
+  ## 🙇 Acknowledgements
+
+  - [NixOS VM tests @ Official NixOS Wiki](https://wiki.nixos.org/wiki/NixOS_VM_tests).
+  - [Testing Modules @ Nix-Book](https://ekala-project.github.io/nix-book/ch09-08-testing-modules.html).
+  - [Integration testing with NixOS virtual machines @ nix.dev](https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html).
+*/
+{ inputs, ... }:
 {
-  lib,
-  inputs,
-  self,
-  ...
-}:
-let
-  inherit (lib.modules) evalModules;
+  perSystem =
+    { pkgs, system, ... }:
+    let
+      nixosVersion = "26.05";
+    in
+    {
+      checks."biapy.console.network" = inputs.nixpkgs.lib.nixos.runTest {
+        name = "biapy.console.network";
 
-  pkgs = import inputs.nixpkgs {
-    system = "x86_64-linux";
-    overlays = [ self.overlays.default ];
-  };
+        # logLevel = "debug";
+        # enableDebugHook = true;
 
-  networkModule = ../../../../home/_biapy/console/network.nix;
+        hostPkgs = pkgs;
+        node.pkgs = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+          overlays = [
+            inputs.self.overlays.default
+          ];
+        };
 
-  stub = {
-    options = {
-      home.packages = lib.mkOption {
-        type = lib.types.listOf lib.types.package;
-        default = [ ];
+        nodes.machine = _: {
+          imports = [
+            inputs.home-manager.nixosModules.home-manager
+            {
+
+              users.users.testbed = {
+                isNormalUser = true;
+              };
+
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = {
+                  inherit inputs;
+                };
+                users.testbed = {
+                  home.stateVersion = nixosVersion;
+                };
+              };
+            }
+            {
+              home-manager.users.testbed = {
+                imports = [
+                  ../../../../home/_biapy/console/network.nix
+                  ../../../../home/_biapy/programs/trippy.nix
+                ];
+                biapy.console.network.enable = true;
+              };
+            }
+          ];
+        };
+
+        testScript = ''
+          machine.wait_for_unit("default.target")
+          machine.succeed("su -- testbed -c 'which doge'")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/doge")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/doggo")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/gping")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/nbping")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/netop")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/snitch")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/trip")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/wtfis")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/netwatch")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/cloudflare-speed-cli")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/quien")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/pktz")
+          machine.succeed("test -x /home/testbed/.nix-profile/bin/wtfi2")
+        '';
       };
-      home.shellAliases = lib.mkOption {
-        type = lib.types.attrsOf lib.types.str;
-        default = { };
-      };
-      biapy.programs.trippy.enable = lib.mkEnableOption "trippy";
     };
-  };
-
-  evalNetwork =
-    modules:
-    (evalModules {
-      specialArgs = { inherit pkgs; };
-      modules = [
-        stub
-        networkModule
-      ]
-      ++ modules;
-    }).config;
-in
-{
-  flake.tests."home.biapy.console.network" = {
-    "test: disabled by default" = {
-      expr = (evalNetwork [ ]).biapy.console.network.enable;
-      expected = false;
-    };
-
-    "test: installs network packages when enabled" = {
-      expr = map lib.getName (evalNetwork [ { biapy.console.network.enable = true; } ]).home.packages;
-      expected = [
-        "dogedns"
-        "doggo"
-        "gping"
-        "nbping"
-        "netop"
-        "snitch"
-        "trippy"
-        "ttl"
-        "wtfis"
-        "netwatch-tui"
-        "cloudflare-speed-cli"
-        "quien"
-        "pktz"
-        "wtfi2"
-      ];
-    };
-
-    "test: installs no packages when disabled" = {
-      expr = (evalNetwork [ ]).home.packages;
-      expected = [ ];
-    };
-
-    "test: sets netop shell alias when enabled" = {
-      expr = (evalNetwork [ { biapy.console.network.enable = true; } ]).home.shellAliases.netop;
-      expected = "sudo ${lib.getExe pkgs.netop}";
-    };
-
-    "test: sets pktz shell alias when enabled" = {
-      expr = (evalNetwork [ { biapy.console.network.enable = true; } ]).home.shellAliases.pktz;
-      expected = "sudo ${lib.getExe pkgs.biapy-parts.pktz}";
-    };
-
-    "test: sets no shell aliases when disabled" = {
-      expr = (evalNetwork [ ]).home.shellAliases;
-      expected = { };
-    };
-
-    "test: enables trippy when enabled" = {
-      expr = (evalNetwork [ { biapy.console.network.enable = true; } ]).biapy.programs.trippy.enable;
-      expected = true;
-    };
-
-    "test: does not enable trippy when disabled" = {
-      expr = (evalNetwork [ ]).biapy.programs.trippy.enable;
-      expected = false;
-    };
-  };
 }
