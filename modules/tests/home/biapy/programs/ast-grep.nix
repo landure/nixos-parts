@@ -12,47 +12,49 @@
       checks."biapy.programs.ast-grep" = pkgs.testers.runNixOSTest {
         name = "biapy.programs.ast-grep";
 
-        nodes.machine = { pkgs, ... }: {
-          imports = [
-            inputs.home-manager.nixosModules.home-manager
-            {
-              users.users.testbed = {
-                isNormalUser = true;
-              };
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = {
-                  inherit inputs;
+        nodes.machine =
+          { pkgs, ... }:
+          {
+            imports = [
+              inputs.home-manager.nixosModules.home-manager
+              {
+                users.users.testbed = {
+                  isNormalUser = true;
                 };
-                users.testbed = {
-                  home.stateVersion = "26.05";
-                };
-              };
-            }
-            {
-              home-manager.users.testbed = {
-                imports = [
-                  ../../../../home/_biapy/ai/skills.nix
-                  ../../../../home/_biapy/programs/ast-grep.nix
-                ];
-                biapy = {
-                  ai.skills.enable = true;
-                  programs.ast-grep.enable = true;
-                };
-
-                # The Claude Code plugin is only installed when Claude Code is enabled.
-                programs.claude-code = {
-                  enable = true;
-                  package = pkgs.writeShellApplication {
-                    name = "claude";
-                    text = "exit 0";
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = {
+                    inherit inputs;
+                  };
+                  users.testbed = {
+                    home.stateVersion = "26.05";
                   };
                 };
-              };
-            }
-          ];
-        };
+              }
+              {
+                home-manager.users.testbed = {
+                  imports = [
+                    ../../../../home/_biapy/ai/skills.nix
+                    ../../../../home/_biapy/programs/ast-grep.nix
+                  ];
+                  biapy = {
+                    ai.skills.enable = true;
+                    programs.ast-grep.enable = true;
+                  };
+
+                  # The Claude Code plugin is only installed when Claude Code is enabled.
+                  programs.claude-code = {
+                    enable = true;
+                    package = pkgs.writeShellApplication {
+                      name = "claude";
+                      text = "exit 0";
+                    };
+                  };
+                };
+              }
+            ];
+          };
 
         testScript = ''
           machine.wait_for_unit("default.target")
