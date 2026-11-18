@@ -46,17 +46,7 @@ in
 
     skills = mkOption {
       type = listOf (enum (builtins.attrNames skills));
-      default = [
-        "animated-readme-logo"
-        "architecture-compass"
-        "architecture-zoom"
-        "codegraph-ast-grep"
-        "drawio-diagrams"
-        "karakeep-knowledge"
-        "telegram-serverless"
-        "visual-reports"
-        "jev-capability-advisor"
-      ];
+      default = [ ];
       description = "The stark-ai-de skills to install.";
       example = [
         "architecture-compass"
