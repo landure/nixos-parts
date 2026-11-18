@@ -38,6 +38,14 @@ in
   config = mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
+    biapy = {
+      programs.ast-grep.enable = mkDefault true;
+      skills.stark-ai-de-agent-skills = {
+        enable = mkDefault true;
+        skills = [ "codegraph-ast-grep" ];
+      };
+    };
+
     programs.mcp.servers.codegraph = {
       command = mkDefault (getExe cfg.package);
       args = mkDefault [
