@@ -3,9 +3,6 @@
 
   ## 🛠️ Tech Stack
 
-  - [ast-grep homepage](https://ast-grep.github.io/)
-    ([ast-grep @ GitHub](https://github.com/ast-grep/ast-grep))
-    is a CLI tool for code structural search, lint and rewriting..
   - [sd - search & displace @ GitHub](https://github.com/chmln/sd)
     is an intuitive find & replace CLI (`sed` alternative).
 */
@@ -26,10 +23,11 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      ast-grep
       sd
       biapy-parts.rgsd
     ];
+
+    biapy.programs.ast-grep.enable = mkDefault true;
 
     programs.ripgrep.enable = mkDefault true;
   };

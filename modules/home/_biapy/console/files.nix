@@ -149,7 +149,6 @@ in
   config = mkIf cfg.enable {
 
     home.packages = with pkgs; [
-      ast-grep
       dust # du alternative
       dysk # df alternative
       f2 # Batch file renamer
@@ -168,6 +167,7 @@ in
 
     biapy.programs = {
       bat.enable = mkDefault true;
+      ast-grep.enable = mkDefault true;
       duf.enable = mkDefault true;
       eza.enable = mkDefault true;
     };
