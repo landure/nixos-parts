@@ -11,43 +11,45 @@
     {
       checks."biapy.programs.anki" = pkgs.testers.runNixOSTest {
         name = "biapy.programs.anki";
-        nodes.machine = { pkgs, ... }: {
-          imports = [
-            inputs.home-manager.nixosModules.home-manager
-            {
-              users.users.testbed = {
-                isNormalUser = true;
-              };
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                extraSpecialArgs = {
-                  inherit inputs;
+        nodes.machine =
+          { pkgs, ... }:
+          {
+            imports = [
+              inputs.home-manager.nixosModules.home-manager
+              {
+                users.users.testbed = {
+                  isNormalUser = true;
                 };
-                users.testbed = {
-                  home.stateVersion = "26.05";
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = {
+                    inherit inputs;
+                  };
+                  users.testbed = {
+                    home.stateVersion = "26.05";
+                  };
                 };
-              };
-            }
-            {
-              home-manager.users.testbed = {
-                imports = [
-                  inputs.sops-nix.homeManagerModules.sops
-                  ../../../../home/_biapy/user/identity.nix
-                  ../../../../home/_biapy/programs/anki.nix
-                ];
-                biapy.user = {
-                  identity.email = "testbed@example.com";
-                  secretsSopsFile = null;
+              }
+              {
+                home-manager.users.testbed = {
+                  imports = [
+                    inputs.sops-nix.homeManagerModules.sops
+                    ../../../../home/_biapy/user/identity.nix
+                    ../../../../home/_biapy/programs/anki.nix
+                  ];
+                  biapy.user = {
+                    identity.email = "testbed@example.com";
+                    secretsSopsFile = null;
+                  };
+                  biapy.programs.anki = {
+                    enable = true;
+                    profile.keyFile = pkgs.writeText "anki-key" "sync-key";
+                  };
                 };
-                biapy.programs.anki = {
-                  enable = true;
-                  profile.keyFile = pkgs.writeText "anki-key" "sync-key";
-                };
-              };
-            }
-          ];
-        };
+              }
+            ];
+          };
 
         testScript = ''
           machine.wait_for_unit("default.target")
