@@ -54,7 +54,7 @@ in
     home.packages = with pkgs; [
       unstable.nix-graph
       nix-inspect
-      # nix-output-monitor
+      nix-output-monitor
       nixd
       nixf
       nixf-diagnose
