@@ -9,7 +9,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      checks."biapy.programs.ddgr" = pkgs.testers.nixosTest {
+      checks."biapy.programs.ddgr" = pkgs.testers.runNixOSTest {
         name = "biapy.programs.ddgr";
 
         nodes.machine = _: {
@@ -36,7 +36,10 @@
                   ../../../../home/_biapy/ai/skills.nix
                   ../../../../home/_biapy/programs/ddgr.nix
                 ];
-                biapy.programs.ddgr.enable = true;
+                biapy = {
+                  ai.skills.enable = true;
+                  programs.ddgr.enable = true;
+                };
               };
             }
           ];
@@ -45,7 +48,7 @@
         testScript = ''
           machine.wait_for_unit("default.target")
           machine.succeed("su -- testbed -c 'which ddgr'")
-          machine.succeed("test -e /home/testbed/.agents/skills/ddgr/SKILL.md")
+          machine.succeed("test -e ~testbed/.agents/skills/ddgr/SKILL.md")
         '';
       };
     };

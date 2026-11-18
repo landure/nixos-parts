@@ -9,7 +9,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      checks."biapy.programs.gum" = pkgs.testers.nixosTest {
+      checks."biapy.programs.gum" = pkgs.testers.runNixOSTest {
         name = "biapy.programs.gum";
 
         nodes.machine = _: {
@@ -36,7 +36,10 @@
                   ../../../../home/_biapy/ai/skills.nix
                   ../../../../home/_biapy/programs/gum.nix
                 ];
-                biapy.programs.gum.enable = true;
+                biapy = {
+                  ai.skills.enable = true;
+                  programs.gum.enable = true;
+                };
               };
             }
           ];
@@ -45,7 +48,7 @@
         testScript = ''
           machine.wait_for_unit("default.target")
           machine.succeed("su -- testbed -c 'which gum'")
-          machine.succeed("test -e /home/testbed/.agents/skills/gum-cli/SKILL.md")
+          machine.succeed("test -e ~testbed/.agents/skills/gum-cli/SKILL.md")
         '';
       };
     };
