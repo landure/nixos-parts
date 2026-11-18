@@ -14,7 +14,6 @@
         nodes.machine = { pkgs, ... }: {
           imports = [
             inputs.home-manager.nixosModules.home-manager
-            inputs.sops-nix.homeManagerModules.sops
             {
               users.users.testbed = {
                 isNormalUser = true;
@@ -33,6 +32,7 @@
             {
               home-manager.users.testbed = {
                 imports = [
+                  inputs.sops-nix.homeManagerModules.sops
                   ../../../../home/_biapy/user/identity.nix
                   ../../../../home/_biapy/programs/anki.nix
                 ];
