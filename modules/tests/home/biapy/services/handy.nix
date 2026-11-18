@@ -9,7 +9,7 @@
   perSystem =
     { pkgs, ... }:
     {
-      checks."biapy.services.handy" = pkgs.testers.nixosTest {
+      checks."biapy.services.handy" = pkgs.testers.runNixOSTest {
         name = "biapy.services.handy";
 
         nodes.machine = _: {
