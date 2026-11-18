@@ -77,24 +77,24 @@
           machine.wait_for_unit("default.target")
 
           # Inline text skills land in ~/.agents/skills/<name>/SKILL.md
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.agents/skills/inline/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/inline/SKILL.md'")
           machine.succeed(
-              "su -- testbed -c 'grep -q \"Inline skill body\" ~testbed/.agents/skills/inline/SKILL.md'"
+              "su -- testbed -c 'grep -q \"Inline skill body\" ~/.agents/skills/inline/SKILL.md'"
           )
 
           # Directory skills are copied recursively as ~/.agents/skills/<name>/
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.agents/skills/dir/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/dir/SKILL.md'")
           machine.succeed(
-              "su -- testbed -c 'grep -q \"Directory skill body\" ~testbed/.agents/skills/dir/SKILL.md'"
+              "su -- testbed -c 'grep -q \"Directory skill body\" ~/.agents/skills/dir/SKILL.md'"
           )
 
           # Skills are propagated to the supported agents' skill folders
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.config/opencode/skills/inline/SKILL.md'")
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.config/opencode/skills/dir/SKILL.md'")
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.claude/skills/inline/SKILL.md'")
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.claude/skills/dir/SKILL.md'")
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.codex/skills/inline/SKILL.md'")
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.codex/skills/dir/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.config/opencode/skills/inline/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.config/opencode/skills/dir/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.claude/skills/inline/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.claude/skills/dir/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.codex/skills/inline/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.codex/skills/dir/SKILL.md'")
         '';
       };
     };

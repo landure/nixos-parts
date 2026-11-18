@@ -55,15 +55,15 @@
           machine.wait_for_unit("default.target")
 
           # The selected skills are installed in ~/.agents/skills
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.agents/skills/architecture-compass/SKILL.md'")
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.agents/skills/visual-reports/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/architecture-compass/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/visual-reports/SKILL.md'")
 
           # Unselected skills are not installed
-          machine.fail("su -- testbed -c 'test -e ~testbed/.agents/skills/codex-memory-curator/SKILL.md'")
+          machine.fail("su -- testbed -c 'test -e ~/.agents/skills/codex-memory-curator/SKILL.md'")
 
           # Skill assets are installed alongside SKILL.md
           machine.succeed(
-              "su -- testbed -c 'test -e ~testbed/.agents/skills/architecture-compass/references/adr-catalog.md'"
+              "su -- testbed -c 'test -e ~/.agents/skills/architecture-compass/references/adr-catalog.md'"
           )
         '';
       };

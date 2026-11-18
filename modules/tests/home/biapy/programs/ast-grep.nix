@@ -62,8 +62,8 @@
           machine.succeed("su -- testbed -c 'ast-grep --version'")
 
           # The agent skills are installed
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.agents/skills/ast-grep/SKILL.md'")
-          machine.succeed("su -- testbed -c 'test -e ~testbed/.agents/skills/ast-grep-outline/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/ast-grep/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/ast-grep-outline/SKILL.md'")
 
           # The Claude Code plugin is passed to the `claude` wrapper via --plugin-dir
           machine.succeed(

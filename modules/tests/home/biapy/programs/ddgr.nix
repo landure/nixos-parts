@@ -48,7 +48,7 @@
         testScript = ''
           machine.wait_for_unit("default.target")
           machine.succeed("su -- testbed -c 'which ddgr'")
-          machine.succeed("test -e ~testbed/.agents/skills/ddgr/SKILL.md")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/ddgr/SKILL.md'")
         '';
       };
     };

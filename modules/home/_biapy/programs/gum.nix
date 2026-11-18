@@ -42,7 +42,7 @@ in
     ];
 
     biapy.ai.skills.skills = mkIf cfg.withSkill {
-      gum = mkDefault (
+      gum-cli = mkDefault (
         pkgs.fetchFromGitHub {
           owner = "rigerc";
           repo = "skills-registry";
