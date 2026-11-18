@@ -56,6 +56,7 @@ in
         "netop"
         "snitch"
         "trippy"
+        "ttl"
         "wtfis"
         "netwatch-tui"
         "cloudflare-speed-cli"
