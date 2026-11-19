@@ -136,3 +136,6 @@ host_request_interval = "50ms"
 # request_interval = "0" # zero disables rate limiting
 # Merge global `header` values with the following `headers` for this host
 # headers = { "A" = "B" }
+
+[hosts."korben.info"]
+headers = { "accept" = "text/html" }

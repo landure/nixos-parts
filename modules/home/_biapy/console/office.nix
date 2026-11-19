@@ -39,10 +39,6 @@
   - [dstask @ GitHub](https://github.com/naggie/dstask)
     is a personal task tracker designed to help you focus.
     It is similar to Taskwarrior but uses git to synchronise instead of a special protocol.
-  - [Taskwarrior homepage](https://taskwarrior.org/)
-    ([Taskwarrior @ GitHub](https://github.com/GothenburgBitFactory/taskwarrior))
-    is a command line task list management utility.
-  - [taskwarrior-tui @ GitHub](https://github.com/kdheepak/taskwarrior-tui).
   - [tuxedo @ GitHub](https://github.com/webstonehq/tuxedo)
     is a fast, keyboard-driven terminal UI for todo.txt.
 
@@ -54,8 +50,6 @@
   - [programs.jrnl @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.jrnl.).
   - [programs.ripgrep-all @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/ripgrep-all.html).
   - [programs.ripgrep-all @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.ripgrep-all.).
-  - [programs.taskwarrior @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/taskwarrior.html).
-  - [programs.taskwarrior @ NixOS reference](https://search.nixos.org/options?source=home_manager&query=programs.taskwarrior.).
 
   ## 🙇 Acknowledgements
 
@@ -83,7 +77,6 @@ in
       dstask
       glow
       rucola
-      taskwarrior-tui
       tdf
 
       # unstable.leaf-markdown-viewer
@@ -95,18 +88,13 @@ in
 
     biapy.programs = {
       joplin-cli.enable = mkDefault true;
+      taskwarrior.enable = mkDefault true;
       zk.enable = mkDefault true;
     };
 
     programs = {
       jrnl.enable = mkDefault true;
       ripgrep-all.enable = mkDefault true;
-      taskwarrior = {
-        enable = mkDefault true;
-        package = pkgs.taskwarrior3;
-      };
     };
-
-    # services.taskwarrior-sync.enable = mkDefault true;
   };
 }
