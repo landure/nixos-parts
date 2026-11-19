@@ -22,6 +22,7 @@ in
       };
       skills = {
         cloudflare-security-audit-skill.enable = mkDefault true;
+        hypothesis-debugging.enable = mkDefault true;
         jeffallan-claude-skills.enable = mkDefault true;
         mattpocock-skills.enable = mkDefault true;
         ponytail.enable = mkDefault true;
