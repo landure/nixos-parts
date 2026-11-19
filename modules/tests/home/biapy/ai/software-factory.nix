@@ -28,6 +28,10 @@ let
             type = lib.types.bool;
             default = false;
           };
+          guard-skills.enable = lib.mkOption {
+            type = lib.types.bool;
+            default = false;
+          };
           hypothesis-debugging.enable = lib.mkOption {
             type = lib.types.bool;
             default = false;
