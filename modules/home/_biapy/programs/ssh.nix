@@ -27,14 +27,10 @@
   ...
 }:
 let
-  inherit (lib.meta) getExe getExe';
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.ssh;
-
-  ssh_exe = getExe pkgs.openssh;
-  ssh-copy-id_exe = getExe' pkgs.openssh "ssh-copy-id";
 in
 {
   options.biapy.programs.ssh.enable = mkEnableOption "ssh";
@@ -43,7 +39,7 @@ in
     programs.ssh = {
       enable = mkDefault true;
 
-      package = pkgs.openssh_gssapi;
+      package = mkDefault pkgs.openssh_gssapi;
 
       # default config is replaced by settings."*"
       enableDefaultConfig = mkDefault false;
@@ -67,18 +63,11 @@ in
 
     home.packages = [
       pkgs.ssh-audit
-      (pkgs.writeShellScriptBin "passh" ''
-        # ssh with public key authentication turned off
-        # see https://serverfault.com/questions/493213/temporarily-disable-ssh-public-key-authentication-from-client
-
-        ${ssh_exe} -o 'PreferredAuthentications=password' -o 'PubkeyAuthentication=no' "''${@}"
-      '')
-      (pkgs.writeShellScriptBin "passh-copy-id" ''
-        # ssh-copy-id with public key authentication turned off
-        # see https://serverfault.com/questions/493213/temporarily-disable-ssh-public-key-authentication-from-client
-
-        ${ssh-copy-id_exe} -o 'PreferredAuthentications=password' -o 'PubkeyAuthentication=no' "''${@}"
-      '')
-    ];
+    ]
+    ++ (with pkgs.biapy-parts; [
+      # Run the very same `ssh` client as the one configured for the `ssh` program.
+      (passh.override { openssh = config.programs.ssh.package; })
+      (passh-copy-id.override { openssh = config.programs.ssh.package; })
+    ]);
   };
 }
