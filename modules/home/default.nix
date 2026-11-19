@@ -71,6 +71,10 @@ in
     };
     llm-agents = {
       url = mkDefault "github:numtide/llm-agents.nix";
+      inputs = {
+        nixpkgs.follows = mkDefault "nixpkgs";
+        flake-parts.follows = mkDefault "flake-parts";
+      };
     };
     quien = {
       url = mkDefault "github:retlehs/quien";
