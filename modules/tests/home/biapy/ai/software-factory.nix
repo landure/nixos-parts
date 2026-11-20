@@ -1,99 +1,102 @@
-{ lib, ... }:
-let
-  inherit (lib.modules) evalModules;
+/**
+  # biapy.ai.software-factory tests
 
-  softwareFactoryModule = ../../../../home/_biapy/ai/software-factory.nix;
+  - [Testing Modules @ Nix-Book](https://ekala-project.github.io/nix-book/ch09-08-testing-modules.html).
+  - [Integration testing with NixOS virtual machines @ nix.dev](https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html).
+*/
+{ inputs, ... }:
+{
+  perSystem =
+    { pkgs, ... }:
+    {
+      checks."biapy.ai.software-factory" = pkgs.testers.runNixOSTest {
+        name = "biapy.ai.software-factory";
 
-  # Stub the modules the preset turns on, so the test only exercises the
-  # preset wiring and not the whole home module tree.
-  stub = {
-    options = {
-      biapy = {
-        ai = {
-          agent-skills.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
+        nodes.machine =
+          { pkgs, ... }:
+          {
+            imports = [
+              inputs.home-manager.nixosModules.home-manager
+              {
+                # Linking the preset's skill packs (60+ skills, 200+
+                # guides) takes longer than the default 5 minutes.
+                systemd.services.home-manager-testbed = {
+                  serviceConfig.TimeoutStartSec = pkgs.lib.mkForce "20min";
+                };
+
+                users.users.testbed = {
+                  isNormalUser = true;
+                };
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
+                  extraSpecialArgs = {
+                    inherit inputs;
+                  };
+                  users.testbed = {
+                    home.stateVersion = "26.05";
+                  };
+                };
+              }
+              {
+                home-manager.users.testbed = {
+                  imports = [
+                    inputs.self.homeModules.default
+                  ];
+
+                  biapy.ai.software-factory.enable = true;
+                  biapy.mcp.context7.apiKey = "placeholder";
+
+                  # The agents only write their skills folder when enabled.
+                  # Stub/empty packages keep the test VM free of the agent binaries.
+                  programs = {
+                    opencode.enable = true;
+                    opencode.package = pkgs.writeShellApplication {
+                      name = "opencode";
+                      text = "exit 0";
+                    };
+                    claude-code.enable = true;
+                    claude-code.package = pkgs.writeShellApplication {
+                      name = "claude";
+                      text = "exit 0";
+                    };
+                    codex.enable = true;
+                    codex.package = pkgs.writeShellApplication {
+                      name = "codex";
+                      text = "exit 0";
+                    };
+                    antigravity-cli.enable = true;
+                    antigravity-cli.package = pkgs.writeShellApplication {
+                      name = "antigravity-cli";
+                      text = "exit 0";
+                    };
+                    github-copilot-cli.enable = true;
+                    github-copilot-cli.package = pkgs.writeShellApplication {
+                      name = "github-copilot-cli";
+                      text = "exit 0";
+                    };
+                  };
+                };
+              }
+            ];
           };
-          mcp-servers.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-          };
-          skills.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-          };
-        };
-        skills = {
-          cloudflare-security-audit-skill.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-          };
-          guard-skills.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-          };
-          hypothesis-debugging.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-          };
-          jeffallan-claude-skills.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-          };
-          mattpocock-skills.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-          };
-          ponytail.enable = lib.mkOption {
-            type = lib.types.bool;
-            default = false;
-          };
-        };
+
+        testScript = ''
+          machine.wait_for_unit("default.target")
+
+          # Every skill pack the preset turns on lands in ~/.agents/skills
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/security-audit/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/clean-code-guard/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/hypothesis-debugging/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/api-designer/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/code-review/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/modern-web-guidance/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/planning-with-files/SKILL.md'")
+          machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/ponytail/SKILL.md'")
+
+          # The guard skills that are not in the preset default are absent
+          machine.fail("su -- testbed -c 'test -e ~/.agents/skills/wp-guard/SKILL.md'")
+        '';
       };
     };
-  };
-
-  evalSoftwareFactory =
-    {
-      modules ? [ ],
-    }:
-    (evalModules {
-      modules = [
-        stub
-        softwareFactoryModule
-      ]
-      ++ modules;
-    }).config;
-in
-{
-  flake.tests."home.biapy.ai.software-factory" = {
-    "test: the preset is disabled by default" = {
-      expr = (evalSoftwareFactory { }).biapy.ai.software-factory.enable;
-      expected = false;
-    };
-
-    "test: enabling the preset turns on the hypothesis-debugging skill" = {
-      expr =
-        (evalSoftwareFactory {
-          modules = [
-            {
-              config.biapy.ai.software-factory.enable = lib.mkForce true;
-            }
-          ];
-        }).biapy.skills.hypothesis-debugging.enable;
-      expected = true;
-    };
-
-    "test: enabling the preset turns on the AI agent skills" = {
-      expr =
-        (evalSoftwareFactory {
-          modules = [
-            {
-              config.biapy.ai.software-factory.enable = lib.mkForce true;
-            }
-          ];
-        }).biapy.ai.skills.enable;
-      expected = true;
-    };
-  };
 }
