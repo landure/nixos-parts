@@ -22,6 +22,7 @@
     as a single HTML file.
   - [nom @ GitHub](https://github.com/guyfedwards/nom)
     is a RSS reader for the terminal.
+    Installed as `nomrss` to avoid clashing with `nix-output-monitor`.
   - [readability-cli @ GitLab](https://gitlab.com/gardenappl/readability-cli)
     takes any HTML page and strips out unnecessary bloat
     by using Mozilla's Readability library.
@@ -46,7 +47,6 @@
   - [programs.chawan @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/chawan.html).
   - [programs.irssi @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/irssi.html).
   - [programs.meli @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/meli.html).
-  - [programs.nom @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/nom.html).
   - [programs.tiny @ Home Manager](https://nix-community.github.io/home-manager/options/home-manager/programs/tiny.html).
 
   ## 🙇 Acknowledgements
@@ -82,14 +82,16 @@ in
       llm-agents.terminal-browser
     ];
 
-    biapy.programs.ddgr.enable = mkDefault true;
+    biapy.programs = {
+      ddgr.enable = mkDefault true;
+      nom.enable = mkDefault true;
+    };
 
     programs = {
       aerc.enable = mkDefault true;
       chawan.enable = mkDefault true;
       irssi.enable = mkDefault true;
       meli.enable = mkDefault true;
-      nom.enable = mkDefault true;
       tiny.enable = mkDefault true;
     };
   };
