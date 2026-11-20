@@ -23,6 +23,7 @@ in
       bash.enable = mkDefault true;
       bat.enable = mkDefault true;
       fzf.enable = mkDefault true;
+      ripgrep.enable = mkDefault true;
       starship.enable = mkDefault true;
       zellij.enable = mkDefault true;
     };
@@ -30,7 +31,6 @@ in
     programs = {
       fd.enable = mkDefault true;
       jq.enable = mkDefault true;
-      ripgrep.enable = mkDefault true;
     };
   };
 }

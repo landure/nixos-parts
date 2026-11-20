@@ -166,19 +166,18 @@ in
     ];
 
     biapy.programs = {
-      bat.enable = mkDefault true;
       ast-grep.enable = mkDefault true;
+      bat.enable = mkDefault true;
       duf.enable = mkDefault true;
       eza.enable = mkDefault true;
+      # `rg`: line-oriented search tool that recursively searches the current directory for a regex pattern
+      ripgrep.enable = mkDefault true;
     };
 
     # Let Home Manager install and manage itself.
     programs = {
       # search & replace
       amber.enable = mkDefault true;
-
-      # `rg`: line-oriented search tool that recursively searches the current directory for a regex pattern
-      ripgrep.enable = mkDefault true;
 
       fd.enable = mkDefault true;
 

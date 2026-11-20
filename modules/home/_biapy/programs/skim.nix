@@ -44,7 +44,10 @@ in
   options.biapy.programs.skim.enable = mkEnableOption "skim";
 
   config = mkIf cfg.enable {
-    biapy.programs.bat.enable = mkDefault true;
+    biapy.programs = {
+      bat.enable = mkDefault true;
+      ripgrep.enable = mkDefault true;
+    };
 
     # home.shellAliases = {
     #  scd = ''scd_function() { local git_root_or_working="$(git rev-parse --show-toplevel 2>/dev/null || pwd)" && local target="''${git_root_or_working}/$(fd --base-directory="''${git_root_or_working}" --type 'd' | sk --query="''${1}")" && cd "''${target}"; }; scd_function'';
@@ -73,7 +76,6 @@ in
 
       fd.enable = mkDefault true;
       git.enable = mkDefault true;
-      ripgrep.enable = mkDefault true;
 
       skim = {
         enable = mkDefault true;

@@ -27,8 +27,9 @@ in
       biapy-parts.rgsd
     ];
 
-    biapy.programs.ast-grep.enable = mkDefault true;
-
-    programs.ripgrep.enable = mkDefault true;
+    biapy.programs = {
+      ast-grep.enable = mkDefault true;
+      ripgrep.enable = mkDefault true;
+    };
   };
 }
