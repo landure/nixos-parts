@@ -26,6 +26,7 @@ in
         hypothesis-debugging.enable = mkDefault true;
         jeffallan-claude-skills.enable = mkDefault true;
         mattpocock-skills.enable = mkDefault true;
+        planning-with-files.enable = mkDefault true;
         ponytail.enable = mkDefault true;
       };
     };
