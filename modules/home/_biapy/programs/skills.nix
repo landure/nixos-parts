@@ -7,8 +7,8 @@
 let
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
-  inherit (lib.options) mkEnableOption mkOption;
-  inherit (lib.types) bool package;
+  inherit (lib.options) mkEnableOption mkOption mkPackageOption;
+  inherit (lib.types) bool;
   inherit (pkgs) fetchFromGitHub writeShellApplication;
 
   cfg = config.biapy.programs.skills;
@@ -44,11 +44,7 @@ in
   options.biapy.programs.skills = {
     enable = mkEnableOption "Vercel Labs' skills";
 
-    package = mkOption {
-      type = package;
-      default = pkgs.skills;
-      description = "The skills package to install.";
-    };
+    package = mkPackageOption pkgs.llm-agents "skills" { };
 
     withSkill = mkOption {
       type = bool;
