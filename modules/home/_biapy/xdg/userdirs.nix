@@ -63,6 +63,8 @@ in
         "english"
       ];
       description = "Language for XDG user directory names.";
+      default = config.biapy.user.language.lowercase;
+      defaultText = "config.biapy.user.language.lowercase";
     };
   };
 
