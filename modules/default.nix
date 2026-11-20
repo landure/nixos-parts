@@ -65,7 +65,6 @@ in
     (inputs.flake-parts.flakeModules.modules or { })
     # enable inside-flake and say goodbye to bootstrap
     (inputs.flake-file.flakeModules.dendritic or { })
-    (inputs.flake-file.flakeModules.nix-auto-follow or { })
   ];
 
   systems = [
