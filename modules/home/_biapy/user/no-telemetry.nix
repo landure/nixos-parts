@@ -21,7 +21,7 @@ let
   cfg = config.biapy.user.no-telemetry;
 in
 {
-  options.biapy.biapy.user.no-telemetry.enable = mkEnableOption "Turn Off Telemetry" // {
+  options.biapy.user.no-telemetry.enable = mkEnableOption "Turn Off Telemetry" // {
     default = true;
   };
 
