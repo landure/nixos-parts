@@ -21,6 +21,7 @@ in
         skills.enable = mkDefault true;
       };
       skills = {
+        addyosmani-agent-skills.enable = mkDefault true;
         cloudflare-security-audit-skill.enable = mkDefault true;
         guard-skills.enable = mkDefault true;
         hypothesis-debugging.enable = mkDefault true;
