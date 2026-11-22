@@ -33,12 +33,14 @@
 
   ## 🙇 Acknowledgements
 
+  - [Zsh @ NixOS Official Wiki](https://wiki.nixos.org/wiki/Zsh).
   - [Unlimited history in zsh @ Stack Exchange](https://unix.stackexchange.com/a/273863).
   - [How do I use Oh-My-Zsh with antidote? #70 @ antidote's GitHub](https://github.com/mattmc3/antidote/discussions/70).
+  - [Aliases @ Mastering ZSH's GitHub](https://github.com/rothgar/mastering-zsh/blob/master/docs/helpers/aliases.md).
 */
 { config, lib, ... }:
 let
-  inherit (lib.modules) mkIf mkDefault;
+  inherit (lib.modules) mkAfter mkIf mkDefault;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.zsh;
@@ -58,6 +60,28 @@ in
       autosuggestion.enable = mkDefault true;
       syntaxHighlighting.enable = mkDefault true;
       oh-my-zsh.enable = mkDefault true;
+
+      shellAliases = {
+        ss = mkDefault "sudo ";
+        ":q" = mkDefault "exit";
+        ".." = mkDefault "cd ..";
+        "..." = mkDefault "cd ../..";
+        "-" = mkDefault "cd -";
+
+        # Search through your command history and print the top 10 commands
+        history-stat = mkDefault "history 0 | awk '{print $2}' | sort | uniq --count | sort --numeric-sort --reverse | head";
+      };
+
+      initContent = mkAfter ''
+        # pipe output to grep
+        alias -g G='| rg'
+        # pipe output to less
+        alias -g L='| bat --plain'
+        # pipe output to `wc` with option `-l`
+        alias -g W='| wc --lines'
+        # convert multiline output to single line and copy it to the system clipboard
+        alias -g C="| tr --delimiter='\n' | wl-copy --primary --regular"
+      '';
 
       history = {
         size = mkDefault 10000000;
