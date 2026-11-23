@@ -24,7 +24,7 @@ rustPlatform.buildRustPackage (final: {
     hash = "sha256-KcAIuvnfVvDcqo8iuM75Q6CEobtAJJQ71t/EAuUYGfE==";
   };
 
-  cargoHash = "sha256-L87NsbTonEXrxq0xNmLX8EvpmdY5tmu1yO0dWWWOdD4=";
+  cargoHash = "sha256-hf9OfbWefyff8JVPnok7kRyzBa04xsVdfY6lVbGwvbw=";
 
   doInstallCheck = true;
   __darwinAllowLocalNetworking = true;
