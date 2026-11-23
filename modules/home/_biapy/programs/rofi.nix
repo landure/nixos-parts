@@ -65,7 +65,7 @@ in
       extraConfig = {
         #   kb-primary-paste = "Control+V,Shift+Insert";
         #   kb-secondary-paste = "Control+v,Insert";
-        combi-modes = mkDefault "drun,run,ssh,window";
+        combi-modes = mkDefault "drun,run";
       };
 
       # Modes to enable. For custom modes see man 5 rofi-script.
@@ -79,10 +79,10 @@ in
         # "keys"
         # "filebrowser"
         # "recursivebrowser"
-        {
-          name = "rbw";
-          path = getExe pkgs.rofi-rbw;
-        }
+        # {
+        #  name = "rbw";
+        #  path = getExe pkgs.rofi-rbw;
+        # }
         {
           name = "nm";
           path = getExe pkgs.rofi-network-manager;
@@ -106,7 +106,7 @@ in
         #rofi-systemd
         rofi-network-manager
         rofi-emoji
-        rofi-rbw
+        # rofi-rbw
       ];
 
       # Path to the terminal which will be used to run console applications
