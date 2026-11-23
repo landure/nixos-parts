@@ -1,3 +1,14 @@
+/**
+  # llm-visuals
+
+  Live truecolor terminal dashboard for a locally running LLM:
+  tok/s, TTFT, GPUs, context, MTP acceptance, layer,
+  and real expert routing (llama.cpp)
+
+  ## 🛠️ Tech Stack
+
+  - [llm-visuals @ GitHub](https://github.com/DingoOz/llm-visuals)
+*/
 {
   rustPlatform,
   fetchFromGitHub,
@@ -5,12 +16,12 @@
 }:
 rustPlatform.buildRustPackage (final: {
   pname = "llm-visuals";
-  version = "0.12.0";
+  version = "0.14.0";
   src = fetchFromGitHub {
     owner = "DingoOz";
     repo = "llm-visuals";
     tag = "v${final.version}";
-    hash = "sha256-5/ntkkN0WtPOo3J7YpDKk4qc012FtHNwrzOIlkBDqcI=";
+    hash = "sha256-KcAIuvnfVvDcqo8iuM75Q6CEobtAJJQ71t/EAuUYGfE==";
   };
 
   cargoHash = "sha256-L87NsbTonEXrxq0xNmLX8EvpmdY5tmu1yO0dWWWOdD4=";
