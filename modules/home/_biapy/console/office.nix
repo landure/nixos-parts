@@ -88,6 +88,7 @@ in
 
     biapy.programs = {
       joplin-cli.enable = mkDefault true;
+      mq.enable = mkDefault true;
       taskwarrior.enable = mkDefault true;
       zk.enable = mkDefault true;
     };
