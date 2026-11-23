@@ -16,12 +16,12 @@
 }:
 rustPlatform.buildRustPackage (final: {
   pname = "wtfi2";
-  version = "0.9.0";
+  version = "0.10.0";
   src = fetchFromGitHub {
     owner = "kanywst";
     repo = "wtfi2";
     tag = "v${final.version}";
-    hash = "sha256-E3SGLSjcI8CuhjmgdiA6CZJtcpSaqciihwHYf74iTmI=";
+    hash = "sha256-SpC4y7yanwM9HlhsUrfClENgQtuRU/UNGlEaksbz+3E=";
   };
 
   cargoHash = "sha256-NQyULEGxKwWcEwqL7nkvLJ3NSeYyqfYtxcUyfMthI24=";

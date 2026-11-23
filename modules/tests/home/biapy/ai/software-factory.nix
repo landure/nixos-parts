@@ -93,6 +93,9 @@
           machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/modern-web-guidance/SKILL.md'")
           machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/planning-with-files/SKILL.md'")
           machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/ponytail/SKILL.md'")
+          machine.succeed(
+              "su -- testbed -c 'test -e ~/.agents/skills/architecture-decision-record-skill/SKILL.md'"
+          )
 
           # The guard skills that are not in the preset default are absent
           machine.fail("su -- testbed -c 'test -e ~/.agents/skills/wp-guard/SKILL.md'")
