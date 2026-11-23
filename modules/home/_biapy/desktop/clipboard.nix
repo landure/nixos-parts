@@ -78,7 +78,7 @@ in
 
       package = mkOption {
         type = package;
-        default = pkgs.wl-clipboard-rs;
+        default = pkgs.unstable.wl-clipboard-rs;
         description = "The wl-clipboard package to use.";
       };
 
@@ -132,7 +132,7 @@ in
         enable = mkDefault (cfg.history.tool == "cliphist");
         # wl-clipboard-rs' wl-paste doesn't support --watch option.
         # see https://github.com/YaLTeR/wl-clipboard-rs/issues/5
-        clipboardPackage = mkDefault pkgs.wl-clipboard;
+        clipboardPackage = mkDefault cfg.package;
         extraOptions = [
           "-max-dedupe-search"
           "10"
