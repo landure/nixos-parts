@@ -24,7 +24,7 @@ rustPlatform.buildRustPackage (final: {
     hash = "sha256-SpC4y7yanwM9HlhsUrfClENgQtuRU/UNGlEaksbz+3E=";
   };
 
-  cargoHash = "sha256-NQyULEGxKwWcEwqL7nkvLJ3NSeYyqfYtxcUyfMthI24=";
+  cargoHash = "sha256-OSB7ZBz/aaEH5aqDOwMU9w3LRzICQ8+Bt6/22CsYd48=";
 
   checkFlags = [
     # In the sandbox probes fail instantly (no network), so a 1ms sweep still
