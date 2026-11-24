@@ -35,6 +35,8 @@ in
       isd
       lazyjournal
       systeroid
+
+      biapy-parts.autoruns-for-linux
     ];
 
     biapy.shellAliases.systemd-inhibit.enable = mkDefault true;
