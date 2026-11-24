@@ -17,7 +17,7 @@
 */
 { config, lib, ... }:
 let
-  inherit (lib.attrsets) mergeAttrsList;
+  inherit (lib.attrsets) optionalAttrs;
   inherit (lib.lists) elem;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption;
@@ -103,18 +103,22 @@ in
     };
   };
 
-  config = mkIf cfg.enable (mergeAttrsList [
-    {
-      boot.kernelParams = [
+  config = mkIf cfg.enable {
+    boot = {
+      kernelParams = [
         "zswap.enabled=1"
-        "zswap.accept_threshold_percent=${cfg.accept_threshold_percent}"
-        "zswap.exclusive_loads=${if cfg.exclusive_loads then 1 else 0}"
+        "zswap.accept_threshold_percent=${toString cfg.accept_threshold_percent}"
+        "zswap.exclusive_loads=${if cfg.exclusive_loads then "1" else "0"}"
         "zswap.compressor=${cfg.compressor}"
-        "zswap.max_pool_percent=${cfg.max_pool_percent}"
-        "zswap.shrinker_enabled=${if cfg.shrinker_enabled then 1 else 0}"
+        "zswap.max_pool_percent=${toString cfg.max_pool_percent}"
+        "zswap.shrinker_enabled=${if cfg.shrinker_enabled then "1" else "0"}"
         "zswap.zpool=${cfg.zpool}"
       ];
-    }
-    (mkIf initrdSystemdEnabled { boot.initrd.systemd.enable = mkDefault true; })
-  ]);
+
+      # the lz4 algorithm requires setting boot.initrd.systemd.enable to true
+      initrd = optionalAttrs initrdSystemdEnabled {
+        systemd.enable = mkDefault true;
+      };
+    };
+  };
 }
