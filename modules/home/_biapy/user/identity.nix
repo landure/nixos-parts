@@ -17,7 +17,7 @@ let
   # inherit (lib)  warn;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkOption;
-  inherit (lib.strings) toUpper;
+  inherit (lib.strings) toUpper trim;
   inherit (lib.types)
     nullOr
     path
@@ -27,7 +27,18 @@ let
 
   cfg = config.biapy.user;
 
-  osIdentity = osConfig.biapy.users.users.${config.home.username}.identity;
+  osUser =
+    if
+      osConfig ? "biapy"
+      && osConfig.biapy ? "users"
+      && osConfig.biapy.users ? "users"
+      && osConfig.biapy.users.users ? config.home.username
+    then
+      osConfig.biapy.users.users.${config.home.username}
+    else
+      { };
+
+  osIdentity = osUser.identity or { };
 
   gecosIdentityOptions = {
     options = {
@@ -48,7 +59,8 @@ let
       };
       fullname = mkOption {
         type = str;
-        default = osIdentity.fullname or "${osIdentity.firstname} ${toUpper osIdentity.lastname}";
+        default =
+          osIdentity.fullname or (trim "${osIdentity.firstname or ""} ${toUpper osIdentity.lastname or ""}");
         description = "User fullname";
       };
       roomNumber = mkOption {
@@ -85,6 +97,7 @@ let
   #     true
   #   else
   #     warn "Warning: user '${username}' `sops.defaultSopsFile` '${homeSecretsPath}' doesn't exists." false;
+
 in
 {
   options.biapy.user = {
@@ -95,7 +108,7 @@ in
 
     secretsSopsFile = mkOption {
       type = nullOr path;
-      default = osConfig.biapy.users.users.${config.home.username}.secretsSopsFile or null;
+      default = osUser.secretsSopsFile or null;
       description = ''
         Users secrets, stored in a SOPS file. Must contains:
 
@@ -105,7 +118,7 @@ in
     };
     secretsFormat = mkOption {
       type = str;
-      default = osConfig.biapy.users.users.${config.home.username}.secretsFormat or "yaml";
+      default = osUser.secretsFormat or "yaml";
       description = "User secrets SOPS file format";
     };
   };
