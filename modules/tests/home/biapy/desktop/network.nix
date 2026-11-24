@@ -41,7 +41,6 @@
               home-manager.users.testbed = {
                 imports = [
                   ../../../../home/_biapy/desktop/network.nix
-                  ../../../../nixos/_biapy/desktop/network.nix
                 ];
                 biapy.desktop.network.enable = true;
               };

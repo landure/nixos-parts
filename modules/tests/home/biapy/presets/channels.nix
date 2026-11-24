@@ -40,7 +40,7 @@
               home-manager.users.testbed = {
                 imports = [
                   ../../../../home/_biapy/presets/channels.nix
-                  ../../../../nixos/_biapy/programs/nh.nix
+                  ../../../../home/_biapy/programs/nh.nix
                 ];
                 biapy.presets.channels.enable = true;
               };

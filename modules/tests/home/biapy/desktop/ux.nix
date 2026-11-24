@@ -20,7 +20,6 @@
         nodes.machine = _: {
           imports = [
             inputs.home-manager.nixosModules.home-manager
-
             {
               users.users.testbed = {
                 isNormalUser = true;
@@ -40,6 +39,7 @@
             {
               home-manager.users.testbed = {
                 imports = [
+                  inputs.nix-index-database.homeModules.default
                   ../../../../home/_biapy/desktop/ux.nix
                   ../../../../home/_biapy/programs/lan-mouse.nix
                   ../../../../home/_biapy/services/handy.nix

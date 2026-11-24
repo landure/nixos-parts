@@ -45,6 +45,7 @@
                   ../../../../home/_biapy/programs/grim.nix
                   ../../../../home/_biapy/programs/tray-tui.nix
                   ../../../../home/_biapy/services/flameshot.nix
+                  ../../../../home/_biapy/xdg/portal.nix
                 ];
                 biapy.console.wayland.enable = true;
               };

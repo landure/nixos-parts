@@ -40,6 +40,7 @@
             {
               home-manager.users.testbed = {
                 imports = [
+                  inputs.nix-index-database.homeModules.default
                   ../../../../home/_biapy/console/ux.nix
                   ../../../../home/_biapy/ai/skills.nix
                   ../../../../home/_biapy/programs/bash.nix
@@ -48,6 +49,7 @@
                   ../../../../home/_biapy/programs/eza.nix
                   ../../../../home/_biapy/programs/fastfetch.nix
                   ../../../../home/_biapy/programs/flyline.nix
+                  ../../../../home/_biapy/programs/fzf.nix
                   ../../../../home/_biapy/programs/go.nix
                   ../../../../home/_biapy/programs/gum.nix
                   ../../../../home/_biapy/programs/mcfly.nix
@@ -59,7 +61,6 @@
                   ../../../../home/_biapy/programs/zellij.nix
                   ../../../../home/_biapy/programs/zsh.nix
                   ../../../../home/_biapy/shellAliases/systemd-inhibit.nix
-                  ../../../../nixos/_biapy/programs/fzf.nix
                 ];
                 biapy.console.ux.enable = true;
               };

@@ -26,6 +26,11 @@
                 isNormalUser = true;
               };
 
+              environment.pathsToLink = [
+                "/share/applications"
+                "/share/xdg-desktop-portal"
+              ];
+
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
@@ -43,6 +48,7 @@
                   ../../../../home/_biapy/desktop/design.nix
                   ../../../../home/_biapy/desktop/graphics.nix
                   ../../../../home/_biapy/services/flameshot.nix
+                  ../../../../home/_biapy/xdg/portal.nix
                 ];
                 biapy.desktop.design.enable = true;
               };

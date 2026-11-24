@@ -43,7 +43,7 @@
                   ../../../../home/_biapy/desktop/clipboard.nix
                   ../../../../home/_biapy/desktop/terminalEmulators.nix
                   ../../../../home/_biapy/programs/ghostty.nix
-                  ../../../../nixos/_biapy/programs/foot.nix
+                  ../../../../home/_biapy/programs/foot.nix
                   inputs.stylix.homeModules.stylix
                 ];
                 stylix = {

@@ -40,6 +40,7 @@
             {
               home-manager.users.testbed = {
                 imports = [
+                  inputs.spicetify-nix.homeManagerModules.spicetify
                   ../../../../home/_biapy/desktop/media.nix
                   ../../../../home/_biapy/programs/spicetify.nix
                 ];
@@ -50,7 +51,8 @@
         };
 
         testScript = ''
-          machine.succeed("su -- testbed -c 'which handbrake'")
+          machine.succeed("su -- testbed -c 'which ghb'")
+          machine.succeed("su -- testbed -c 'which HandBrakeCLI'")
           machine.succeed("su -- testbed -c 'which vlc'")
           machine.succeed("su -- testbed -c 'which spicetify'")
         '';
