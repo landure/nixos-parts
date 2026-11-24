@@ -9,12 +9,16 @@
 
   ## 🛠️ Tech Stack
 
-  - [beads_rust @ GitHub](https://github.com/Dicklesworthstone/beads_rust).
-  - [llm-agents.nix @ GitHub](https://github.com/numtide/llm-agents.nix).
+  - [br - Beads Rust @ GitHub](https://github.com/Dicklesworthstone/beads_rust).
+  - [Beads Viewer (bv) @ GitHub](https://github.com/Dicklesworthstone/beads_viewer).
 
   ### 🤖 Agent skills
 
   - [br agent skill @ GitHub](https://github.com/Dicklesworthstone/beads_rust/tree/main/.claude/skills/br).
+
+  ## 🙇 Acknowledgements
+
+  - [Numtime / llm-agents.nix](https://numtide.github.io/llm-agents.nix/).
 */
 {
   config,
@@ -23,6 +27,7 @@
   ...
 }:
 let
+  inherit (lib.lists) optional;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.types) bool;
@@ -39,9 +44,16 @@ let
 in
 {
   options.biapy.programs.beads-rust = {
-    enable = mkEnableOption "beads-rust";
+    enable = mkEnableOption "beads-rust (br)";
 
     package = mkPackageOption pkgs.llm-agents "beads-rust" { };
+
+    viewer = {
+      enable = mkEnableOption "beads-viewer (bv)" // {
+        default = true;
+      };
+      package = mkPackageOption pkgs.llm-agents "beads-viewer" { };
+    };
 
     withSkill = mkOption {
       type = bool;
@@ -53,7 +65,8 @@ in
   config = mkIf cfg.enable {
     home.packages = [
       cfg.package
-    ];
+    ]
+    ++ (optional cfg.viewer.enable cfg.viewer.package);
 
     biapy.ai.skills.skills = mkIf cfg.withSkill {
       br = mkDefault "${skill}/.claude/skills/br";
