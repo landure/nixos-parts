@@ -8,8 +8,9 @@
 let
   inherit (lib.lists) optional;
   inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
+  inherit (lib.types) bool;
 
   cfg = config.biapy.programs.herdr;
 
@@ -48,6 +49,12 @@ in
     enable = mkEnableOption "Herdr";
 
     package = mkPackageOption pkgs.llm-agents "herdr" { nullable = true; };
+
+    withSkill = mkOption {
+      type = bool;
+      default = true;
+      description = "Install herdr agent skill.";
+    };
 
     app = {
       enable = mkEnableOption "Herdr desktop app";
@@ -155,9 +162,13 @@ in
       );
     };
 
+    biapy.ai.skills.skills = mkIf cfg.withSkill {
+      herdr = mkDefault "${cfg.package}/share/skills/herdr/herdr";
+    };
+
     xdg.configFile."herdr/config.toml" = mkIf (!cfg.mutableSettings && cfg.settings != { }) {
-      source = settingsSource;
-      onChange = reloadConfig;
+      source = mkDefault settingsSource;
+      onChange = mkDefault reloadConfig;
     };
   };
 }
