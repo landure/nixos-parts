@@ -40,6 +40,7 @@
             {
               home-manager.users.testbed = {
                 imports = [
+                  inputs.stylix.homeModules.stylix
                   ../../../../home/_biapy/desktop/web.nix
                   ../../../../home/_biapy/programs/firefox.nix
                 ];

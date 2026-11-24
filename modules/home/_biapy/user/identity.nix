@@ -43,17 +43,17 @@ let
   gecosIdentityOptions = {
     options = {
       firstname = mkOption {
-        type = str;
+        type = nullOr str;
         default = osIdentity.firstname or null;
         description = "User firstname";
       };
       lastname = mkOption {
-        type = str;
+        type = nullOr str;
         default = osIdentity.lastname or null;
         description = "User lastname";
       };
       email = mkOption {
-        type = str;
+        type = nullOr str;
         default = osIdentity.email or null;
         description = "User email address";
       };

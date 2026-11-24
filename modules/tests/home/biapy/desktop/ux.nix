@@ -39,7 +39,7 @@
             {
               home-manager.users.testbed = {
                 imports = [
-                  inputs.nix-index-database.homeModules.default
+                  inputs.lan-mouse.homeManagerModules.default
                   ../../../../home/_biapy/desktop/ux.nix
                   ../../../../home/_biapy/programs/lan-mouse.nix
                   ../../../../home/_biapy/services/handy.nix
