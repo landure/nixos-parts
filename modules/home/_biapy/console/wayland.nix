@@ -29,7 +29,7 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      wl-clipboard-rs
+      config.biapy.desktop.clipboard.package
       wl-screenrec
     ];
 

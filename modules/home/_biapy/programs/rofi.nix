@@ -52,7 +52,7 @@ in
     home.packages = with pkgs; [
       dotool
       # wtype, xdotool, ydotool
-      wl-clipboard-rs
+      config.biapy.desktop.clipboard.package
     ];
 
     programs.rofi = {
