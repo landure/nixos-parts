@@ -20,7 +20,12 @@ in
         mcp-servers.enable = mkDefault true;
         skills.enable = mkDefault true;
       };
-      programs.beads-rust.enable = mkDefault true;
+
+      programs = {
+        beads-rust.enable = mkDefault true;
+        herdr.enable = mkDefault true;
+      };
+
       skills = {
         addyosmani-agent-skills.enable = mkDefault true;
         architecture-decision-record.enable = mkDefault true;
