@@ -17,6 +17,7 @@
   ## 🙇 Acknowledgements
 
   - [default -t to modified -r to be backward compatible with ls @ eza's GitHub](https://github.com/eza-community/eza/issues/980).
+  - [Tip 5: Replacing ls with exa @ David McKay's dev.to](https://dev.to/rawkode/tip-5-replacing-ls-with-exa-3o5n).
 */
 {
   config,
@@ -25,13 +26,10 @@
   ...
 }:
 let
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption;
 
   cfg = config.biapy.programs.eza;
-
-  eza_exe = getExe config.programs.eza.package;
 in
 {
   options.biapy.programs.eza.enable = mkEnableOption "eza";
@@ -48,96 +46,22 @@ in
       ];
     };
 
-    home.packages = [
-      (pkgs.writeShellScriptBin "lazes" ''
-        # ls compatibility wrapper for eza
-        args=()
-        while [ "''${#}" -gt 0 ]; do
-            arg="''${1}"
-            shift
-            case "''${arg}" in
-                --)
-                    args+=("''${arg}")
-                    break;
-                    ;;
-                --directory)
-                    args+=('--list-dirs')
-                    ;; # Replace --directory with --list-dirs
-                --numeric-uid-gid)
-                    args+=('--numeric')
-                    ;; # Replace --numeric-uid-gid with --numeric
-                --block-size | --author | --escape | --dired | --full-time | --kibibytes | --literal | --quoting-style | --size | --time-style | --width)
-                    if [ "''${#}" -gt 0 ] && [ "''${1#-}" = "''${1}" ]; then
-                        shift
-                    fi
-                    ;;
-                --sort | --sort=* | --time | --time=* | --indicator-style | --indicator-style=* | --color | --color=* | --hyperlink | --hyperlink=*)
-                    if [ "''${arg#*=}" != "''${arg}" ]; then
-                        args+=("''${arg}")
-                    else
-                        if [ "''${#}" -gt 0 ] && [ "''${1#-}" = "''${1}" ]; then
-                            args+=("''${arg}" "''${1}")
-                            shift
-                        else
-                            args+=("''${arg}")
-                        fi
-                    fi
-                    ;;
-                --*)
-                    args+=("''${arg}")
-                    ;;
-                -*)
-                    arg="''${arg#-}"
-                    while [ -n "''${arg}" ]; do
-                        char="''${arg%"''${arg#?}"}"
-                        case "''${char}" in
-                            t)
-                                args+=('--sort=modified')
-                                ;; # Suppress -t
-                            r)
-                                args+=('--reverse')
-                                ;; # Suppress -r
-                            S)
-                                args+=('--sort=size')
-                                ;; # Supress -S
-                            s)
-                                ;; # Supress -s (no equivalent in eza)
-                            c)
-                                args+=('--sort=changed')
-                                ;; # Supress -c
-                            u)
-                                args+=('--sort=accessed')
-                                ;; # Supress -u
-                            1)
-                                args+=('--oneline')
-                                ;; # Supress -1
-                            g)
-                                args+=('--group')
-                                ;; # Supress -g
-                            d)
-                                args+=('--list-dirs')
-                                ;; # Supress -d
-                            p)
-                                args+=('--indicator-style=slash')
-                                ;; # Supress -p
-                            *)
-                                args+=("-''${char}")
-                                ;;
-                        esac
-                        arg="''${arg#?}"
-                    done
-                    ;;
-                *)
-                    args+=("''${arg}")
-                    ;;
-            esac
-        done
-
-        args+=("''${@}")
-
-        # Execute eza with the processed arguments
-        exec ${eza_exe} "''${args[@]}"
-      '')
-    ];
+    home = {
+      shellAliases = {
+        ltd = mkDefault "ls --tree --only-dirs --level=2 --ignore-glob='cache|log|logs|node_modules|vendor'";
+        lt3d = mkDefault "ls --tree --only-dirs --level=3 --ignore-glob='cache|log|logs|node_modules|vendor'";
+        lt4d = mkDefault "ls --tree --only-dirs --level=4 --ignore-glob='cache|log|logs|node_modules|vendor'";
+        lt5d = mkDefault "ls --tree --only-dirs --level=5 --ignore-glob='cache|log|logs|node_modules|vendor'";
+      };
+      packages = [
+        # Use the same eza as the one configured for the `programs.eza` module.
+        (pkgs.biapy-parts.lazes.overrideAttrs (old: {
+          runtimeInputs = [
+            config.programs.eza.package
+            config.biapy.programs.gum.package
+          ];
+        }))
+      ];
+    };
   };
 }

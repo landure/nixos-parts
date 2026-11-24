@@ -19,7 +19,7 @@
 }:
 let
   inherit (lib.modules) mkDefault mkIf;
-  inherit (lib.options) mkEnableOption mkOption;
+  inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.types) bool;
 
   cfg = config.biapy.programs.gum;
@@ -29,6 +29,8 @@ in
   options.biapy.programs.gum = {
     enable = mkEnableOption "gum";
 
+    package = mkPackageOption pkgs "gum" { };
+
     withSkill = mkOption {
       type = bool;
       default = true;
@@ -37,8 +39,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [
-      gum
+    home.packages = [
+      cfg.package
     ];
 
     biapy.ai.skills.skills = mkIf cfg.withSkill {
