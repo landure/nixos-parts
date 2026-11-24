@@ -12,6 +12,10 @@
   - [programs.bash @ NixOS reference](https://search.nixos.org/options?query=programs.bash&source=home_manager).
   - [programs.bash @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-programs.bash.enable).
   - [home.shell.enableBashIntegration @ Home Manager](https://nix-community.github.io/home-manager/options.xhtml#opt-home.shell.enableBashIntegration).
+
+  ## 🙇 Acknowledgements
+
+  - [Tip 3: Create a `tmp` Alias @ David McKay's dev.to](https://dev.to/rawkode/tip-3-create-a-tmp-alias-f6h).
 */
 {
   config,
@@ -62,6 +66,8 @@ in
         initExtra = mkDefault ''
           [[ -f "${homeManagerSessionVars}" ]] && source "${homeManagerSessionVars}"
         '';
+
+        shellAliases.tmp = mkDefault ''cd "$(mktemp -d)"'';
       };
     };
   };

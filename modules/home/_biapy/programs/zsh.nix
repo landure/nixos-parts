@@ -37,6 +37,8 @@
   - [Unlimited history in zsh @ Stack Exchange](https://unix.stackexchange.com/a/273863).
   - [How do I use Oh-My-Zsh with antidote? #70 @ antidote's GitHub](https://github.com/mattmc3/antidote/discussions/70).
   - [Aliases @ Mastering ZSH's GitHub](https://github.com/rothgar/mastering-zsh/blob/master/docs/helpers/aliases.md).
+  - [Tip 2: History Forgets Common Commands @ David McKay's dev.to](https://dev.to/rawkode/tip-2-history-forgets-common-commands-l5c).
+  - [Tip 3: Create a `tmp` Alias @ David McKay's dev.to](https://dev.to/rawkode/tip-3-create-a-tmp-alias-f6h).
 */
 { config, lib, ... }:
 let
@@ -67,6 +69,7 @@ in
         ".." = mkDefault "cd ..";
         "..." = mkDefault "cd ../..";
         "-" = mkDefault "cd -";
+        tmp = mkDefault ''cd "$(mktemp -d)"'';
 
         # Search through your command history and print the top 10 commands
         history-stat = mkDefault "history 0 | awk '{print $2}' | sort | uniq --count | sort --numeric-sort --reverse | head";
@@ -102,6 +105,18 @@ in
           "rm *"
           "pkill *"
           "cp *"
+          "&"
+          "ls"
+          "[bf]g"
+          "exit"
+          "reset"
+          "clear"
+          "cd"
+          "cd.."
+          "cd .."
+          "z"
+          "zi"
+
         ];
       };
 
