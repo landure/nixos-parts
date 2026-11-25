@@ -43,6 +43,13 @@ alias = "fmt"
 description = "Format nix, MarkDown, and TOML files"
 run = ["taplo fmt", "rumdl fmt", "nixfmt ."]
 
+[tasks.checks]
+alias = "check"
+description = "Run flake checks with nix-eval-jobs to prevent OOM"
+run = [
+  "nix-eval-jobs --max-memory-size 3072 --gc-roots-dir /tmp/gcroot --force-recurse --flake .#checks",
+]
+
 [tasks.tests]
 alias = "test"
 description = "Run nix-unit tests"
