@@ -202,7 +202,10 @@ Layout:
   e.g. by writing it to `environment.etc."…".text`
   and grepping the file in `testScript`.
 - **Home Manager session variables** land in
-  `~/.nix-profile/etc/profile.d/hm-session-vars.sh`.
+  `/etc/profiles/per-user/<user>/etc/profile.d/hm-session-vars.sh`.
+  With `home-manager.useUserPackages = true` the profile directory is
+  `/etc/profiles/per-user/<user>`, *not* `~/.nix-profile`.
+  Variables are written as `export NAME="value"`, so grep for `NAME="value"`.
 - **NixOS polkit rules** land in `/etc/polkit-1/rules.d/10-nixos.rules`.
 - **Nix 2.34 rejects int interpolation.**
   `"${cfg.someInt}"` fails with "cannot coerce an integer to a string";
