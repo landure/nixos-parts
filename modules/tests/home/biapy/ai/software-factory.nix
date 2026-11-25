@@ -44,8 +44,11 @@
                     inputs.self.homeModules.default
                   ];
 
-                  biapy.ai.software-factory.enable = true;
-                  biapy.mcp.context7.apiKey = "placeholder";
+                  biapy = {
+                    ai.software-factory.enable = true;
+                    mcp.context7.apiKey = "placeholder";
+                    user.language = "english";
+                  };
 
                   # The agents only write their skills folder when enabled.
                   # Stub/empty packages keep the test VM free of the agent binaries.

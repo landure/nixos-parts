@@ -55,17 +55,34 @@ in
       biapy-parts.llm-visuals
     ];
 
+    programs.opencode.settings.provider.ollama-local = {
+      npm = mkDefault "@ai-sdk/openai-compatible";
+      name = mkDefault "Ollama (local)";
+      options.baseURL = mkDefault cfg.api-base;
+      models = {
+        "hf.co/bartowski/Qwen2.5-Coder-3B-Instruct-GGUF:Q4_K_M" = {
+          name = mkDefault "Qwen2.5-Coder-3B-Instruct-GGUF Q4_K_M";
+          modelId = mkDefault "hf.co/bartowski/Qwen2.5-Coder-3B-Instruct-GGUF:Q4_K_M";
+          family = mkDefault "Qwen2.5-Coder";
+        };
+        "qwen2.5-coder-3b-instruct-q6" = {
+          name = mkDefault "Qwen2.5-Coder-3B-Instruct-GGUF Q6_K_L";
+          modelId = mkDefault "hf.co/bartowski/Qwen2.5-Coder-3B-Instruct-GGUF:Q6_K_L";
+          family = mkDefault "Qwen2.5-Coder";
+        };
+        "qwen2.5-coder-3b-instruct-q8" = {
+          name = mkDefault "Qwen2.5-Coder-3B-Instruct-GGUF Q8_0";
+          modelId = mkDefault "hf.co/bartowski/Qwen2.5-Coder-3B-Instruct-GGUF:Q8_0";
+          family = mkDefault "Qwen2.5-Coder";
+        };
+      };
+    };
+
     services.ollama = {
       enable = mkDefault true;
 
       # host = mkDefault "127.0.0.1";
       # port = mkDefault 11434;
-
-      # loadModels = [
-      #   "mistral-small3.1:latest"
-      #   "deepseek-r1:8b"
-      #   "qwen2.5-coder:1.5b"
-      # ];
 
       environmentVariables = {
         # OLLAMA_ORIGINS = "http://localhost:3000,http://127.0.0.1:3000";
@@ -128,6 +145,7 @@ in
         # - q4_0 - 4-bit quantization, uses approximately 1/4 the memory of f16 with a
         #   small-medium loss in precision that may be more noticeable at higher context sizes.
         # OLLAMA_KV_CACHE_TYPE=f16
+        OLLAMA_KV_CACHE_TYPE = mkDefault "q8_0";
 
         # Enable memory debugging
         # OLLAMA_DEBUG = 1;

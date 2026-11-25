@@ -35,6 +35,7 @@ in
         jeffallan-claude-skills.enable = mkDefault true;
         mattpocock-skills.enable = mkDefault true;
         modern-web-guidance.enable = mkDefault true;
+        softaworks-agent-toolkit.enable = mkDefault true;
         planning-with-files.enable = mkDefault true;
         ponytail.enable = mkDefault true;
       };
