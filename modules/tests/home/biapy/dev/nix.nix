@@ -52,7 +52,7 @@
 
         testScript = ''
           machine.succeed("su -- testbed -c 'which nix-inspect'")
-          machine.succeed("su -- testbed -c 'which nix-output-monitor'")
+          machine.succeed("su -- testbed -c 'which nom'")
           machine.succeed("su -- testbed -c 'which nixd'")
           machine.succeed("su -- testbed -c 'which nixf'")
           machine.succeed("su -- testbed -c 'which nixf-diagnose'")

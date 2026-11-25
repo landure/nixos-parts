@@ -40,6 +40,7 @@
             {
               home-manager.users.testbed = {
                 imports = [
+                  inputs.sofka.homeManagerModules.default
                   ../../../../home/_biapy/dev/k8s.nix
                   ../../../../home/_biapy/programs/k9s.nix
                 ];
