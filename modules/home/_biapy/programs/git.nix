@@ -28,7 +28,6 @@
   ## 🙇 Acknowledgements
 
   - [Git @ Official NixOS Wiki](https://wiki.nixos.org/wiki/Git).
-  - [Git @ NixOS Wiki](https://nixos.wiki/wiki/Git).
   - [A Collection of Useful .gitattributes Templates @ GitHub](https://github.com/gitattributes/gitattributes).
   - [Archiving git branches as tags @ et cetera](https://etc.octavore.com/2025/12/archiving-git-branches-as-tags/).
   - [How to Customize Git Help for Your Aliases in NixOS @ PUPUWEB](https://pupuweb.com/how-customize-git-help-aliases-nixos/).
@@ -104,10 +103,7 @@ in
 
             # Set SSH command to custom one to match system global configuration
             sshCommand = mkDefault (
-              if config.targets.genericLinux.enable then
-                if config.programs.ssh.package == null then "/usr/bin/ssh" else getExe config.programs.ssh.package
-              else
-                null
+              if null == config.programs.ssh.package then "ssh" else getExe config.programs.ssh.package
             );
           };
 

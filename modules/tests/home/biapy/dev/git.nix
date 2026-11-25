@@ -40,6 +40,7 @@
             {
               home-manager.users.testbed = {
                 imports = [
+                  ../../../../home/_biapy/ai/skills.nix
                   ../../../../home/_biapy/dev/git.nix
                   ../../../../home/_biapy/programs/bat.nix
                   ../../../../home/_biapy/programs/diffnav.nix
@@ -48,6 +49,7 @@
                   ../../../../home/_biapy/programs/git-utils.nix
                   ../../../../home/_biapy/programs/git.nix
                   ../../../../home/_biapy/programs/gitalias.nix
+                  ../../../../home/_biapy/programs/jujutsu.nix
                   ../../../../home/_biapy/programs/lazygit.nix
                 ];
                 biapy.dev.git.enable = true;
