@@ -48,10 +48,10 @@
 
         testScript = ''
           machine.succeed(
-              "su -- testbed -c 'grep -q '^MANROFFOPT=' ~/.nix-profile/etc/profile.d/hm-session-vars.sh'"
+              "su -- testbed -c 'grep -q \"MANROFFOPT=\" /etc/profiles/per-user/testbed/etc/profile.d/hm-session-vars.sh'"
           )
           machine.succeed(
-              "su -- testbed -c 'grep -q '^MANPAGER=' ~/.nix-profile/etc/profile.d/hm-session-vars.sh'"
+              "su -- testbed -c 'grep -q \"MANPAGER=\" /etc/profiles/per-user/testbed/etc/profile.d/hm-session-vars.sh'"
           )
         '';
       };

@@ -48,7 +48,7 @@
         };
 
         testScript = ''
-          machine.succeed("su -- testbed -c 'which skillsPackage'")
+          machine.succeed("su -- testbed -c 'which skills'")
         '';
       };
     };

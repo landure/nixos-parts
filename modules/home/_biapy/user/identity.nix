@@ -32,7 +32,7 @@ let
       osConfig ? "biapy"
       && osConfig.biapy ? "users"
       && osConfig.biapy.users ? "users"
-      && osConfig.biapy.users.users ? config.home.username
+      && osConfig.biapy.users.users ? ${config.home.username}
     then
       osConfig.biapy.users.users.${config.home.username}
     else

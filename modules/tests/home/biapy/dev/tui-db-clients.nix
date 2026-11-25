@@ -50,7 +50,7 @@
 
         testScript = ''
           machine.succeed("su -- testbed -c 'which harlequin'")
-          machine.succeed("su -- testbed -c 'which sqlit-tui'")
+          machine.succeed("su -- testbed -c 'which sqlit'")
         '';
       };
     };

@@ -37,6 +37,7 @@ let
 
   frenchLanguage = {
     name = "French";
+    lowercase = "french";
     iso-639-1 = "fr";
     locale = "fr_FR";
     charset = "UTF-8";
@@ -45,6 +46,7 @@ let
 
   englishLanguage = {
     name = "English";
+    lowercase = "english";
     iso-639-1 = "en";
     locale = "en_US";
     charset = "UTF-8";

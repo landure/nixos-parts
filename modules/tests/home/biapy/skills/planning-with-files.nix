@@ -84,7 +84,7 @@
 
           # The OpenCode plugin and commands are configured
           machine.succeed(
-              "su -- testbed -c 'grep -q \"planning-with-files.ts\" ~/.config/opencode/opencode.json'"
+              "su -- testbed -c 'grep -q \".opencode/plugins\" ~/.config/opencode/opencode.json'"
           )
           machine.succeed("su -- testbed -c 'test -e ~/.config/opencode/commands/pwf.md'")
           machine.succeed("su -- testbed -c 'test -e ~/.config/opencode/commands/pwf-status.md'")

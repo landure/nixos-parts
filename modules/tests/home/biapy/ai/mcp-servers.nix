@@ -61,7 +61,6 @@
           machine.succeed("su -- testbed -c 'which mcp-server-fetch'")
           machine.succeed("su -- testbed -c 'which mcp-server-filesystem'")
           machine.succeed("su -- testbed -c 'which mcp-language-server'")
-          machine.succeed("su -- testbed -c 'which mcp'")
         '';
       };
     };

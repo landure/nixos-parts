@@ -52,8 +52,8 @@
 
         testScript = ''
           machine.succeed("su -- testbed -c 'which arsenal'")
-          machine.succeed("su -- testbed -c 'which cht-sh'")
-          machine.succeed("su -- testbed -c 'which tealdeer'")
+          machine.succeed("su -- testbed -c 'which cht.sh'")
+          machine.succeed("su -- testbed -c 'which tldr'")
         '';
       };
     };

@@ -82,7 +82,9 @@
           };
 
         testScript = ''
-          machine.wait_for_unit("default.target")
+          # Linking the preset's 60+ skill packs makes the testbed boot take
+          # longer than the 15 minute default.
+          machine.wait_for_unit("default.target", timeout=1800)
 
           # Every skill pack the preset turns on lands in ~/.agents/skills
           machine.succeed("su -- testbed -c 'test -e ~/.agents/skills/security-audit/SKILL.md'")

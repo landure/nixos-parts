@@ -56,7 +56,7 @@
           machine.succeed("su -- testbed -c 'which nixd'")
           machine.succeed("su -- testbed -c 'which nixf-tidy'")
           machine.succeed("su -- testbed -c 'which nixf-diagnose'")
-          machine.succeed("su -- testbed -c 'which nixos-rebuild-ng'")
+          machine.succeed("su -- testbed -c 'which nixos-rebuild'")
           machine.succeed("su -- testbed -c 'which nurl'")
           machine.succeed("su -- testbed -c 'which statix'")
         '';

@@ -51,7 +51,7 @@
         testScript = ''
           machine.succeed("su -- testbed -c 'which fx'")
           machine.succeed("su -- testbed -c 'which jaq'")
-          machine.succeed("su -- testbed -c 'which jsongrep'")
+          machine.succeed("su -- testbed -c 'which jg'")
           machine.succeed("su -- testbed -c 'which jid'")
           machine.succeed("su -- testbed -c 'which jless'")
         '';

@@ -49,7 +49,10 @@
         };
 
         testScript = ''
-          machine.succeed("su -- testbed -c 'which diffutils'")
+          machine.succeed("su -- testbed -c 'which diff'")
+          machine.succeed("su -- testbed -c 'which delta'")
+          machine.succeed("su -- testbed -c 'which difft'")
+          machine.succeed("su -- testbed -c 'which hunk'")
         '';
       };
     };

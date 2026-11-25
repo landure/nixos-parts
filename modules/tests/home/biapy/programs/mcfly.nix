@@ -48,7 +48,7 @@
 
         testScript = ''
           machine.succeed(
-              "su -- testbed -c 'grep -q '^MCFLY_PROMPT=' ~/.nix-profile/etc/profile.d/hm-session-vars.sh'"
+              "su -- testbed -c 'grep -q \"MCFLY_PROMPT=\" /etc/profiles/per-user/testbed/etc/profile.d/hm-session-vars.sh'"
           )
         '';
       };

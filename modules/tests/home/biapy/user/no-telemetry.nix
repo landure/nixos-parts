@@ -51,19 +51,19 @@
 
           # the opt-out variables are exported in the user session environment
           machine.succeed(
-              "su -- testbed -c 'grep -qx DO_NOT_TRACK=1 ~/.nix-profile/etc/profile.d/hm-session-vars.sh'"
+              "su -- testbed -c 'grep -q \"DO_NOT_TRACK=\\\"1\\\"\" /etc/profiles/per-user/testbed/etc/profile.d/hm-session-vars.sh'"
           )
           machine.succeed(
-              "su -- testbed -c 'grep -qx DISABLE_TELEMETRY=1 ~/.nix-profile/etc/profile.d/hm-session-vars.sh'"
+              "su -- testbed -c 'grep -q \"DISABLE_TELEMETRY=\\\"1\\\"\" /etc/profiles/per-user/testbed/etc/profile.d/hm-session-vars.sh'"
           )
           machine.succeed(
-              "su -- testbed -c 'grep -qx TELEMETRY_OPTOUT=1 ~/.nix-profile/etc/profile.d/hm-session-vars.sh'"
+              "su -- testbed -c 'grep -q \"TELEMETRY_OPTOUT=\\\"1\\\"\" /etc/profiles/per-user/testbed/etc/profile.d/hm-session-vars.sh'"
           )
           machine.succeed(
-              "su -- testbed -c 'grep -qx PIP_DISABLE_PIP_VERSION_CHECK=1 ~/.nix-profile/etc/profile.d/hm-session-vars.sh'"
+              "su -- testbed -c 'grep -q \"PIP_DISABLE_PIP_VERSION_CHECK=\\\"1\\\"\" /etc/profiles/per-user/testbed/etc/profile.d/hm-session-vars.sh'"
           )
           machine.succeed(
-              "su -- testbed -c 'grep -qx NO_UPDATE_NOTIFIER=1 ~/.nix-profile/etc/profile.d/hm-session-vars.sh'"
+              "su -- testbed -c 'grep -q \"NO_UPDATE_NOTIFIER=\\\"1\\\"\" /etc/profiles/per-user/testbed/etc/profile.d/hm-session-vars.sh'"
           )
         '';
       };

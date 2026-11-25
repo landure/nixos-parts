@@ -50,7 +50,7 @@
 
         testScript = ''
           machine.succeed("su -- testbed -c 'which yamlfmt'")
-          machine.succeed("su -- testbed -c 'which yq-go'")
+          machine.succeed("su -- testbed -c 'which yq'")
         '';
       };
     };

@@ -54,7 +54,8 @@
           machine.succeed("su -- testbed -c 'which ghb'")
           machine.succeed("su -- testbed -c 'which HandBrakeCLI'")
           machine.succeed("su -- testbed -c 'which vlc'")
-          machine.succeed("su -- testbed -c 'which spicetify'")
+          # spicetify-nix ships a spiced Spotify, not the spicetify CLI.
+          machine.succeed("su -- testbed -c 'which spotify'")
         '';
       };
     };

@@ -49,7 +49,7 @@
         };
 
         testScript = ''
-          machine.succeed("su -- testbed -c 'which nixfmt-rs'")
+          machine.succeed("su -- testbed -c 'which nixfmt'")
         '';
       };
     };

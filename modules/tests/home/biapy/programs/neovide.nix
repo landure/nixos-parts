@@ -55,7 +55,7 @@
         };
 
         testScript = ''
-          machine.succeed("su -- testbed -c 'which neovim'")
+          machine.succeed("su -- testbed -c 'which nvim'")
         '';
       };
     };

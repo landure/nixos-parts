@@ -50,9 +50,9 @@
 
         testScript = ''
           machine.succeed("su -- testbed -c 'which mago'")
-          machine.succeed("su -- testbed -c 'which phpantom-lsp'")
+          machine.succeed("su -- testbed -c 'which phpantom_lsp'")
           machine.succeed("su -- testbed -c 'which phpactor'")
-          machine.succeed("su -- testbed -c 'which php85'")
+          machine.succeed("su -- testbed -c 'which php'")
         '';
       };
     };

@@ -51,7 +51,7 @@
         };
 
         testScript = ''
-          machine.succeed("su -- testbed -c 'which skim'")
+          machine.succeed("su -- testbed -c 'which sk'")
         '';
       };
     };

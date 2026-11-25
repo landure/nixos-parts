@@ -49,7 +49,7 @@
         };
 
         testScript = ''
-          machine.succeed("su -- testbed -c 'which ripgrep'")
+          machine.succeed("su -- testbed -c 'which rg'")
         '';
       };
     };

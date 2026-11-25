@@ -73,7 +73,7 @@ in
   options.biapy.user.country = mkOption {
     type = nullOr (enum allCodes);
     default = null;
-    apply = code: lookup (if null == code then "US" else code);
+    apply = code: if null == code then null else lookup code;
     description = ''
       User country. Accepts an ISO 3166-1 alpha-2 code (e.g. `FR`), alpha-3 code
       (e.g. `FRA`), or country name (e.g. `France`), and returns the country
