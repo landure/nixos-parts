@@ -38,6 +38,7 @@
             {
               home-manager.users.testbed = {
                 imports = [
+                  ../../../../home/_biapy/ai/skills.nix
                   ../../../../home/_biapy/programs/skills.nix
                 ];
                 biapy.programs.skills.enable = true;

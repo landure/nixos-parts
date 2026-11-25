@@ -17,7 +17,7 @@
       checks."biapy.programs.msedit" = pkgs.testers.runNixOSTest {
         name = "biapy.programs.msedit";
 
-        nodes.machine = _: {
+        nodes.machine = { lib, ... }: {
           imports = [
             inputs.home-manager.nixosModules.home-manager
             {
@@ -38,6 +38,12 @@
             {
               home-manager.users.testbed = {
                 imports = [
+                  {
+                    options.biapy.console.text-editors.default = lib.options.mkOption {
+                      type = lib.types.nullOr lib.types.str;
+                      default = "msedit";
+                    };
+                  }
                   ../../../../home/_biapy/programs/msedit.nix
                 ];
                 biapy.programs.msedit.enable = true;
@@ -47,7 +53,7 @@
         };
 
         testScript = ''
-          machine.succeed("su -- testbed -c 'which msedit'")
+          machine.succeed("su -- testbed -c 'which edit'")
         '';
       };
     };

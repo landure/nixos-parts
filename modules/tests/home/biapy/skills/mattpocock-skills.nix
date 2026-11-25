@@ -42,6 +42,7 @@
                   ../../../../home/_biapy/skills/mattpocock-skills.nix
                   ../../../../home/_biapy/ai/skills.nix
                   ../../../../home/_biapy/programs/bat.nix
+                  ../../../../home/_biapy/programs/fzf.nix
                   ../../../../home/_biapy/programs/gh.nix
                 ];
                 biapy.skills.mattpocock-skills.enable = true;

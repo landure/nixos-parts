@@ -17,7 +17,7 @@
       checks."biapy.programs.neovide" = pkgs.testers.runNixOSTest {
         name = "biapy.programs.neovide";
 
-        nodes.machine = _: {
+        nodes.machine = { lib, ... }: {
           imports = [
             inputs.home-manager.nixosModules.home-manager
 
@@ -40,17 +40,13 @@
               home-manager.users.testbed = {
                 imports = [
                   ../../../../home/_biapy/programs/neovide.nix
-                  ../../../../home/_biapy/console/text-editors.nix
-                  ../../../../home/_biapy/desktop/clipboard.nix
-                  ../../../../home/_biapy/programs/emacs.nix
-                  ../../../../home/_biapy/programs/fresh-editor.nix
-                  ../../../../home/_biapy/programs/helix.nix
-                  ../../../../home/_biapy/programs/kakoune.nix
-                  ../../../../home/_biapy/programs/micro.nix
-                  ../../../../home/_biapy/programs/msedit.nix
-                  ../../../../home/_biapy/programs/ne.nix
                   ../../../../home/_biapy/programs/neovim.nix
-                  ../../../../home/_biapy/programs/vim.nix
+                  {
+                    options.biapy.console.text-editors.default = lib.options.mkOption {
+                      type = lib.types.nullOr lib.types.str;
+                      default = "neovide";
+                    };
+                  }
                 ];
                 biapy.programs.neovide.enable = true;
               };

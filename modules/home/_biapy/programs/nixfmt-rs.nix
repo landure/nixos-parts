@@ -16,7 +16,6 @@
   ...
 }:
 let
-  inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkPackageOption;
 
@@ -34,8 +33,8 @@ in
     ];
 
     programs.zed-editor.userSettings.languages.Nix.formatter.external = {
-      command = mkDefault (getExe cfg.package);
-      arguments = mkDefault [ "-" ];
+      command = mkDefault "nixfmt";
+      arguments = mkDefault [ ];
     };
   };
 }

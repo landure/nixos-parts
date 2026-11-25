@@ -30,6 +30,7 @@
   - [Zed @ Official NixOS Wiki](https://wiki.nixos.org/w/index.php?title=Zed).
   - [Configuring Zed Editor with Nix: A Modern Development Setup @ Nohup](https://nohup.no/zed-editor/).
   - [Configurer votre éditeur Zed sur le bout des doigts @ Le blog de Seboss666 🇫🇷](https://blog.seboss666.info/2026/04/configurer-votre-editeur-zed-sur-le-bout-des-doigts/).
+  - [Zed Editor Configuration Guide: Autosave, Prettier, Terminal Font, and Formatting Made Easy @ The idea shore](https://www.kevnu.com/en/posts/zed-editor-configuration-guide-autosave-prettier-terminal-font-and-formatting-made-easy).
 */
 {
   config,
@@ -127,12 +128,35 @@ in
 
         buffer_font_size = mkDefault 12.0;
 
+        format_on_save = mkDefault "on";
+
         #   features = {
         #     copilot = false;
         #   };
 
         # Disable telemetry
-        telemetry.metrics = mkDefault false;
+        telemetry = {
+          diagnostics = mkDefault false;
+          metrics = mkDefault false;
+        };
+
+        tabs = {
+          git_status = mkDefault true;
+        };
+        # confirm_quit = mkDefault true;
+
+        edit_predictions = {
+          disabled_globs = [
+            ".env"
+            ".env.local"
+            "mise.local.toml"
+          ];
+        };
+
+        current_line_highlight = mkDefault "all";
+        terminal = {
+          copy_on_select = mkDefault true;
+        };
 
         #   vim_mode = false;
         #   ui_font_size = 16;
