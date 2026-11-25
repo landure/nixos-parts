@@ -53,6 +53,7 @@ in
 
     home.packages = with pkgs; [
       unstable.nix-graph
+      nix-eval-jobs
       nix-inspect
       nix-output-monitor
       nixd
