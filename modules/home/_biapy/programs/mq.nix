@@ -25,14 +25,12 @@ let
   inherit (lib.types) bool;
 
   cfg = config.biapy.programs.mq;
-
-  package = pkgs.biapy-parts.mq;
 in
 {
   options.biapy.programs.mq = {
     enable = mkEnableOption "mq";
 
-    package = mkPackageOption pkgs "mq" { };
+    package = mkPackageOption pkgs.biapy-parts "mq" { };
 
     withSkills = mkOption {
       type = bool;
@@ -43,12 +41,12 @@ in
 
   config = mkIf cfg.enable {
     home.packages = [
-      package
+      cfg.package
     ];
 
     biapy.ai.skills.skills = mkIf cfg.withSkills {
-      processing-markdown = mkDefault "${package}/skills/processing-markdown";
-      web-scraping = mkDefault "${package}/skills/web-scraping";
+      processing-markdown = mkDefault "${cfg.package}/skills/processing-markdown";
+      web-scraping = mkDefault "${cfg.package}/skills/web-scraping";
     };
   };
 }
