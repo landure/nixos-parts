@@ -37,6 +37,8 @@ in
   config = mkIf cfg.enable {
     home.shellAliases = {
       cat = mkDefault "bat --plain --paging=never";
+      bap = mkDefault "bat --plain";
+      less = mkDefault "bat --plain";
     };
 
     programs.bat = {
