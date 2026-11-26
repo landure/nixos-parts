@@ -23,11 +23,11 @@ in
       hyprlock.enable = mkDefault true;
       hyprshot.enable = mkDefault true;
       hyprpanel = {
-        enable = mkDefault true;
+        enable = mkDefault (!config.services.mako.enable);
       };
     };
 
-    home.pointerCursor.hyprcursor.enable = mkDefault true;
+    # home.pointerCursor.hyprcursor.enable = mkDefault true;
 
     services = {
       hypridle = {
