@@ -18,6 +18,21 @@
 }:
 let
   inherit (lib) mkDefault;
+
+  biapy-parts_overlay =
+    (
+      localFlake: final: prev:
+      withSystem prev.stdenv.hostPlatform.system (
+        { system, ... }:
+        {
+          biapy-parts = localFlake.packages.${system};
+        }
+      )
+    )
+      {
+        # this is localFlake
+        inherit (self) packages;
+      };
 in
 {
   imports = [
@@ -35,48 +50,17 @@ in
         inherit system;
         config.allowUnfree = true;
         overlays = [
-          inputs.self.overlays.default
+          inputs.self.overlays.biapy-parts
+          inputs.self.overlays.biapy-parts-home
         ];
       };
       pkgsDirectory = ../../packages;
     };
 
   flake = {
-    overlays.default =
-      (
-        localFlake: final: prev:
-        withSystem prev.stdenv.hostPlatform.system (
-          { config, system, ... }:
-          {
-            unstable = import localFlake.inputs.nixpkgs-unstable {
-              inherit system;
-              nixpkgs.config = config.nixpkgs.config;
-            };
-            biapy-parts = localFlake.packages.${system};
-            flyline = localFlake.inputs.flyline.packages.${system};
-            helix-notes = localFlake.inputs.helix-notes.packages.${system};
-            lan-mouse = localFlake.inputs.lan-mouse.packages.${system};
-            llm-agents = localFlake.inputs.llm-agents.packages.${system};
-            quien = localFlake.inputs.quien.packages.${system};
-            sofka = localFlake.inputs.sofka.packages.${system};
-            spicetify-nix = localFlake.inputs.spicetify-nix.legacyPackages.${system};
-          }
-        )
-      )
-        {
-          inputs = {
-            inherit (inputs)
-              nixpkgs-unstable
-              flyline
-              helix-notes
-              lan-mouse
-              llm-agents
-              quien
-              sofka
-              spicetify-nix
-              ;
-          };
-          inherit (self) packages;
-        };
+    overlays = {
+      default = biapy-parts_overlay;
+      biapy-parts = biapy-parts_overlay;
+    };
   };
 }

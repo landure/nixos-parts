@@ -25,6 +25,7 @@
   inputs,
   lib,
   self,
+  withSystem,
   ...
 }:
 let
@@ -52,6 +53,10 @@ let
 in
 {
   flake-file.inputs = {
+    dbdelve = {
+      url = mkDefault "github:ShayanAbbas1/dbdelve/v0.8.0";
+      inputs.nixpkgs.follows = mkDefault "nixpkgs";
+    };
     flyline = {
       url = mkDefault "github:HalFrgrd/flyline";
       inputs.nixpkgs.follows = mkDefault "nixpkgs";
@@ -89,6 +94,45 @@ in
   };
 
   flake = {
+    overlays.biapy-parts-home =
+      (
+        localFlake: final: prev:
+        withSystem prev.stdenv.hostPlatform.system (
+          { config, system, ... }:
+          {
+            unstable = import localFlake.inputs.nixpkgs-unstable {
+              inherit system;
+              nixpkgs.config = config.nixpkgs.config;
+            };
+            biapy-parts = localFlake.packages.${system};
+            dbdelve = localFlake.inputs.dbdelve.packages.${system};
+            flyline = localFlake.inputs.flyline.packages.${system};
+            helix-notes = localFlake.inputs.helix-notes.packages.${system};
+            lan-mouse = localFlake.inputs.lan-mouse.packages.${system};
+            llm-agents = localFlake.inputs.llm-agents.packages.${system};
+            quien = localFlake.inputs.quien.packages.${system};
+            sofka = localFlake.inputs.sofka.packages.${system};
+            spicetify-nix = localFlake.inputs.spicetify-nix.legacyPackages.${system};
+          }
+        )
+      )
+        {
+          inputs = {
+            inherit (inputs)
+              nixpkgs-unstable
+              dbdelve
+              flyline
+              helix-notes
+              lan-mouse
+              llm-agents
+              quien
+              sofka
+              spicetify-nix
+              ;
+          };
+          inherit (self) packages;
+        };
+
     modules.homeManager = {
       default = config.flake.modules.homeManager.biapy;
       biapy = biapyHomeModule localFlake;

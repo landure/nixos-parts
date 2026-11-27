@@ -10,6 +10,10 @@
       url = "git+https://codeberg.org/wvhulle/bootvine";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dbdelve = {
+      url = "github:ShayanAbbas1/dbdelve/v0.8.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     devshell = {
       url = "github:numtide/devshell";
       inputs.nixpkgs.follows = "nixpkgs";

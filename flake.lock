@@ -156,6 +156,28 @@
         "type": "github"
       }
     },
+    "dbdelve": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-overlay": "rust-overlay_2"
+      },
+      "locked": {
+        "lastModified": 1795603664,
+        "narHash": "sha256-P/qi11q75R1p9Jv8/oLOiJGpGoJjSQ9xfSGSqJeb6X4=",
+        "owner": "ShayanAbbas1",
+        "repo": "dbdelve",
+        "rev": "f890ed411189a98b89b7e3e64e9a91b09523a5cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ShayanAbbas1",
+        "ref": "v0.8.0",
+        "repo": "dbdelve",
+        "type": "github"
+      }
+    },
     "devshell": {
       "inputs": {
         "nixpkgs": [
@@ -419,7 +441,7 @@
         "nixpkgs": [
           "nixpkgs"
         ],
-        "rust-overlay": "rust-overlay_2"
+        "rust-overlay": "rust-overlay_3"
       },
       "locked": {
         "lastModified": 1781269631,
@@ -633,6 +655,7 @@
     "root": {
       "inputs": {
         "bootvine": "bootvine",
+        "dbdelve": "dbdelve",
         "devshell": "devshell",
         "flake-file": "flake-file",
         "flake-parts": "flake-parts_2",
@@ -680,6 +703,27 @@
       }
     },
     "rust-overlay_2": {
+      "inputs": {
+        "nixpkgs": [
+          "dbdelve",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1795340093,
+        "narHash": "sha256-fosvQ7eeQMrh6RvUXotBc6d92dHskAI6tu1EERJQ2LY=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "5aa410a1df0e4e9c25f3818320651c2bddf66aff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    },
+    "rust-overlay_3": {
       "inputs": {
         "nixpkgs": [
           "lan-mouse",
