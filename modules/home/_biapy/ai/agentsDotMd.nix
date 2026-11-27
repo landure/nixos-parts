@@ -24,12 +24,12 @@ let
   inherit (lib.strings) optionalString;
   inherit (lib.trivial) min;
   inherit (lib.types)
-    attrs
     attrsOf
     bool
     lines
     listOf
     oneOf
+    str
     ;
 
   cfg = config.biapy.ai.agentsDotMd;
@@ -82,7 +82,11 @@ let
         in
         heading level name + optionalString (body != "") ("\n\n" + body);
     in
-    renderAttrs 1 contents + "\n";
+    ''
+      # ${cfg.title}
+
+      ${renderAttrs 2 contents + "\n"}
+    '';
 
   # home.file creator: one AGENTS.md per supported agent.
   mkAgentsDotMdFiles =
@@ -95,21 +99,41 @@ in
   options = {
     biapy.ai.agentsDotMd = {
       enable = mkEnableOption "Biapy agent skills";
+      title = mkOption {
+        type = str;
+        default = "Global Instructions";
+        description = ''
+          Global AGENTS.md H1 title
+        '';
+      };
       contents = mkOption {
         type = attrsOf (oneOf [
           lines
           (listOf lines)
-          attrs
+          (attrsOf (oneOf [
+            lines
+            (listOf lines)
+            (attrsOf (oneOf [
+              lines
+              (listOf lines)
+              (attrsOf (oneOf [
+                lines
+                (listOf lines)
+                (attrsOf (oneOf [
+                  lines
+                  (listOf lines)
+                ]))
+              ]))
+            ]))
+          ]))
         ]);
         default = {
-          "Global Instructions" = {
-            _ = [
-              ''
-                Applies across projects.
-                Be brief. Use precise technical terms.
-              ''
-            ];
-          };
+          _ = [
+            ''
+              Applies across projects.
+              Be brief. Use precise technical terms.
+            ''
+          ];
         };
         description = ''
           Global AGENTS.md prompt organised by sections.
@@ -119,7 +143,7 @@ in
     programs = genAttrs (map (agent: agent.name) supportedAgents) (agent: {
       biapy.enableAgentsDotMd = mkOption {
         type = bool;
-        default = false;
+        default = true;
         description = "Enable biapy AGENTS.md integration for ${agent}.";
       };
     });
@@ -127,7 +151,8 @@ in
 
   config = mkIf (cfg.enable && (cfg.contents != { })) {
     home.file = mkAgentsDotMdFiles (filter (
-      agent: config.programs.${agent.name}.biapy.enableAgentsDotMd or false
+      agent:
+      (config.programs.${agent.name}.enable && config.programs.${agent.name}.biapy.enableAgentsDotMd)
     ) supportedAgents) (renderAgentsDotMd cfg.contents);
   };
 }
