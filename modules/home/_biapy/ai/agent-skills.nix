@@ -27,10 +27,12 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      ctx7
       llm-agents.apm
     ];
 
-    biapy.programs.skills.enable = mkDefault true;
+    biapy.programs = {
+      ctx7.enable = mkDefault true;
+      skills.enable = mkDefault true;
+    };
   };
 }

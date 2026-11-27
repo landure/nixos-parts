@@ -10,6 +10,10 @@
   - [Context7 homepage](https://context7.com/).
   - [Context7 @ GitHub](https://github.com/upstash/context7).
 
+  ### 🤖 Agent skills
+
+  - [Context7 skills @ GitHub](https://github.com/upstash/context7/tree/master/skills).
+
   ## 📝 Documentation
 
   ### 🏠 Home Manager
@@ -24,10 +28,13 @@
   ...
 }:
 let
+  inherit (lib.attrsets) nameValuePair;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkDefault mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.types)
+    enum
+    listOf
     nullOr
     oneOf
     str
@@ -59,6 +66,14 @@ in
       ]);
       description = "CONTEXT7_API_KEY value to raise limits";
     };
+
+    withSkills = mkOption {
+      type = listOf (enum [
+        "context7-mcp"
+      ]);
+      default = [ "context7-mcp" ];
+      description = "Install the context7 MCP agent skills.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -76,5 +91,11 @@ in
         CONTEXT7_API_KEY = mkDefault cfg.apiKey;
       };
     };
+
+    biapy.ai.skills.skills = builtins.listToAttrs (
+      map (
+        name: nameValuePair name (mkDefault "${pkgs.biapy-parts.context7-skills}/skills/${name}")
+      ) cfg.withSkills
+    );
   };
 }
