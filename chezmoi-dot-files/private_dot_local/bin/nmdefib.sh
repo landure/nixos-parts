@@ -27,6 +27,9 @@ Options:
   --ping-host HOST       ping target IP (default 1.1.1.1)
   --dns-host HOST        DNS server IP (empty disables DNS check)
   --dns-name NAME        name to resolve (default example.com)
+  --timeout MS           default timeout ms for ping and dns (default 300)
+  --ping-timeout MS      ping timeout ms (overrides --timeout)
+  --dns-timeout MS       dns timeout ms (overrides --timeout)
   --interval SEC         seconds between healthy checks (default 10)
   --fail-threshold N     consecutive failures before reconnect (default 3)
   --max-backoff SEC      max backoff seconds (default 300)
@@ -54,9 +57,9 @@ die() {
 }
 
 require-commands() {
-	for cmd in "${@}"; do
-		command -v "${cmd}" >/dev/null 2>&1 ||
-			die "missing command: ${cmd}"
+	for command_name in "${@}"; do
+		command -v "${command_name}" >/dev/null 2>&1 ||
+			die "missing command: ${command_name}"
 	done
 }
 
@@ -64,6 +67,9 @@ require-commands() {
 PING_HOST="${NMDEFIB_PING_HOST:-1.1.1.1}"
 DNS_HOST="${NMDEFIB_DNS_HOST:-1.1.1.1}"
 DNS_NAME="${NMDEFIB_DNS_NAME:-example.com}"
+TIMEOUT="${NMDEFIB_TIMEOUT:-300}"
+PING_TIMEOUT="${NMDEFIB_PING_TIMEOUT:-}"
+DNS_TIMEOUT="${NMDEFIB_DNS_TIMEOUT:-}"
 INTERVAL="${NMDEFIB_INTERVAL:-10}"
 FAIL_THRESHOLD="${NMDEFIB_FAIL_THRESHOLD:-3}"
 MAX_BACKOFF="${NMDEFIB_MAX_BACKOFF:-300}"
@@ -86,6 +92,18 @@ parse_args() {
 			;;
 		--dns-name)
 			DNS_NAME="$2"
+			shift 2
+			;;
+		--timeout)
+			TIMEOUT="$2"
+			shift 2
+			;;
+		--ping-timeout)
+			PING_TIMEOUT="$2"
+			shift 2
+			;;
+		--dns-timeout)
+			DNS_TIMEOUT="$2"
 			shift 2
 			;;
 		--interval)
@@ -134,10 +152,18 @@ parse_args() {
 }
 
 log() {
+	local level=info
+	if [[ ${1:-} == "--warning" ]]; then
+		level=warning
+		shift
+	elif [[ ${1:-} == "--error" ]]; then
+		level=error
+		shift
+	fi
 	local msg
 	msg="$(date '+%Y-%m-%dT%H:%M:%S') $*"
 	if command -v gum >/dev/null 2>&1; then
-		gum log --level=info "$msg"
+		gum log --level="$level" "$msg"
 	else
 		printf '%s\n' "$msg" >&2
 	fi
@@ -150,19 +176,46 @@ require-commands nmcli ping flock
 
 FAIL_REASON=""
 
-check_connectivity() {
+check_ping() {
 	FAIL_REASON=""
-	if ! ping -c 1 -W 2 "$PING_HOST" >/dev/null 2>&1; then
-		FAIL_REASON="ping $PING_HOST failed"
-		return 1
-	fi
-	if [[ -n $DNS_HOST ]]; then
-		if ! getent hosts "$DNS_NAME" >/dev/null 2>&1 &&
-			! (command -v dig >/dev/null 2>&1 && dig +time=2 +tries=1 "@$DNS_HOST" "$DNS_NAME" >/dev/null 2>&1); then
-			FAIL_REASON="DNS resolution of $DNS_NAME failed"
+	if command -v fping >/dev/null 2>&1; then
+		if ! fping --timeout="$PING_TO" --count=1 "$PING_HOST" >/dev/null 2>&1; then
+			FAIL_REASON="fping $PING_HOST failed"
+			return 1
+		fi
+	else
+		local seconds
+		seconds=$(awk "BEGIN{print $PING_TO/1000}")
+		if ! ping -c 1 -W "$seconds" "$PING_HOST" >/dev/null 2>&1; then
+			FAIL_REASON="ping $PING_HOST failed"
 			return 1
 		fi
 	fi
+	return 0
+}
+
+check_dns() {
+	[[ -z $DNS_HOST ]] && return 0
+	FAIL_REASON=""
+	if getent hosts "$DNS_NAME" >/dev/null 2>&1; then
+		return 0
+	fi
+	local dns_ok=0
+	if command -v doggo >/dev/null 2>&1; then
+		doggo "$DNS_NAME" "@$DNS_HOST" >/dev/null 2>&1 && dns_ok=1
+	elif command -v dig >/dev/null 2>&1; then
+		dig +time="$((DNS_TO / 1000 + 1))" +tries=1 "@$DNS_HOST" "$DNS_NAME" >/dev/null 2>&1 && dns_ok=1
+	fi
+	if [[ $dns_ok -ne 1 ]]; then
+		FAIL_REASON="DNS resolution of $DNS_NAME failed"
+		return 1
+	fi
+	return 0
+}
+
+check_connectivity() {
+	check_ping || return 1
+	check_dns || return 1
 	return 0
 }
 
@@ -184,7 +237,7 @@ resolve_connection() {
 reconnect() {
 	local info uuid name dev attempt
 	info="$(resolve_connection)" || {
-		log "Warning: no active Wi-Fi connection found"
+		log --warning "no active Wi-Fi connection found"
 		return 1
 	}
 	IFS='|' read -r uuid name dev <<<"$info"
@@ -211,6 +264,8 @@ reconnect() {
 
 main() {
 	parse_args "$@"
+	PING_TO="${PING_TIMEOUT:-$TIMEOUT}"
+	DNS_TO="${DNS_TIMEOUT:-$TIMEOUT}"
 
 	exec 9>"$LOCK"
 	if ! flock -n 9; then
@@ -242,7 +297,7 @@ main() {
 		fi
 
 		failures=$((failures + 1))
-		log "Warning: $FAIL_REASON (failure $failures/$FAIL_THRESHOLD)"
+		log --warning "$FAIL_REASON (failure $failures/$FAIL_THRESHOLD)"
 		if [[ $failures -lt $FAIL_THRESHOLD ]]; then
 			sleep "$INTERVAL"
 			continue
