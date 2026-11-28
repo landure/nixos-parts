@@ -66,6 +66,7 @@ in
       packages = with pkgs; [
         dogedns # dig alternative
         doggo
+        fping
         gping # ping with data visualization
         nbping
         netop

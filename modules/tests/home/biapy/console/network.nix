@@ -66,6 +66,7 @@
           machine.wait_for_unit("default.target")
           machine.succeed("su -- testbed -c 'which doge'")
           machine.succeed("su -- testbed -c 'which doggo'")
+          machine.succeed("su -- testbed -c 'which fping'")
           machine.succeed("su -- testbed -c 'which gping'")
           machine.succeed("su -- testbed -c 'which nbping'")
           machine.succeed("su -- testbed -c 'which netop'")
