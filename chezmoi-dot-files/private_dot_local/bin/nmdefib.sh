@@ -136,7 +136,11 @@ parse_args() {
 log() {
 	local msg
 	msg="$(date '+%Y-%m-%dT%H:%M:%S') $*"
-	printf '%s\n' "$msg" >&2
+	if command -v gum >/dev/null 2>&1; then
+		gum log --level=info "$msg"
+	else
+		printf '%s\n' "$msg" >&2
+	fi
 	if [[ -n $LOG_FILE ]]; then
 		printf '%s\n' "$msg" >>"$LOG_FILE"
 	fi
@@ -165,7 +169,7 @@ check_connectivity() {
 resolve_connection() {
 	local uuid name ctype dev state
 	while IFS=: read -r uuid name ctype dev state; do
-		[[ $ctype == "wifi" ]] || continue
+		[[ $ctype == *wireless* || $ctype == "wifi" ]] || continue
 		if [[ -n $DEVICE && $dev != "$DEVICE" ]]; then
 			continue
 		fi
@@ -194,7 +198,7 @@ reconnect() {
 		sleep 2
 		if nmcli connection up "$uuid" >/dev/null 2>&1; then
 			sleep 2
-			if nmcli -t -f STATE device show "$dev" 2>/dev/null | grep -q '^connected$'; then
+			if nmcli -t -f GENERAL.STATE device show "$dev" 2>/dev/null | grep -qi 'connected'; then
 				log "Reconnect succeeded (attempt $attempt)"
 				return 0
 			fi
@@ -215,6 +219,12 @@ main() {
 	fi
 
 	trap 'log "Signal received, exiting"; exit 0' INT TERM HUP
+
+	log "Starting nmdefib: watching connectivity to $PING_HOST (Wi-Fi device: ${DEVICE:-auto})"
+	if info="$(resolve_connection 2>/dev/null)"; then
+		IFS='|' read -r _uuid conn_name _dev <<<"$info"
+		log "Monitoring connection '$conn_name'"
+	fi
 
 	local failures=0 backoff=0
 	while true; do
