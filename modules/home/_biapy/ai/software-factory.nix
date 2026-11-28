@@ -24,6 +24,7 @@ in
       programs = {
         beads-rust.enable = mkDefault true;
         herdr.enable = mkDefault true;
+        sidecar.enable = mkDefault true;
       };
 
       skills = {

@@ -78,6 +78,11 @@
                       name = "github-copilot-cli";
                       text = "exit 0";
                     };
+                    sidecar.enable = true;
+                    sidecar.package = pkgs.writeShellApplication {
+                      name = "sidecar";
+                      text = "exit 0";
+                    };
                   };
                 };
               }
